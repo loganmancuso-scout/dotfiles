@@ -1,0 +1,241 @@
+##############################################################################
+#
+# Author: Logan Mancuso
+# Created: 11.29.2023
+#
+##############################################################################
+
+## Set Prompt ##
+export STARSHIP_CONFIG=$HOME/.config/bash/personal.toml
+eval "$(starship init bash)"
+
+## Environment Variables ##
+export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
+export PATH=$PATH:$HOME/.local/bin
+
+## BitWarden Authentication ##
+function bw-auth() {
+  # Check if BW_SESSION is set in the current environment
+  if [ -z "$BW_SESSION" ]; then
+    # echo "BW_SESSION is not set."
+    # Check if the /tmp/bw.env file exists and source it
+    if [ -f /tmp/bw.env ]; then
+      # echo "Sourcing BW_SESSION from /tmp/bw.env"
+      source /tmp/bw.env
+    fi
+    # If BW_SESSION is still not set, log in to Bitwarden
+    if [ -z "$BW_SESSION" ]; then
+      echo "Logging in to Bitwarden..."
+      local login_output=$(bw unlock --raw) # Use --raw to get the session key directly
+      if [ $? -ne 0 ]; then
+        echo "Failed to log in to Bitwarden."
+        return 1
+      fi
+      eval "BW_SESSION=$login_output"
+      echo "export BW_SESSION=\"$login_output\"" > /tmp/bw.env
+    fi
+  fi
+}
+
+## OpenTofu ##
+alias tf="tofu"
+alias tfa="tofu apply"
+alias tfr="tofu apply -refresh-only"
+alias tfp="tofu plan"
+alias tfs="tofu state"
+alias tfw="tofu workspace"
+alias tfi="tofu init --reconfigure --upgrade && tofu workspace list"
+alias tfc="find . -maxdepth 1 -type l -delete"
+alias tffmt="tofu fmt -recursive"
+alias tfsclear='tofu state rm $(tofu state list)'
+
+function tfauth() {
+  bw-auth
+  # Retrieve the JSON from Bitwarden
+  echo "Retrieving Hashi Vault Secrets"
+  local vault_json=$(bw get item "Hashi Vault" --session "$BW_SESSION")
+  if [ $? -ne 0 ]; then
+    echo "Failed to retrieve item from Bitwarden."
+    return 1
+  fi
+
+  # Use jq to extract the name and value fields and prefix them with 'export'
+  export_commands=$(echo "$vault_json" | jq -r '.fields[] | "export \(.name)=\(.value)"')
+  if [ $? -ne 0 ]; then
+    echo "Failed to parse JSON from Bitwarden."
+    return 1
+  fi
+
+  # Evaluate the export commands to set the environment variables
+  echo "Setting Hashi Vault Secrets"
+  eval "$export_commands"
+}
+
+function tfunseal() {
+  tfauth
+  vault status
+  vault operator unseal $UNSEAL_KEY_1
+  vault operator unseal $UNSEAL_KEY_2
+  vault operator unseal $UNSEAL_KEY_3
+  vault status
+  vault login $VAULT_DEV_ROOT_TOKEN_ID
+}
+
+## RDP into Work Laptop Using BitWarden ##
+function workrdp() {
+  bw-auth
+  echo "Retrieving RDP Vault Secret"
+  local vault_json=$(bw get item "bw-kopis" --session "$BW_SESSION")
+  if [ $? -ne 0 ]; then
+    echo "Failed to retrieve item from Bitwarden."
+    return 1
+  fi
+  # Parse the domain from the item JSON jq -r '.fields[] | "export \(.name)=\(.value)"')
+  local domain=$(echo "$vault_json" | jq -r '.fields[] | select(.name == "domain") | .value')
+  # Parse the username from the item JSON
+  local user=$(echo "$vault_json" | jq -r '.fields[] | select(.name == "username") | .value')
+  # Parse the lan_ip (eth0) from the item JSON
+  local lan_ip=$(echo "$vault_json" | jq -r '.fields[] | select(.name == "eth0") | .value')
+  local mac=$(echo "$vault_json" | jq -r '.fields[] | select(.name == "mac") | .value')
+  # Use jq to extract the name and value fields and prefix them with 'export'
+  local password=$(echo "$vault_json" | jq -r '.login.password') 
+  echo "wakeonlan $mac"
+  echo "xfreerdp /u:$user /d:$domain /v:$lan_ip:3389 /dynamic-resolution /multimon /audio-mode:1 /network:LAN +clipboard +fonts /cert:ignore /p:$password" 
+}
+
+## Programming Helper ##
+# changes the date on a file if it has Created date tag
+function newdate() {
+  today_=$(date +%m.%d.%Y)
+  to_replace_="Created:"
+  # git_list=$(git show --pretty="" --name-only)
+  for passed_ in $@; do 
+    temp=$(echo ${passed_} | cut -d'/' -f2-)
+    sed -i "0,\|.* $to_replace_.*|{s|$to_replace_.*|$to_replace_ $today_|g1}" ${temp}
+    echo "--- ${temp} --- $to_replace_ $today_"
+  done
+}
+
+## Sys Helpers ##
+# System Admin
+alias whatsmyip="ifconfig | grep --color=always 'inet'"
+alias fastping="ping -c 100 -s.2 $1"
+alias ports="netstat -tulanp"
+
+# Basic Default Function #
+function delete() {
+  for item in $@; do
+    mv $item $HOME/.local/share/Trash/files
+  done
+}
+
+function stopwatch() {
+  local date1=`date +%s`; while true; do 
+    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
+  done
+}
+
+function timer() {
+  while true; do 
+    echo -ne "$(date +%H:%M:%S:%N)\r";
+  done
+}
+
+## update linux ##
+function os-update() {
+  # Get os name via uname
+  declare -A osInfo;
+  osInfo[/etc/redhat-release]=dnf # yum
+  osInfo[/etc/arch-release]=pacman
+  osInfo[/etc/gentoo-release]=emerge
+  osInfo[/etc/SuSE-release]=zypp
+  osInfo[/etc/debian_version]=apt-get
+  osInfo[/etc/alpine-release]=apk
+
+  for f in "${!osInfo[@]}"; do
+    if [[ -f $f ]]; then
+      echo "Updating Using Package Manager: '${osInfo[$f]}'"
+      case ${osInfo[$f]} in
+        apt-get)
+          sudo snap refresh
+          sudo apt-get update
+          sudo apt-get upgrade -y
+          sudo apt-get dist-upgrade -y
+          sudo apt-get autoremove -y
+          break
+        ;;
+        dnf)
+          sudo dnf check-update
+          sudo dnf update -y
+          sudo dnf upgrade -y
+          sudo rpmconf -a
+          sudo dnf repoquery --unsatisfied
+          sudo dnf repoquery --duplicates
+          sudo dnf list extras
+          sudo dnf autoremove -y
+          break
+        ;;
+        pacman)
+          sudo pacman -Syy
+          sudo pacman -Su --noconfirm
+          break
+        ;;
+        emerge)
+          sudo emerge --sync
+          sudo emerge -uDNav @world
+          sudo emerge --depclean
+          break
+        ;;
+        zypp)
+          sudo zypper refresh
+          sudo zypper update -y
+          sudo zypper dist-upgrade -y
+          sudo zypper clean
+          break
+        ;;
+        apk)
+          sudo apk update
+          sudo apk upgrade
+          break
+        ;;
+        *)
+          echo "ERROR: Cannot Find Package Manager"
+        ;;
+      esac
+    fi
+  done
+}
+
+# extract file type
+function extract() {
+  file_name_=$1
+  if [ -z "$file_name_" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+  else
+    if [ -f $file_name_ ] ; then
+      # NAME=${1%.*}
+      # mkdir $NAME && cd $NAME
+      case $file_name_ in
+        *.tar.bz2)   tar xvjf $file_name_    ;;
+        *.tar.gz)    tar xvzf $file_name_    ;;
+        *.tar.xz)    tar xvJf $file_name_    ;;
+        *.lzma)      unlzma $file_name_      ;;
+        *.bz2)       bunzip2 $file_name_     ;;
+        *.rar)       unrar x -ad $file_name_ ;;
+        *.gz)        gunzip $file_name_      ;;
+        *.tar)       tar xvf $file_name_     ;;
+        *.tbz2)      tar xvjf $file_name_    ;;
+        *.tgz)       tar xvzf $file_name_    ;;
+        *.zip)       unzip $file_name_       ;;
+        *.Z)         uncompress $file_name_  ;;
+        *.7z)        7z x $file_name_        ;;
+        *.xz)        unxz $file_name_        ;;
+        *.exe)       cabextract $file_name_  ;;
+        *)           echo "extract: '$file_name_' - unknown archive method" ;;
+      esac
+    else
+      echo "$file_name_ - file does not exist"
+    fi
+  fi
+}

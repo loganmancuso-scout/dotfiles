@@ -1,0 +1,96 @@
+format = """\
+[╭╴](fg:arrow)\
+$os\
+$time\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$cmd_duration\
+(\
+)
+[╰─](fg:arrow)$character\
+"""
+
+add_newline = false
+palette = "custo"
+
+[palettes.custo]
+arrow = "#333533"
+os = "#16f4d0"
+os_admin = "#e4ff1a"
+directory = "#9ffff5"
+time = "#ff79c6" # Dark neon purple
+git = "#f17f29"
+git_status = "#DFEBED"
+duration = "#ce4257"
+text_color = "#EDF2F4"
+text_light = "#26272A"
+hostname = "#bd93f9" # Lightning blue
+
+[hostname]
+disabled = false
+style = "bold fg:hostname"
+format = "[ $hostname]($style)"
+ssh_only = false
+
+[os]
+disabled = false
+format = "[$symbol]($style)"
+style = "bold blue"
+
+[os.symbols]
+Alpine = ""
+Arch = ""
+Debian = ""
+EndeavourOS = ""
+Fedora = ""
+Linux = ""
+Macos = ""
+Manjaro = ""
+Mint = ""
+NixOS = ""
+openSUSE = ""
+Pop = ""
+SUSE = ""
+Ubuntu = ""
+Windows = ""
+
+[character]
+disabled = false
+success_symbol = "[❯](fg:blue)"
+error_symbol = "[❯](fg:red)"
+
+[directory]
+disabled = false
+format = "[  $path](bold $style)[$read_only]($read_only_style)"
+style = "fg:directory"
+truncation_length = 2
+read_only_style = "fg:directory"
+before_repo_root_style = "fg:directory"
+# truncation_symbol = "…/"
+truncate_to_repo = true
+read_only =" "
+
+[time]
+disabled = true
+format = "[ $time]($style)"
+style = "bold fg:time"
+time_format = "%H:%M:%S"
+
+[cmd_duration]
+disabled = false
+format = "[  $duration]($style)"
+style = "bold fg:duration"
+min_time = 500
+
+[git_branch]
+disabled = false
+format = "[ $symbol $branch]($style)"
+style = "bold fg:#50fa7b" # Green
+symbol = ""
+
+[git_status]
+disabled = false
+format = "[ $all_status$ahead_behind]($style)"
+style = "bold fg:#ffb86c" # Orange
