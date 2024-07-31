@@ -59,3 +59,4 @@ if ! shopt -oq posix; then
 fi
 
 source ~/.config/bash/bash_aliases
+source "$HOME/.cargo/env"
