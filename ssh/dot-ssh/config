@@ -1,0 +1,103 @@
+## Mobile ##
+Host bytevault.local
+  HostName 192.168.1.10
+  User root
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking yes
+
+Host mightymouse.local
+  HostName 192.168.1.11
+  User root
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking yes
+
+## VPC ##
+Host 192.168.10.*
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+Host prod-thoth.local
+  HostName 192.168.10.5
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+Host prod-ingress-instance.local
+  HostName 192.168.10.2
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+Host prod-utility-instance.local
+  HostName 192.168.10.6
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+Host prod-k8-manager.local
+  HostName 192.168.10.10
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+Host prod-sandbox-instance.local
+  HostName 192.168.10.240
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+## IOT ##
+Host iot-rickey.local
+  HostName 192.168.3.3
+   User octo-user
+   Port 22
+   IdentityFile ~/.ssh/id_ed25519
+
+Host iot-pizero.local
+  HostName 192.168.3.5
+  User assistant-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+
+Host 192.168.3.*
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+## LAN ##
+Host 100.64.*.*
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+Host dev-infra-instance.local
+  HostName 100.64.0.5
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+Host dev-proxmox.local
+  HostName 100.64.0.10
+  User root
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+Host dev-thoth.local
+  HostName 100.64.0.15
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
