@@ -1,2 +1,4 @@
 *.log
-*.vscdb
+# *.vscdb
+# Cache/
+# CachedData/

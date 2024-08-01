@@ -5,14 +5,12 @@
             "file:///home/loganmancuso/SourceControl/Personal/dotfiles": "__default__profile__",
             "file:///home/loganmancuso/SourceControl": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Personal/obsidian": "__default__profile__",
-            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Workspaces/snippets.code-workspace": "__default__profile__"
         },
-        "emptyWindows": {
-            "1722524973702": "__default__profile__"
-        }
+        "emptyWindows": {}
     },
     "profileAssociationsMigration": true,
     "telemetry.sqmId": "",
@@ -24,24 +22,12 @@
                 "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/snippets.code-workspace"
             },
             {
-                "id": "4e06325daec8f9f13991b81b6cf16a30",
-                "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace"
-            },
-            {
                 "id": "6690bee2766d3281d112d621341b2daf",
                 "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace"
-            },
-            {
-                "id": "042caae02f49e7fca0d9f845a02e3a06",
-                "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace"
             }
         ],
         "folders": [],
-        "emptyWindows": [
-            {
-                "backupFolder": "1722524973702"
-            }
-        ]
+        "emptyWindows": []
     },
     "lastKnownMenubarData": {
         "menus": {
@@ -81,7 +67,8 @@
                             "items": [
                                 {
                                     "id": "workbench.action.reopenClosedEditor",
-                                    "label": "&&Reopen Closed Editor"
+                                    "label": "&&Reopen Closed Editor",
+                                    "enabled": false
                                 },
                                 {
                                     "id": "vscode.menubar.separator"
@@ -96,6 +83,17 @@
                                     },
                                     "enabled": true,
                                     "label": "~/SourceControl/Workspaces/snippets (Workspace)"
+                                },
+                                {
+                                    "id": "openRecentWorkspace",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace",
+                                        "path": "/home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/SourceControl/Workspaces/Personal/templates (Workspace)"
                                 },
                                 {
                                     "id": "openRecentWorkspace",
@@ -118,17 +116,6 @@
                                     },
                                     "enabled": true,
                                     "label": "~/SourceControl/Workspaces/wiki (Workspace)"
-                                },
-                                {
-                                    "id": "openRecentWorkspace",
-                                    "uri": {
-                                        "$mid": 1,
-                                        "external": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace",
-                                        "path": "/home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace",
-                                        "scheme": "file"
-                                    },
-                                    "enabled": true,
-                                    "label": "~/SourceControl/Workspaces/Personal/templates (Workspace)"
                                 },
                                 {
                                     "id": "openRecentFolder",
@@ -165,6 +152,17 @@
                                 },
                                 {
                                     "id": "vscode.menubar.separator"
+                                },
+                                {
+                                    "id": "openRecentFile",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/.config/hypr/UserConfigs/Startup_Apps.conf",
+                                        "path": "/home/loganmancuso/.config/hypr/UserConfigs/Startup_Apps.conf",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/.config/hypr/UserConfigs/Startup_Apps.conf"
                                 },
                                 {
                                     "id": "openRecentFile",
@@ -1852,9 +1850,38 @@
                 "x": 0,
                 "y": 0,
                 "width": 1874,
-                "height": 1249
+                "height": 1210
             }
         },
-        "openedWindows": []
+        "openedWindows": [
+            {
+                "workspaceIdentifier": {
+                    "id": "6690bee2766d3281d112d621341b2daf",
+                    "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace"
+                },
+                "backupPath": "/home/loganmancuso/.config/VSCodium/Backups/6690bee2766d3281d112d621341b2daf",
+                "uiState": {
+                    "mode": 0,
+                    "x": 0,
+                    "y": 0,
+                    "width": 1874,
+                    "height": 1249
+                }
+            },
+            {
+                "workspaceIdentifier": {
+                    "id": "77f35f266b2704abb99b6f16ff5252d6",
+                    "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/snippets.code-workspace"
+                },
+                "backupPath": "/home/loganmancuso/.config/VSCodium/Backups/77f35f266b2704abb99b6f16ff5252d6",
+                "uiState": {
+                    "mode": 0,
+                    "x": 0,
+                    "y": 0,
+                    "width": 1874,
+                    "height": 1210
+                }
+            }
+        ]
     }
 }
