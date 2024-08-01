@@ -5,5 +5,6 @@
     "explorer.confirmDelete": false,
     "terminal.integrated.fontSize": 18,
     "explorer.confirmDragAndDrop": false,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "workbench.startupEditor": "none"
 }
