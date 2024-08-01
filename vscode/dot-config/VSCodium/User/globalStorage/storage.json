@@ -6,8 +6,8 @@
             "file:///home/loganmancuso/SourceControl": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Personal/obsidian": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace": "__default__profile__",
-            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Workspaces/snippets.code-workspace": "__default__profile__"
         },
         "emptyWindows": {
@@ -81,8 +81,7 @@
                             "items": [
                                 {
                                     "id": "workbench.action.reopenClosedEditor",
-                                    "label": "&&Reopen Closed Editor",
-                                    "enabled": false
+                                    "label": "&&Reopen Closed Editor"
                                 },
                                 {
                                     "id": "vscode.menubar.separator"
@@ -102,23 +101,23 @@
                                     "id": "openRecentWorkspace",
                                     "uri": {
                                         "$mid": 1,
-                                        "external": "file:///home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace",
-                                        "path": "/home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace",
-                                        "scheme": "file"
-                                    },
-                                    "enabled": true,
-                                    "label": "~/SourceControl/Workspaces/wiki (Workspace)"
-                                },
-                                {
-                                    "id": "openRecentWorkspace",
-                                    "uri": {
-                                        "$mid": 1,
                                         "external": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace",
                                         "path": "/home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace",
                                         "scheme": "file"
                                     },
                                     "enabled": true,
                                     "label": "~/SourceControl/Workspaces/Personal/infra (Workspace)"
+                                },
+                                {
+                                    "id": "openRecentWorkspace",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace",
+                                        "path": "/home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/SourceControl/Workspaces/wiki (Workspace)"
                                 },
                                 {
                                     "id": "openRecentWorkspace",
