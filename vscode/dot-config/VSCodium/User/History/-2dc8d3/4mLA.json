@@ -1,0 +1,10 @@
+{
+    "sync.gist": "",
+    "workbench.sideBar.location": "right",
+    "workbench.activityBar.location": "top",
+    "window.customTitleBarVisibility": "auto",
+    "editor.fontFamily": "'CaskaydiaCove Nerd Font Mono'",
+    "editor.codeLensFontFamily": "'CaskaydiaCove Nerd Font Mono'",
+    "git.confirmSync": false,
+    "editor.tabSize": 2
+}

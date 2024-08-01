@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "prompt-work",
+      "path": "../Snippets/prompt-work"
+    },
+    {
+      "name": "os-init",
+      "path": "../../Documents/Backups/os-init"
+    },
+    {
+      "path": "../Personal/dotfiles"
+    },
+    {
+      "path": "../../.config/hypr"
+    },
+    {
+      "path": "."
+    }
+  ]
+}

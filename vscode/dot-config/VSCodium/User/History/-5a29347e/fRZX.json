@@ -1,0 +1,20 @@
+packer init ./templates/ubuntu && 
+packer validate -var { 'env=prod',
+'node_name=mightymouse',
+'node_ip=192.168.1.11',
+'port=8801',
+'id=00246',
+'username=instance-user',
+'iso=ubuntu-24.04-live-server-amd64.iso',
+'os=ubuntu',
+'name=mi-noble-2404-dev',
+'description=# Ubuntu Server Template
+  ## Noble Image 24.04 with docker pre-installed',
+  'key_private=mykey',
+  'key_path=~/.ssh/id_ed25519',
+  'directories={"home":"/opt/tofu","log":"/var/log/tofu"}' 
+} ./templates/ubuntu/main.pkr.hcl
+
+
+packer init ./templates/ubuntu && 
+packer build -var '{  "env": "prod",  "node_name": "mightymouse",  "node_ip": "192.168.1.11",  "port": 8801,  "id": "00246",  "username": "instance-user",  "iso": "ubuntu-24.04-live-server-amd64.iso",  "os": "ubuntu",  "name": "mi-noble-2404-dev",  "description": "# Ubuntu Server Template\\n## Noble Image 24.04 with docker pre-installed",  "key_private": "mykey",  "key_path": "~/.ssh/id_ed25519",  "directories": \{"home": "/opt/tofu", "log": "/var/log/tofu"\}}' ./templates/ubuntu/main.pkr.hcl

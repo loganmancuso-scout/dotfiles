@@ -1,0 +1,55 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Terraform Validate",
+      "type": "shell",
+      "request": "launch",
+      "command": "terraform validate",
+      "args": [],
+      "problemMatcher": ["$terraform"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "name": "Terraform Plan",
+      "type": "shell",
+      "request": "launch",
+      "command": "terraform plan",
+      "args": [],
+      "problemMatcher": ["$terraform"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "name": "Terraform Apply",
+      "type": "shell",
+      "request": "launch",
+      "command": "terraform apply -auto-approve",
+      "args": [],
+      "problemMatcher": ["$terraform"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "preLaunchTask": "Terraform Plan",
+      "postLaunchTask": "Terraform Destroy"
+    },
+    {
+      "name": "Terraform Destroy",
+      "type": "shell",
+      "request": "launch",
+      "command": "terraform destroy -auto-approve",
+      "args": [],
+      "problemMatcher": ["$terraform"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    }
+  ]
+}

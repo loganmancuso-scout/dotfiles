@@ -19,7 +19,8 @@ function main() {
   stow -vv --dotfiles --target=$HOME --adopt bash
   stow -vv --dotfiles --target=$HOME --adopt git
   stow -vv --dotfiles --target=$HOME --adopt nvim
-  stow -vv --dotfiles --target=$HOME --adopt ssh 
+  stow -vv --dotfiles --target=$HOME --adopt ssh
+  stow -vv --dotfiles --target=$HOME --adopt vscode
   
   # stow -D -vv --dotfiles --target=$HOME bash
 }

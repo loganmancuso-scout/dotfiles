@@ -1,0 +1,770 @@
+2024-07-31 23:00:29.145 [info] Log level: Info
+2024-07-31 23:00:29.145 [info] Validating found git in: "git"
+2024-07-31 23:00:29.145 [info] Using git "2.43.0" from "git"
+2024-07-31 23:00:29.145 [info] > git rev-parse --show-toplevel [34ms]
+2024-07-31 23:00:29.146 [info] > git rev-parse --git-dir --git-common-dir [3ms]
+2024-07-31 23:00:29.154 [info] Open repository: /home/loganmancuso/SourceControl/Workspaces
+2024-07-31 23:00:29.175 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:00:29.175 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.176 [info] > git config --get commit.template [11ms]
+2024-07-31 23:00:29.228 [info] > git rev-parse --show-toplevel [42ms]
+2024-07-31 23:00:29.250 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [39ms]
+2024-07-31 23:00:29.264 [info] > git rev-parse --git-dir --git-common-dir [16ms]
+2024-07-31 23:00:29.273 [info] Open repository: /home/loganmancuso/SourceControl/Snippets/prompt-work
+2024-07-31 23:00:29.312 [info] > git rev-parse --show-toplevel [14ms]
+2024-07-31 23:00:29.312 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.314 [info] > git config --get commit.template [27ms]
+2024-07-31 23:00:29.351 [info] > git status -z -uall [26ms]
+2024-07-31 23:00:29.386 [info] > git merge-base refs/heads/main refs/remotes/gitlab/main [23ms]
+2024-07-31 23:00:29.393 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [44ms]
+2024-07-31 23:00:29.394 [info] > git rev-parse --show-toplevel [60ms]
+2024-07-31 23:00:29.416 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/gitlab/main [23ms]
+2024-07-31 23:00:29.425 [info] > git config --get commit.template [41ms]
+2024-07-31 23:00:29.447 [info] > git diff --name-status -z --diff-filter=ADMR bd6746c639d7a80f049c832de9e4db6da6b9d8b8...refs/remotes/gitlab/main [22ms]
+2024-07-31 23:00:29.447 [info] > git rev-parse --git-dir --git-common-dir [34ms]
+2024-07-31 23:00:29.455 [info] Open repository: /home/loganmancuso/SourceControl/Personal/dotfiles
+2024-07-31 23:00:29.492 [info] > git config --get commit.template [14ms]
+2024-07-31 23:00:29.492 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [21ms]
+2024-07-31 23:00:29.493 [info] > git rev-parse --show-toplevel [9ms]
+2024-07-31 23:00:29.493 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.505 [info] > git status -z -uall [14ms]
+2024-07-31 23:00:29.505 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-07-31 23:00:29.533 [info] > git status -z -uall [7ms]
+2024-07-31 23:00:29.533 [info] > git merge-base refs/heads/main refs/remotes/origin/main [20ms]
+2024-07-31 23:00:29.540 [info] > git rev-parse --show-toplevel [36ms]
+2024-07-31 23:00:29.540 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.551 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/origin/main [12ms]
+2024-07-31 23:00:29.558 [info] > git config --get commit.template [26ms]
+2024-07-31 23:00:29.563 [info] > git diff --name-status -z --diff-filter=ADMR 7e7e550d24f76a46e127d2c140eccf5e46d2549e...refs/remotes/origin/main [4ms]
+2024-07-31 23:00:29.563 [info] > git rev-parse --show-toplevel [13ms]
+2024-07-31 23:00:29.586 [info] > git status -z -uall [16ms]
+2024-07-31 23:00:29.586 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [9ms]
+2024-07-31 23:00:29.609 [info] > git merge-base refs/heads/main refs/remotes/origin/main [16ms]
+2024-07-31 23:00:29.620 [info] > git rev-parse --show-toplevel [36ms]
+2024-07-31 23:00:29.631 [info] > git config --get commit.template [23ms]
+2024-07-31 23:00:29.634 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/origin/main [15ms]
+2024-07-31 23:00:29.658 [info] > git status -z -uall [9ms]
+2024-07-31 23:00:29.658 [info] > git rev-parse --show-toplevel [29ms]
+2024-07-31 23:00:29.658 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.669 [info] > git diff --name-status -z --diff-filter=ADMR 55a8928e704850e9425f48569244c52021ea52cb...refs/remotes/origin/main [28ms]
+2024-07-31 23:00:29.719 [info] > git rev-parse --show-toplevel [54ms]
+2024-07-31 23:00:29.719 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.719 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [62ms]
+2024-07-31 23:00:29.739 [info] > git rev-parse --show-toplevel [8ms]
+2024-07-31 23:00:29.739 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.754 [info] > git rev-parse --show-toplevel [8ms]
+2024-07-31 23:00:29.754 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.764 [info] > git status -z -uall [11ms]
+2024-07-31 23:00:29.768 [info] > git rev-parse --show-toplevel [6ms]
+2024-07-31 23:00:29.768 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.775 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.788 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.800 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.809 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.822 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.822 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.834 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:00:29.834 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.843 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:00:29.843 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.859 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:00:29.859 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.873 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.873 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.886 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:00:29.886 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.896 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:00:29.896 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.905 [info] > git rev-parse --show-toplevel [1ms]
+2024-07-31 23:00:29.905 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.912 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.912 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.920 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.920 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.931 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.932 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.940 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.940 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.948 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.948 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.956 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.956 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:29.966 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:00:29.966 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:00:30.074 [info] > git check-ignore -v -z --stdin [22ms]
+2024-07-31 23:00:30.075 [info] > git check-ignore -v -z --stdin [16ms]
+2024-07-31 23:00:30.076 [info] > git check-ignore -v -z --stdin [4ms]
+2024-07-31 23:05:09.131 [info] > git show --textconv :README.md [11ms]
+2024-07-31 23:05:09.134 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Personal/dotfiles/README.md [4ms]
+2024-07-31 23:05:09.147 [info] > git cat-file -s f1f6152a2dacaa90abaa89dda66ea2f2c1484132 [5ms]
+2024-07-31 23:07:50.695 [info] > git check-ignore -v -z --stdin [5ms]
+2024-07-31 23:07:51.701 [info] > git show --textconv :bash_aliases [10ms]
+2024-07-31 23:07:51.703 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/bash_aliases [3ms]
+2024-07-31 23:07:51.715 [info] > git cat-file -s e1a1bcef669d6bbc1afd6898c36d8774cf5cbeef [3ms]
+2024-07-31 23:08:09.550 [info] Log level: Info
+2024-07-31 23:08:09.550 [info] Validating found git in: "git"
+2024-07-31 23:08:09.550 [info] Using git "2.43.0" from "git"
+2024-07-31 23:08:09.554 [info] > git rev-parse --show-toplevel [8ms]
+2024-07-31 23:08:09.554 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:09.582 [info] > git rev-parse --show-toplevel [12ms]
+2024-07-31 23:08:09.591 [info] > git rev-parse --git-dir --git-common-dir [3ms]
+2024-07-31 23:08:09.599 [info] Open repository: /home/loganmancuso/SourceControl/Snippets/prompt-work
+2024-07-31 23:08:09.617 [info] > git config --get commit.template [8ms]
+2024-07-31 23:08:09.618 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:08:09.618 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:09.633 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [7ms]
+2024-07-31 23:08:09.636 [info] > git rev-parse --show-toplevel [4ms]
+2024-07-31 23:08:09.649 [info] > git rev-parse --git-dir --git-common-dir [7ms]
+2024-07-31 23:08:09.655 [info] Open repository: /home/loganmancuso/SourceControl/Personal/dotfiles
+2024-07-31 23:08:09.669 [info] > git status -z -uall [21ms]
+2024-07-31 23:08:09.684 [info] > git merge-base refs/heads/main refs/remotes/origin/main [6ms]
+2024-07-31 23:08:09.691 [info] > git rev-parse --show-toplevel [22ms]
+2024-07-31 23:08:09.691 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:09.692 [info] > git config --get commit.template [28ms]
+2024-07-31 23:08:09.703 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/origin/main [12ms]
+2024-07-31 23:08:09.718 [info] > git rev-parse --show-toplevel [16ms]
+2024-07-31 23:08:09.718 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:09.726 [info] > git diff --name-status -z --diff-filter=ADMR 7e7e550d24f76a46e127d2c140eccf5e46d2549e...refs/remotes/origin/main [16ms]
+2024-07-31 23:08:09.728 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [11ms]
+2024-07-31 23:08:09.731 [info] > git rev-parse --show-toplevel [6ms]
+2024-07-31 23:08:09.731 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:09.744 [info] > git rev-parse --show-toplevel [8ms]
+2024-07-31 23:08:09.744 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:09.751 [info] > git status -z -uall [8ms]
+2024-07-31 23:08:09.763 [info] > git merge-base refs/heads/main refs/remotes/origin/main [4ms]
+2024-07-31 23:08:09.769 [info] > git rev-parse --show-toplevel [19ms]
+2024-07-31 23:08:09.769 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:09.777 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/origin/main [7ms]
+2024-07-31 23:08:09.807 [info] > git rev-parse --show-toplevel [31ms]
+2024-07-31 23:08:09.807 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:09.815 [info] > git diff --name-status -z --diff-filter=ADMR 55a8928e704850e9425f48569244c52021ea52cb...refs/remotes/origin/main [32ms]
+2024-07-31 23:08:09.823 [info] > git rev-parse --show-toplevel [9ms]
+2024-07-31 23:08:10.045 [info] > git rev-parse --show-toplevel [109ms]
+2024-07-31 23:08:10.054 [info] > git config --get commit.template [16ms]
+2024-07-31 23:08:10.054 [info] > git config --get commit.template [22ms]
+2024-07-31 23:08:10.057 [info] > git rev-parse --show-toplevel [5ms]
+2024-07-31 23:08:10.096 [info] > git rev-parse --show-toplevel [22ms]
+2024-07-31 23:08:10.096 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [28ms]
+2024-07-31 23:08:10.096 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [33ms]
+2024-07-31 23:08:10.112 [info] > git rev-parse --show-toplevel [6ms]
+2024-07-31 23:08:10.112 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:10.149 [info] > git status -z -uall [30ms]
+2024-07-31 23:08:10.149 [info] > git status -z -uall [23ms]
+2024-07-31 23:08:10.149 [info] > git rev-parse --show-toplevel [7ms]
+2024-07-31 23:08:10.149 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:10.175 [info] > git rev-parse --show-toplevel [6ms]
+2024-07-31 23:08:10.175 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:10.219 [info] > git check-ignore -v -z --stdin [13ms]
+2024-07-31 23:08:10.220 [info] > git check-ignore -v -z --stdin [4ms]
+2024-07-31 23:08:10.221 [info] > git rev-parse --show-toplevel [36ms]
+2024-07-31 23:08:10.221 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:10.253 [info] > git rev-parse --show-toplevel [21ms]
+2024-07-31 23:08:10.253 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:10.278 [info] > git rev-parse --show-toplevel [7ms]
+2024-07-31 23:08:10.278 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:10.298 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/bash_aliases [8ms]
+2024-07-31 23:08:10.313 [info] > git cat-file -s e1a1bcef669d6bbc1afd6898c36d8774cf5cbeef [5ms]
+2024-07-31 23:08:10.380 [info] > git show --textconv :bash_aliases [52ms]
+2024-07-31 23:08:11.828 [info] Log level: Info
+2024-07-31 23:08:11.828 [info] Validating found git in: "git"
+2024-07-31 23:08:11.828 [info] Using git "2.43.0" from "git"
+2024-07-31 23:08:11.833 [info] > git rev-parse --show-toplevel [13ms]
+2024-07-31 23:08:11.853 [info] > git rev-parse --git-dir --git-common-dir [8ms]
+2024-07-31 23:08:11.865 [info] Open repository: /home/loganmancuso/SourceControl/Snippets/prompt-work
+2024-07-31 23:08:11.900 [info] > git rev-parse --show-toplevel [16ms]
+2024-07-31 23:08:11.900 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:11.902 [info] > git config --get commit.template [26ms]
+2024-07-31 23:08:11.928 [info] > git rev-parse --show-toplevel [11ms]
+2024-07-31 23:08:11.935 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [9ms]
+2024-07-31 23:08:11.946 [info] > git rev-parse --git-dir --git-common-dir [12ms]
+2024-07-31 23:08:11.952 [info] Open repository: /home/loganmancuso/SourceControl/Personal/dotfiles
+2024-07-31 23:08:11.966 [info] > git status -z -uall [21ms]
+2024-07-31 23:08:11.990 [info] > git merge-base refs/heads/main refs/remotes/origin/main [15ms]
+2024-07-31 23:08:11.999 [info] > git rev-parse --show-toplevel [34ms]
+2024-07-31 23:08:11.999 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:11.999 [info] > git config --get commit.template [40ms]
+2024-07-31 23:08:12.017 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/origin/main [19ms]
+2024-07-31 23:08:12.029 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [13ms]
+2024-07-31 23:08:12.029 [info] > git rev-parse --show-toplevel [21ms]
+2024-07-31 23:08:12.029 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.036 [info] > git diff --name-status -z --diff-filter=ADMR 7e7e550d24f76a46e127d2c140eccf5e46d2549e...refs/remotes/origin/main [10ms]
+2024-07-31 23:08:12.039 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:08:12.039 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.055 [info] > git status -z -uall [8ms]
+2024-07-31 23:08:12.069 [info] > git merge-base refs/heads/main refs/remotes/origin/main [4ms]
+2024-07-31 23:08:12.077 [info] > git rev-parse --show-toplevel [24ms]
+2024-07-31 23:08:12.077 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.085 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/origin/main [8ms]
+2024-07-31 23:08:12.096 [info] > git rev-parse --show-toplevel [12ms]
+2024-07-31 23:08:12.096 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.105 [info] > git diff --name-status -z --diff-filter=ADMR 55a8928e704850e9425f48569244c52021ea52cb...refs/remotes/origin/main [10ms]
+2024-07-31 23:08:12.119 [info] > git rev-parse --show-toplevel [15ms]
+2024-07-31 23:08:12.119 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.149 [info] > git rev-parse --show-toplevel [19ms]
+2024-07-31 23:08:12.250 [info] > git rev-parse --show-toplevel [94ms]
+2024-07-31 23:08:12.281 [info] > git config --get commit.template [5ms]
+2024-07-31 23:08:12.282 [info] > git config --get commit.template [12ms]
+2024-07-31 23:08:12.282 [info] > git rev-parse --show-toplevel [16ms]
+2024-07-31 23:08:12.304 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [10ms]
+2024-07-31 23:08:12.304 [info] > git rev-parse --show-toplevel [16ms]
+2024-07-31 23:08:12.314 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [15ms]
+2024-07-31 23:08:12.316 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:08:12.316 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.335 [info] > git status -z -uall [12ms]
+2024-07-31 23:08:12.342 [info] > git status -z -uall [7ms]
+2024-07-31 23:08:12.347 [info] > git rev-parse --show-toplevel [18ms]
+2024-07-31 23:08:12.347 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.356 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:08:12.356 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.365 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:08:12.365 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.374 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:08:12.375 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.412 [info] > git rev-parse --show-toplevel [30ms]
+2024-07-31 23:08:12.412 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:12.464 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/bash_aliases [47ms]
+2024-07-31 23:08:12.486 [info] > git cat-file -s e1a1bcef669d6bbc1afd6898c36d8774cf5cbeef [16ms]
+2024-07-31 23:08:12.535 [info] > git check-ignore -v -z --stdin [33ms]
+2024-07-31 23:08:12.536 [info] > git check-ignore -v -z --stdin [25ms]
+2024-07-31 23:08:12.536 [info] > git show --textconv :bash_aliases [8ms]
+2024-07-31 23:08:17.494 [info] > git rev-parse --show-toplevel [6ms]
+2024-07-31 23:08:17.512 [info] > git rev-parse --git-dir --git-common-dir [5ms]
+2024-07-31 23:08:17.521 [info] Open repository: /home/loganmancuso/SourceControl/Workspaces
+2024-07-31 23:08:17.549 [info] > git config --get commit.template [5ms]
+2024-07-31 23:08:17.562 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-07-31 23:08:17.576 [info] > git status -z -uall [7ms]
+2024-07-31 23:08:17.600 [info] > git merge-base refs/heads/main refs/remotes/gitlab/main [14ms]
+2024-07-31 23:08:17.615 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/gitlab/main [6ms]
+2024-07-31 23:08:17.625 [info] > git config --get commit.template [25ms]
+2024-07-31 23:08:17.632 [info] > git diff --name-status -z --diff-filter=ADMR bd6746c639d7a80f049c832de9e4db6da6b9d8b8...refs/remotes/gitlab/main [8ms]
+2024-07-31 23:08:17.649 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-07-31 23:08:17.666 [info] > git status -z -uall [5ms]
+2024-07-31 23:08:18.182 [info] > git check-ignore -v -z --stdin [30ms]
+2024-07-31 23:08:18.183 [info] > git check-ignore -v -z --stdin [16ms]
+2024-07-31 23:08:18.184 [info] > git check-ignore -v -z --stdin [5ms]
+2024-07-31 23:08:20.331 [info] > git check-ignore -v -z --stdin [2ms]
+2024-07-31 23:08:32.079 [info] Log level: Info
+2024-07-31 23:08:32.079 [info] Validating found git in: "git"
+2024-07-31 23:08:32.079 [info] Using git "2.43.0" from "git"
+2024-07-31 23:08:32.085 [info] > git rev-parse --show-toplevel [8ms]
+2024-07-31 23:08:32.147 [info] > git rev-parse --git-dir --git-common-dir [15ms]
+2024-07-31 23:08:32.168 [info] Open repository: /home/loganmancuso/SourceControl/Workspaces
+2024-07-31 23:08:32.273 [info] > git rev-parse --show-toplevel [23ms]
+2024-07-31 23:08:32.277 [info] > git config --get commit.template [55ms]
+2024-07-31 23:08:32.334 [info] > git rev-parse --git-dir --git-common-dir [31ms]
+2024-07-31 23:08:32.345 [info] Open repository: /home/loganmancuso/SourceControl/Snippets/prompt-work
+2024-07-31 23:08:32.371 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [40ms]
+2024-07-31 23:08:32.378 [info] > git rev-parse --show-toplevel [8ms]
+2024-07-31 23:08:32.379 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:32.381 [info] > git config --get commit.template [21ms]
+2024-07-31 23:08:32.421 [info] > git rev-parse --show-toplevel [28ms]
+2024-07-31 23:08:32.434 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [28ms]
+2024-07-31 23:08:32.437 [info] > git status -z -uall [17ms]
+2024-07-31 23:08:32.437 [info] > git rev-parse --git-dir --git-common-dir [4ms]
+2024-07-31 23:08:32.447 [info] Open repository: /home/loganmancuso/SourceControl/Personal/dotfiles
+2024-07-31 23:08:32.486 [info] > git merge-base refs/heads/main refs/remotes/gitlab/main [30ms]
+2024-07-31 23:08:32.502 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/gitlab/main [5ms]
+2024-07-31 23:08:32.514 [info] > git rev-parse --show-toplevel [29ms]
+2024-07-31 23:08:32.514 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:32.515 [info] > git config --get commit.template [39ms]
+2024-07-31 23:08:32.535 [info] > git status -z -uall [9ms]
+2024-07-31 23:08:32.535 [info] > git diff --name-status -z --diff-filter=ADMR bd6746c639d7a80f049c832de9e4db6da6b9d8b8...refs/remotes/gitlab/main [22ms]
+2024-07-31 23:08:32.549 [info] > git rev-parse --show-toplevel [15ms]
+2024-07-31 23:08:32.602 [info] > git merge-base refs/heads/main refs/remotes/origin/main [42ms]
+2024-07-31 23:08:32.613 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [66ms]
+2024-07-31 23:08:32.617 [info] > git rev-parse --show-toplevel [42ms]
+2024-07-31 23:08:32.779 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/origin/main [166ms]
+2024-07-31 23:08:32.838 [info] > git diff --name-status -z --diff-filter=ADMR 7e7e550d24f76a46e127d2c140eccf5e46d2549e...refs/remotes/origin/main [50ms]
+2024-07-31 23:08:32.839 [info] > git rev-parse --show-toplevel [72ms]
+2024-07-31 23:08:32.839 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:32.870 [info] > git status -z -uall [16ms]
+2024-07-31 23:08:32.872 [info] > git config --get commit.template [37ms]
+2024-07-31 23:08:32.872 [info] > git config --get commit.template [48ms]
+2024-07-31 23:08:32.920 [info] > git rev-parse --show-toplevel [54ms]
+2024-07-31 23:08:32.920 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:32.956 [info] > git merge-base refs/heads/main refs/remotes/origin/main [27ms]
+2024-07-31 23:08:32.967 [info] > git config --get commit.template [12ms]
+2024-07-31 23:08:32.967 [info] > git rev-parse --show-toplevel [17ms]
+2024-07-31 23:08:32.967 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:32.967 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [22ms]
+2024-07-31 23:08:32.967 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [27ms]
+2024-07-31 23:08:32.981 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/origin/main [19ms]
+2024-07-31 23:08:33.000 [info] > git rev-parse --show-toplevel [23ms]
+2024-07-31 23:08:33.000 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:33.032 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [39ms]
+2024-07-31 23:08:33.032 [info] > git diff --name-status -z --diff-filter=ADMR 55a8928e704850e9425f48569244c52021ea52cb...refs/remotes/origin/main [46ms]
+2024-07-31 23:08:33.047 [info] > git check-ignore -v -z --stdin [38ms]
+2024-07-31 23:08:33.048 [info] > git check-ignore -v -z --stdin [33ms]
+2024-07-31 23:08:33.048 [info] > git check-ignore -v -z --stdin [26ms]
+2024-07-31 23:08:33.049 [info] > git status -z -uall [12ms]
+2024-07-31 23:08:33.049 [info] > git rev-parse --show-toplevel [19ms]
+2024-07-31 23:08:33.049 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:33.059 [info] > git status -z -uall [14ms]
+2024-07-31 23:08:33.082 [info] > git rev-parse --show-toplevel [24ms]
+2024-07-31 23:08:33.103 [info] > git status -z -uall [10ms]
+2024-07-31 23:08:33.103 [info] > git rev-parse --show-toplevel [4ms]
+2024-07-31 23:08:33.140 [info] > git rev-parse --show-toplevel [8ms]
+2024-07-31 23:08:33.151 [info] > git rev-parse --show-toplevel [5ms]
+2024-07-31 23:08:33.160 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:08:33.160 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:33.171 [info] > git rev-parse --show-toplevel [5ms]
+2024-07-31 23:08:33.171 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:33.246 [info] > git rev-parse --show-toplevel [39ms]
+2024-07-31 23:08:33.246 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:33.265 [info] > git rev-parse --show-toplevel [11ms]
+2024-07-31 23:08:33.265 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:33.286 [info] > git rev-parse --show-toplevel [13ms]
+2024-07-31 23:08:33.286 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:33.314 [info] > git rev-parse --show-toplevel [14ms]
+2024-07-31 23:08:33.314 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:33.334 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/bash_aliases [15ms]
+2024-07-31 23:08:33.352 [info] > git cat-file -s e1a1bcef669d6bbc1afd6898c36d8774cf5cbeef [11ms]
+2024-07-31 23:08:33.431 [info] > git show --textconv :bash_aliases [23ms]
+2024-07-31 23:08:33.609 [info] > git check-ignore -v -z --stdin [6ms]
+2024-07-31 23:08:41.609 [info] > git rev-parse --show-toplevel [1ms]
+2024-07-31 23:08:41.609 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:43.383 [info] > git rev-parse --show-toplevel [2ms]
+2024-07-31 23:08:43.383 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:49.975 [info] > git rev-parse --show-toplevel [7ms]
+2024-07-31 23:08:49.975 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:49.993 [info] > git rev-parse --show-toplevel [4ms]
+2024-07-31 23:08:49.993 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:08:50.350 [info] > git show --textconv :windows-init.ps1 [24ms]
+2024-07-31 23:08:50.356 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/windows-init.ps1 [9ms]
+2024-07-31 23:08:50.596 [info] > git check-ignore -v -z --stdin [7ms]
+2024-07-31 23:08:51.169 [info] > git config --get commit.template [26ms]
+2024-07-31 23:08:51.178 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [10ms]
+2024-07-31 23:08:51.209 [info] > git status -z -uall [11ms]
+2024-07-31 23:09:07.252 [info] > git show --textconv :bash_aliases [8ms]
+2024-07-31 23:09:07.253 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/bash_aliases [2ms]
+2024-07-31 23:09:07.262 [info] > git cat-file -s e1a1bcef669d6bbc1afd6898c36d8774cf5cbeef [2ms]
+2024-07-31 23:09:07.556 [info] > git show --textconv :windows-init.ps1 [11ms]
+2024-07-31 23:09:07.559 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/windows-init.ps1 [4ms]
+2024-07-31 23:09:10.050 [info] > git show --textconv :profile.ps1 [21ms]
+2024-07-31 23:09:10.054 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/profile.ps1 [9ms]
+2024-07-31 23:09:10.079 [info] > git cat-file -s 199a29c88c871ac8a5c52e9d7aba60b0f0c5ce7f [8ms]
+2024-07-31 23:09:50.376 [info] > git config --get commit.template [11ms]
+2024-07-31 23:09:50.379 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [5ms]
+2024-07-31 23:09:50.393 [info] > git status -z -uall [5ms]
+2024-07-31 23:09:50.748 [info] > git show --textconv :README.md [11ms]
+2024-07-31 23:09:50.751 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Personal/dotfiles/README.md [3ms]
+2024-07-31 23:09:50.765 [info] > git cat-file -s f1f6152a2dacaa90abaa89dda66ea2f2c1484132 [5ms]
+2024-07-31 23:09:51.539 [info] > git show --textconv :profile.ps1 [11ms]
+2024-07-31 23:09:51.541 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/profile.ps1 [4ms]
+2024-07-31 23:09:51.552 [info] > git cat-file -s 199a29c88c871ac8a5c52e9d7aba60b0f0c5ce7f [4ms]
+2024-07-31 23:09:52.613 [info] > git show --textconv :windows-init.ps1 [13ms]
+2024-07-31 23:09:52.617 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/windows-init.ps1 [4ms]
+2024-07-31 23:10:00.637 [info] > git config --get commit.template [19ms]
+2024-07-31 23:10:00.640 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-07-31 23:10:00.652 [info] > git status -z -uall [4ms]
+2024-07-31 23:10:03.644 [info] > git show --textconv :work.json [61ms]
+2024-07-31 23:10:03.644 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/work.json [49ms]
+2024-07-31 23:10:03.665 [info] > git cat-file -s c4b6ae5472781d8def50cc412ccf17e9cd10f155 [14ms]
+2024-07-31 23:10:05.797 [info] > git show --textconv :work.toml [20ms]
+2024-07-31 23:10:05.801 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/work.toml [7ms]
+2024-07-31 23:10:05.816 [info] > git cat-file -s 7b7b9af3664ffc5b339c90e884e1ce73db5b4b04 [4ms]
+2024-07-31 23:10:07.067 [info] > git show --textconv :profile.ps1 [23ms]
+2024-07-31 23:10:07.073 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/profile.ps1 [8ms]
+2024-07-31 23:10:07.096 [info] > git cat-file -s 199a29c88c871ac8a5c52e9d7aba60b0f0c5ce7f [8ms]
+2024-07-31 23:10:11.913 [info] > git show --textconv :work.toml [16ms]
+2024-07-31 23:10:11.915 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/work.toml [3ms]
+2024-07-31 23:10:11.927 [info] > git cat-file -s 7b7b9af3664ffc5b339c90e884e1ce73db5b4b04 [3ms]
+2024-07-31 23:10:13.835 [info] > git show --textconv :README.md [17ms]
+2024-07-31 23:10:13.840 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Personal/dotfiles/README.md [5ms]
+2024-07-31 23:10:13.848 [info] > git cat-file -s f1f6152a2dacaa90abaa89dda66ea2f2c1484132 [2ms]
+2024-07-31 23:10:24.760 [info] > git show --textconv :bash_aliases [11ms]
+2024-07-31 23:10:24.762 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Snippets/prompt-work/bash_aliases [3ms]
+2024-07-31 23:10:24.772 [info] > git cat-file -s e1a1bcef669d6bbc1afd6898c36d8774cf5cbeef [3ms]
+2024-07-31 23:10:42.280 [info] > git show --textconv :README.md [17ms]
+2024-07-31 23:10:42.284 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Personal/dotfiles/README.md [6ms]
+2024-07-31 23:10:42.303 [info] > git cat-file -s f1f6152a2dacaa90abaa89dda66ea2f2c1484132 [6ms]
+2024-07-31 23:10:52.194 [info] > git config --get commit.template [13ms]
+2024-07-31 23:10:52.196 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-07-31 23:10:52.214 [info] > git status -z -uall [6ms]
+2024-07-31 23:10:59.186 [info] > git config --get commit.template [6ms]
+2024-07-31 23:10:59.188 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-07-31 23:10:59.197 [info] > git status -z -uall [2ms]
+2024-07-31 23:11:04.241 [info] > git config --get commit.template [19ms]
+2024-07-31 23:11:04.246 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [7ms]
+2024-07-31 23:11:04.272 [info] > git status -z -uall [8ms]
+2024-07-31 23:11:04.298 [info] > git merge-base refs/heads/main refs/remotes/origin/main [8ms]
+2024-07-31 23:11:04.309 [info] > git rev-list --count --left-right refs/heads/main...refs/remotes/origin/main [4ms]
+2024-07-31 23:11:04.317 [info] > git diff --name-status -z --diff-filter=ADMR 1770558b62a41d58e989f9fd7d0be45bbe19d6df...refs/remotes/origin/main [2ms]
+2024-07-31 23:11:18.306 [info] > git rev-parse --show-toplevel [6ms]
+2024-07-31 23:11:18.318 [info] > git rev-parse --git-dir --git-common-dir [3ms]
+2024-07-31 23:11:18.324 [info] Open repository: /home/loganmancuso/Documents/Backups/os-init
+2024-07-31 23:11:18.337 [info] No remotes found in the git config file.
+2024-07-31 23:11:18.338 [info] > git config --get commit.template [7ms]
+2024-07-31 23:11:18.340 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-07-31 23:11:18.340 [warning] No such branch: main.
+2024-07-31 23:11:18.357 [info] > git status -z -uall [11ms]
+2024-07-31 23:11:18.391 [info] > git config --get commit.template [1ms]
+2024-07-31 23:11:18.398 [info] No remotes found in the git config file.
+2024-07-31 23:11:18.400 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-07-31 23:11:18.400 [warning] No such branch: main.
+2024-07-31 23:11:18.419 [info] > git status -z -uall [13ms]
+2024-07-31 23:11:18.958 [info] > git check-ignore -v -z --stdin [30ms]
+2024-07-31 23:11:18.958 [info] > git check-ignore -v -z --stdin [16ms]
+2024-07-31 23:11:18.959 [info] > git check-ignore -v -z --stdin [9ms]
+2024-07-31 23:11:18.959 [info] > git check-ignore -v -z --stdin [2ms]
+2024-07-31 23:11:26.035 [info] > git show --textconv :install.bak/init-arch.sh [10ms]
+2024-07-31 23:11:26.036 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/install.bak/init-arch.sh [2ms]
+2024-07-31 23:11:26.591 [info] > git show --textconv :install.bak/init-debian.sh [14ms]
+2024-07-31 23:11:26.593 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/install.bak/init-debian.sh [4ms]
+2024-07-31 23:11:27.147 [info] > git show --textconv :install.bak/init-suse.sh [22ms]
+2024-07-31 23:11:27.152 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/install.bak/init-suse.sh [8ms]
+2024-07-31 23:11:27.729 [info] > git show --textconv :install.bak/windows-init.ps1 [12ms]
+2024-07-31 23:11:27.730 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/install.bak/windows-init.ps1 [3ms]
+2024-07-31 23:11:29.074 [info] > git show --textconv :README.md [19ms]
+2024-07-31 23:11:29.080 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Personal/dotfiles/README.md [7ms]
+2024-07-31 23:11:29.091 [info] > git cat-file -s f1f6152a2dacaa90abaa89dda66ea2f2c1484132 [3ms]
+2024-07-31 23:11:29.834 [info] > git show --textconv :install.bak/init-suse.sh [22ms]
+2024-07-31 23:11:29.836 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/install.bak/init-suse.sh [5ms]
+2024-07-31 23:11:29.882 [info] No remotes found in the git config file.
+2024-07-31 23:11:29.882 [info] > git config --get commit.template [11ms]
+2024-07-31 23:11:29.884 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-07-31 23:11:29.884 [warning] No such branch: main.
+2024-07-31 23:11:29.908 [info] > git status -z -uall [14ms]
+2024-07-31 23:11:36.852 [info] No remotes found in the git config file.
+2024-07-31 23:11:36.857 [info] > git config --get commit.template [16ms]
+2024-07-31 23:11:36.858 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-07-31 23:11:36.858 [warning] No such branch: main.
+2024-07-31 23:11:36.894 [info] > git status -z -uall [24ms]
+2024-07-31 23:11:38.153 [info] > git check-ignore -v -z --stdin [3ms]
+2024-07-31 23:11:40.149 [info] > git check-ignore -v -z --stdin [6ms]
+2024-07-31 23:11:45.293 [info] No remotes found in the git config file.
+2024-07-31 23:11:45.295 [info] > git config --get commit.template [21ms]
+2024-07-31 23:11:45.300 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [8ms]
+2024-07-31 23:11:45.300 [warning] No such branch: main.
+2024-07-31 23:11:45.325 [info] > git status -z -uall [8ms]
+2024-07-31 23:11:52.473 [info] No remotes found in the git config file.
+2024-07-31 23:11:52.474 [info] > git config --get commit.template [8ms]
+2024-07-31 23:11:52.476 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-07-31 23:11:52.476 [warning] No such branch: main.
+2024-07-31 23:11:52.485 [info] > git status -z -uall [3ms]
+2024-07-31 23:11:52.530 [info] > git check-ignore -v -z --stdin [4ms]
+2024-07-31 23:11:54.723 [info] > git check-ignore -v -z --stdin [6ms]
+2024-07-31 23:11:55.241 [info] > git show --textconv :restic/backup.sh [10ms]
+2024-07-31 23:11:55.242 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup.sh [1ms]
+2024-07-31 23:12:00.906 [info] > git show --textconv :bootstrap/init-debian.sh [9ms]
+2024-07-31 23:12:00.908 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh [2ms]
+2024-07-31 23:12:41.940 [info] > git rev-parse --show-toplevel [4ms]
+2024-07-31 23:12:41.940 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:12:46.650 [info] > git show --textconv :bootstrap/init-debian.sh [9ms]
+2024-07-31 23:12:46.651 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh [2ms]
+2024-07-31 23:17:07.754 [info] No remotes found in the git config file.
+2024-07-31 23:17:07.755 [info] > git config --get commit.template [18ms]
+2024-07-31 23:17:07.757 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-07-31 23:17:07.758 [warning] No such branch: main.
+2024-07-31 23:17:07.777 [info] > git status -z -uall [7ms]
+2024-07-31 23:17:16.080 [info] No remotes found in the git config file.
+2024-07-31 23:17:16.081 [info] > git config --get commit.template [13ms]
+2024-07-31 23:17:16.083 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-07-31 23:17:16.083 [warning] No such branch: main.
+2024-07-31 23:17:16.095 [info] > git status -z -uall [3ms]
+2024-07-31 23:17:24.131 [info] > git show --textconv :restic/backup.sh [11ms]
+2024-07-31 23:17:24.133 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup.sh [3ms]
+2024-07-31 23:17:59.063 [info] No remotes found in the git config file.
+2024-07-31 23:17:59.064 [info] > git config --get commit.template [19ms]
+2024-07-31 23:17:59.068 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [5ms]
+2024-07-31 23:17:59.068 [warning] No such branch: main.
+2024-07-31 23:17:59.092 [info] > git status -z -uall [10ms]
+2024-07-31 23:18:10.519 [info] No remotes found in the git config file.
+2024-07-31 23:18:10.521 [info] > git config --get commit.template [20ms]
+2024-07-31 23:18:10.526 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-07-31 23:18:10.526 [warning] No such branch: main.
+2024-07-31 23:18:10.542 [info] > git status -z -uall [5ms]
+2024-07-31 23:20:51.881 [info] > git show --textconv :restic/backup copy.sh [7ms]
+2024-07-31 23:20:51.882 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup copy.sh [1ms]
+2024-07-31 23:20:52.121 [info] > git check-ignore -v -z --stdin [6ms]
+2024-07-31 23:20:52.749 [info] No remotes found in the git config file.
+2024-07-31 23:20:52.752 [info] > git config --get commit.template [21ms]
+2024-07-31 23:20:52.756 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-07-31 23:20:52.756 [warning] No such branch: main.
+2024-07-31 23:20:52.782 [info] > git status -z -uall [8ms]
+2024-07-31 23:20:55.925 [info] > git show --textconv :restic/restore.sh [11ms]
+2024-07-31 23:20:55.927 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/restore.sh [2ms]
+2024-07-31 23:20:56.203 [info] > git check-ignore -v -z --stdin [5ms]
+2024-07-31 23:20:57.798 [info] No remotes found in the git config file.
+2024-07-31 23:20:57.805 [info] > git config --get commit.template [6ms]
+2024-07-31 23:20:57.808 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-07-31 23:20:57.808 [warning] No such branch: main.
+2024-07-31 23:20:57.819 [info] > git status -z -uall [3ms]
+2024-07-31 23:21:19.977 [info] No remotes found in the git config file.
+2024-07-31 23:21:19.979 [info] > git config --get commit.template [18ms]
+2024-07-31 23:21:19.980 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-07-31 23:21:19.980 [warning] No such branch: main.
+2024-07-31 23:21:19.992 [info] > git status -z -uall [3ms]
+2024-07-31 23:21:21.913 [info] > git show --textconv :README.md [15ms]
+2024-07-31 23:21:21.917 [info] > git ls-files --stage -- /home/loganmancuso/SourceControl/Personal/dotfiles/README.md [6ms]
+2024-07-31 23:21:21.937 [info] > git cat-file -s f1f6152a2dacaa90abaa89dda66ea2f2c1484132 [8ms]
+2024-07-31 23:21:24.005 [info] > git config --get commit.template [5ms]
+2024-07-31 23:21:24.026 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [7ms]
+2024-07-31 23:21:24.041 [info] > git status -z -uall [6ms]
+2024-07-31 23:21:24.392 [info] > git show --textconv :restic/restore.sh [25ms]
+2024-07-31 23:21:24.396 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/restore.sh [7ms]
+2024-07-31 23:21:24.481 [info] > git rev-parse --show-toplevel [3ms]
+2024-07-31 23:21:24.481 [info] fatal: not a git repository (or any of the parent directories): .git
+2024-07-31 23:21:25.379 [info] > git show --textconv :restic/restore.sh [15ms]
+2024-07-31 23:21:25.381 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/restore.sh [3ms]
+2024-07-31 23:21:26.645 [info] > git show --textconv :bootstrap/init-debian.sh [13ms]
+2024-07-31 23:21:26.647 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh [4ms]
+2024-07-31 23:21:41.579 [info] No remotes found in the git config file.
+2024-07-31 23:21:41.589 [info] > git config --get commit.template [11ms]
+2024-07-31 23:21:41.591 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-07-31 23:21:41.591 [warning] No such branch: main.
+2024-07-31 23:21:41.605 [info] > git status -z -uall [5ms]
+2024-07-31 23:21:53.981 [info] > git show --textconv :restic/backup.sh [15ms]
+2024-07-31 23:21:53.983 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup.sh [3ms]
+2024-07-31 23:27:50.457 [info] > git show --textconv :bootstrap/init-debian.sh [19ms]
+2024-07-31 23:27:50.460 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh [5ms]
+2024-07-31 23:28:50.838 [info] No remotes found in the git config file.
+2024-07-31 23:28:50.840 [info] > git config --get commit.template [21ms]
+2024-07-31 23:28:50.843 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [5ms]
+2024-07-31 23:28:50.843 [warning] No such branch: main.
+2024-07-31 23:28:50.869 [info] > git status -z -uall [8ms]
+2024-07-31 23:29:35.049 [info] No remotes found in the git config file.
+2024-07-31 23:29:35.051 [info] > git config --get commit.template [19ms]
+2024-07-31 23:29:35.056 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [7ms]
+2024-07-31 23:29:35.056 [warning] No such branch: main.
+2024-07-31 23:29:35.079 [info] > git status -z -uall [6ms]
+2024-07-31 23:30:11.080 [info] No remotes found in the git config file.
+2024-07-31 23:30:11.082 [info] > git config --get commit.template [28ms]
+2024-07-31 23:30:11.084 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-07-31 23:30:11.084 [warning] No such branch: main.
+2024-07-31 23:30:11.113 [info] > git status -z -uall [10ms]
+2024-07-31 23:30:48.468 [info] No remotes found in the git config file.
+2024-07-31 23:30:48.469 [info] > git config --get commit.template [14ms]
+2024-07-31 23:30:48.472 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-07-31 23:30:48.472 [warning] No such branch: main.
+2024-07-31 23:30:48.487 [info] > git status -z -uall [4ms]
+2024-07-31 23:30:51.644 [info] > git show --textconv :restic/backup.sh [17ms]
+2024-07-31 23:30:51.647 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup.sh [5ms]
+2024-07-31 23:30:53.531 [info] No remotes found in the git config file.
+2024-07-31 23:30:53.535 [info] > git config --get commit.template [24ms]
+2024-07-31 23:30:53.537 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-07-31 23:30:53.537 [warning] No such branch: main.
+2024-07-31 23:30:53.557 [info] > git status -z -uall [6ms]
+2024-07-31 23:30:57.778 [info] > git show --textconv :bootstrap/init-debian.sh [12ms]
+2024-07-31 23:30:57.780 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh [3ms]
+2024-07-31 23:30:58.601 [info] No remotes found in the git config file.
+2024-07-31 23:30:58.603 [info] > git config --get commit.template [22ms]
+2024-07-31 23:30:58.607 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-07-31 23:30:58.607 [warning] No such branch: main.
+2024-07-31 23:30:58.633 [info] > git status -z -uall [8ms]
+2024-07-31 23:31:05.963 [info] > git config --get commit.template [22ms]
+2024-07-31 23:31:05.969 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [9ms]
+2024-07-31 23:31:05.992 [info] > git status -z -uall [8ms]
+2024-07-31 23:31:47.021 [info] > git check-ignore -v -z --stdin [6ms]
+2024-07-31 23:32:32.939 [info] No remotes found in the git config file.
+2024-07-31 23:32:32.941 [info] > git config --get commit.template [25ms]
+2024-07-31 23:32:32.941 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-07-31 23:32:32.941 [warning] No such branch: main.
+2024-07-31 23:32:32.973 [info] > git status -z -uall [11ms]
+2024-07-31 23:33:04.488 [info] No remotes found in the git config file.
+2024-07-31 23:33:04.489 [info] > git config --get commit.template [12ms]
+2024-07-31 23:33:04.490 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-07-31 23:33:04.490 [warning] No such branch: main.
+2024-07-31 23:33:04.500 [info] > git status -z -uall [3ms]
+2024-07-31 23:33:07.210 [info] > git show --textconv :restic/backup.sh [11ms]
+2024-07-31 23:33:07.212 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup.sh [4ms]
+2024-07-31 23:33:35.202 [info] No remotes found in the git config file.
+2024-07-31 23:33:35.203 [info] > git config --get commit.template [7ms]
+2024-07-31 23:33:35.205 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-07-31 23:33:35.205 [warning] No such branch: main.
+2024-07-31 23:33:35.213 [info] > git status -z -uall [2ms]
+2024-07-31 23:33:43.546 [info] No remotes found in the git config file.
+2024-07-31 23:33:43.546 [info] > git config --get commit.template [7ms]
+2024-07-31 23:33:43.547 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2024-07-31 23:33:43.547 [warning] No such branch: main.
+2024-07-31 23:33:43.556 [info] > git status -z -uall [3ms]
+2024-07-31 23:33:48.594 [info] No remotes found in the git config file.
+2024-07-31 23:33:48.595 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2024-07-31 23:33:48.595 [warning] No such branch: main.
+2024-07-31 23:33:48.595 [info] > git config --get commit.template [24ms]
+2024-07-31 23:33:48.608 [info] > git status -z -uall [4ms]
+2024-07-31 23:33:53.680 [info] No remotes found in the git config file.
+2024-07-31 23:33:53.683 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-07-31 23:33:53.683 [warning] No such branch: main.
+2024-07-31 23:33:53.683 [info] > git config --get commit.template [17ms]
+2024-07-31 23:33:53.696 [info] > git status -z -uall [2ms]
+2024-08-01 00:24:02.162 [info] No remotes found in the git config file.
+2024-08-01 00:24:02.163 [info] > git config --get commit.template [9ms]
+2024-08-01 00:24:02.164 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-08-01 00:24:02.164 [warning] No such branch: main.
+2024-08-01 00:24:02.173 [info] > git status -z -uall [3ms]
+2024-08-01 00:24:35.580 [info] No remotes found in the git config file.
+2024-08-01 00:24:35.583 [info] > git config --get commit.template [20ms]
+2024-08-01 00:24:35.586 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-08-01 00:24:35.586 [warning] No such branch: main.
+2024-08-01 00:24:35.611 [info] > git status -z -uall [9ms]
+2024-08-01 00:24:45.803 [info] No remotes found in the git config file.
+2024-08-01 00:24:45.805 [info] > git config --get commit.template [20ms]
+2024-08-01 00:24:45.808 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [5ms]
+2024-08-01 00:24:45.809 [warning] No such branch: main.
+2024-08-01 00:24:45.833 [info] > git status -z -uall [9ms]
+2024-08-01 00:24:50.913 [info] No remotes found in the git config file.
+2024-08-01 00:24:50.915 [info] > git config --get commit.template [19ms]
+2024-08-01 00:24:50.916 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-08-01 00:24:50.916 [warning] No such branch: main.
+2024-08-01 00:24:50.930 [info] > git status -z -uall [3ms]
+2024-08-01 00:25:22.762 [info] No remotes found in the git config file.
+2024-08-01 00:25:22.763 [info] > git config --get commit.template [16ms]
+2024-08-01 00:25:22.765 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-08-01 00:25:22.765 [warning] No such branch: main.
+2024-08-01 00:25:22.777 [info] > git status -z -uall [5ms]
+2024-08-01 00:25:44.634 [info] No remotes found in the git config file.
+2024-08-01 00:25:44.652 [info] > git config --get commit.template [20ms]
+2024-08-01 00:25:44.655 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [5ms]
+2024-08-01 00:25:44.655 [warning] No such branch: main.
+2024-08-01 00:25:44.675 [info] > git status -z -uall [7ms]
+2024-08-01 00:25:49.720 [info] No remotes found in the git config file.
+2024-08-01 00:25:49.722 [info] > git config --get commit.template [21ms]
+2024-08-01 00:25:49.725 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [5ms]
+2024-08-01 00:25:49.726 [warning] No such branch: main.
+2024-08-01 00:25:49.749 [info] > git status -z -uall [8ms]
+2024-08-01 00:25:57.223 [info] No remotes found in the git config file.
+2024-08-01 00:25:57.226 [info] > git config --get commit.template [16ms]
+2024-08-01 00:25:57.227 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-08-01 00:25:57.227 [warning] No such branch: main.
+2024-08-01 00:25:57.236 [info] > git status -z -uall [2ms]
+2024-08-01 00:26:02.282 [info] No remotes found in the git config file.
+2024-08-01 00:26:02.284 [info] > git config --get commit.template [22ms]
+2024-08-01 00:26:02.287 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-08-01 00:26:02.287 [warning] No such branch: main.
+2024-08-01 00:26:02.305 [info] > git status -z -uall [4ms]
+2024-08-01 00:26:18.757 [info] No remotes found in the git config file.
+2024-08-01 00:26:18.759 [info] > git config --get commit.template [21ms]
+2024-08-01 00:26:18.762 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [5ms]
+2024-08-01 00:26:18.762 [warning] No such branch: main.
+2024-08-01 00:26:18.779 [info] > git status -z -uall [6ms]
+2024-08-01 00:26:46.860 [info] No remotes found in the git config file.
+2024-08-01 00:26:46.861 [info] > git config --get commit.template [6ms]
+2024-08-01 00:26:46.862 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-08-01 00:26:46.862 [warning] No such branch: main.
+2024-08-01 00:26:46.869 [info] > git status -z -uall [2ms]
+2024-08-01 00:26:51.907 [info] No remotes found in the git config file.
+2024-08-01 00:26:51.908 [info] > git config --get commit.template [15ms]
+2024-08-01 00:26:51.909 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-08-01 00:26:51.910 [warning] No such branch: main.
+2024-08-01 00:26:51.920 [info] > git status -z -uall [2ms]
+2024-08-01 00:31:57.100 [info] No remotes found in the git config file.
+2024-08-01 00:31:57.102 [info] > git config --get commit.template [8ms]
+2024-08-01 00:31:57.103 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-08-01 00:31:57.104 [warning] No such branch: main.
+2024-08-01 00:31:57.115 [info] > git status -z -uall [4ms]
+2024-08-01 00:32:02.135 [info] No remotes found in the git config file.
+2024-08-01 00:32:02.135 [info] > git config --get commit.template [9ms]
+2024-08-01 00:32:02.136 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-08-01 00:32:02.136 [warning] No such branch: main.
+2024-08-01 00:32:02.145 [info] > git status -z -uall [3ms]
+2024-08-01 00:32:07.173 [info] > git config --get commit.template [1ms]
+2024-08-01 00:32:07.186 [info] No remotes found in the git config file.
+2024-08-01 00:32:07.188 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-08-01 00:32:07.188 [warning] No such branch: main.
+2024-08-01 00:32:07.203 [info] > git status -z -uall [2ms]
+2024-08-01 00:32:12.247 [info] No remotes found in the git config file.
+2024-08-01 00:32:12.248 [info] > git config --get commit.template [13ms]
+2024-08-01 00:32:12.249 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-08-01 00:32:12.249 [warning] No such branch: main.
+2024-08-01 00:32:12.263 [info] > git status -z -uall [1ms]
+2024-08-01 00:40:31.575 [info] > git show --textconv :bootstrap/init-debian.sh [28ms]
+2024-08-01 00:40:31.579 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh [12ms]
+2024-08-01 00:40:41.458 [info] No remotes found in the git config file.
+2024-08-01 00:40:41.458 [info] > git config --get commit.template [12ms]
+2024-08-01 00:40:41.460 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-08-01 00:40:41.461 [warning] No such branch: main.
+2024-08-01 00:40:41.476 [info] > git status -z -uall [5ms]
+2024-08-01 00:41:09.749 [info] No remotes found in the git config file.
+2024-08-01 00:41:09.752 [info] > git config --get commit.template [24ms]
+2024-08-01 00:41:09.754 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [7ms]
+2024-08-01 00:41:09.754 [warning] No such branch: main.
+2024-08-01 00:41:09.777 [info] > git status -z -uall [6ms]
+2024-08-01 00:45:05.095 [info] > git show --textconv :restic/backup.sh [13ms]
+2024-08-01 00:45:05.097 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup.sh [4ms]
+2024-08-01 00:45:06.234 [info] > git show --textconv :bootstrap/init-debian.sh [9ms]
+2024-08-01 00:45:06.235 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh [2ms]
+2024-08-01 00:45:06.745 [info] > git show --textconv :restic/restore.sh [15ms]
+2024-08-01 00:45:06.750 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/restore.sh [6ms]
+2024-08-01 00:45:39.769 [info] > git show --textconv :restic/backup.sh [18ms]
+2024-08-01 00:45:39.773 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup.sh [5ms]
+2024-08-01 00:45:42.553 [info] > git show --textconv :restic/restore.sh [17ms]
+2024-08-01 00:45:42.555 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/restore.sh [3ms]
+2024-08-01 00:45:45.529 [info] No remotes found in the git config file.
+2024-08-01 00:45:45.530 [info] > git config --get commit.template [18ms]
+2024-08-01 00:45:45.532 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-08-01 00:45:45.532 [warning] No such branch: main.
+2024-08-01 00:45:45.545 [info] > git status -z -uall [3ms]
+2024-08-01 00:47:16.106 [info] No remotes found in the git config file.
+2024-08-01 00:47:16.108 [info] > git config --get commit.template [23ms]
+2024-08-01 00:47:16.111 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-08-01 00:47:16.111 [warning] No such branch: main.
+2024-08-01 00:47:16.130 [info] > git status -z -uall [4ms]
+2024-08-01 00:49:47.130 [info] No remotes found in the git config file.
+2024-08-01 00:49:47.132 [info] > git config --get commit.template [23ms]
+2024-08-01 00:49:47.135 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-08-01 00:49:47.135 [warning] No such branch: main.
+2024-08-01 00:49:47.153 [info] > git status -z -uall [5ms]
+2024-08-01 00:49:52.187 [info] No remotes found in the git config file.
+2024-08-01 00:49:52.190 [info] > git config --get commit.template [16ms]
+2024-08-01 00:49:52.191 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-08-01 00:49:52.191 [warning] No such branch: main.
+2024-08-01 00:49:52.202 [info] > git status -z -uall [2ms]
+2024-08-01 00:49:57.222 [info] No remotes found in the git config file.
+2024-08-01 00:49:57.223 [info] > git config --get commit.template [9ms]
+2024-08-01 00:49:57.226 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2024-08-01 00:49:57.226 [warning] No such branch: main.
+2024-08-01 00:49:57.238 [info] > git status -z -uall [4ms]
+2024-08-01 00:50:08.158 [info] No remotes found in the git config file.
+2024-08-01 00:50:08.162 [info] > git config --get commit.template [23ms]
+2024-08-01 00:50:08.164 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-08-01 00:50:08.164 [warning] No such branch: main.
+2024-08-01 00:50:08.187 [info] > git status -z -uall [7ms]
+2024-08-01 00:51:57.397 [info] > git show --textconv :restic/backup.sh [35ms]
+2024-08-01 00:51:57.401 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup.sh [11ms]
+2024-08-01 00:52:08.112 [info] > git show --textconv :restic/restore.sh [13ms]
+2024-08-01 00:52:08.115 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/restore.sh [3ms]
+2024-08-01 00:53:00.969 [info] > git show --textconv :bootstrap/init-debian.sh [11ms]
+2024-08-01 00:53:00.972 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh [5ms]
+2024-08-01 00:53:09.241 [info] No remotes found in the git config file.
+2024-08-01 00:53:09.243 [info] > git config --get commit.template [25ms]
+2024-08-01 00:53:09.247 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-08-01 00:53:09.248 [warning] No such branch: main.
+2024-08-01 00:53:09.271 [info] > git status -z -uall [6ms]
+2024-08-01 00:55:38.350 [info] No remotes found in the git config file.
+2024-08-01 00:55:38.352 [info] > git config --get commit.template [12ms]
+2024-08-01 00:55:38.352 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-08-01 00:55:38.352 [warning] No such branch: main.
+2024-08-01 00:55:38.361 [info] > git status -z -uall [3ms]
+2024-08-01 01:40:01.875 [info] No remotes found in the git config file.
+2024-08-01 01:40:01.877 [info] > git config --get commit.template [10ms]
+2024-08-01 01:40:01.878 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-08-01 01:40:01.878 [warning] No such branch: main.
+2024-08-01 01:40:01.886 [info] > git status -z -uall [2ms]
+2024-08-01 01:40:43.643 [info] No remotes found in the git config file.
+2024-08-01 01:40:43.645 [info] > git config --get commit.template [21ms]
+2024-08-01 01:40:43.648 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-08-01 01:40:43.648 [warning] No such branch: main.
+2024-08-01 01:40:43.662 [info] > git status -z -uall [4ms]
+2024-08-01 01:41:02.481 [info] > git show --textconv :restic/backup.sh [10ms]
+2024-08-01 01:41:02.483 [info] > git ls-files --stage -- /home/loganmancuso/Documents/Backups/os-init/restic/backup.sh [4ms]
+2024-08-01 01:41:03.514 [info] > git config --get commit.template [3ms]
+2024-08-01 01:41:03.523 [info] No remotes found in the git config file.
+2024-08-01 01:41:03.526 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2024-08-01 01:41:03.526 [warning] No such branch: main.
+2024-08-01 01:41:03.541 [info] > git status -z -uall [2ms]
+2024-08-01 01:41:10.532 [info] No remotes found in the git config file.
+2024-08-01 01:41:10.533 [info] > git config --get commit.template [6ms]
+2024-08-01 01:41:10.534 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-08-01 01:41:10.534 [warning] No such branch: main.
+2024-08-01 01:41:10.541 [info] > git status -z -uall [2ms]
+2024-08-01 01:41:15.585 [info] No remotes found in the git config file.
+2024-08-01 01:41:15.587 [info] > git config --get commit.template [20ms]
+2024-08-01 01:41:15.590 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [6ms]
+2024-08-01 01:41:15.591 [warning] No such branch: main.
+2024-08-01 01:41:15.615 [info] > git status -z -uall [8ms]
+2024-08-01 01:41:20.648 [info] No remotes found in the git config file.
+2024-08-01 01:41:20.649 [info] > git config --get commit.template [14ms]
+2024-08-01 01:41:20.650 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2024-08-01 01:41:20.650 [warning] No such branch: main.
+2024-08-01 01:41:20.665 [info] > git status -z -uall [4ms]
