@@ -4,7 +4,7 @@
 	signingkey = 0F5FCC0292CA0340
 [safe]
   directory = /home/loganmancuso/SourceControl/*
-  directory = /home/loganmancuso/.config/*
+  directory = /home/loganmancuso/Documents/*
 [core]
   autocrlf = input
 [core]
