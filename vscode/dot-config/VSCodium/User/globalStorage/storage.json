@@ -829,13 +829,6 @@
                                     "id": "vscode.menubar.separator"
                                 },
                                 {
-                                    "id": "workbench.action.splitEditorInGroup",
-                                    "label": "Split in &&Group"
-                                },
-                                {
-                                    "id": "vscode.menubar.separator"
-                                },
-                                {
                                     "id": "workbench.action.moveEditorToNewWindow",
                                     "label": "&&Move Editor into New Window"
                                 },
@@ -944,8 +937,7 @@
                 "items": [
                     {
                         "id": "workbench.action.navigateBack",
-                        "label": "&&Back",
-                        "enabled": false
+                        "label": "&&Back"
                     },
                     {
                         "id": "workbench.action.navigateForward",
@@ -965,6 +957,17 @@
                         "label": "Switch &&Editor",
                         "submenu": {
                             "items": [
+                                {
+                                    "id": "workbench.action.focusFirstSideEditor",
+                                    "label": "&&First Side in Editor"
+                                },
+                                {
+                                    "id": "workbench.action.focusSecondSideEditor",
+                                    "label": "&&Second Side in Editor"
+                                },
+                                {
+                                    "id": "vscode.menubar.separator"
+                                },
                                 {
                                     "id": "workbench.action.nextEditor",
                                     "label": "&&Next Editor"
@@ -1615,11 +1618,6 @@
                 "isNative": false,
                 "userSettingsLabel": "ctrl+k ctrl+\\"
             },
-            "workbench.action.splitEditorInGroup": {
-                "label": "Ctrl+K Ctrl+Shift+\\",
-                "isNative": false,
-                "userSettingsLabel": "ctrl+k ctrl+shift+\\"
-            },
             "workbench.action.copyEditorToNewWindow": {
                 "label": "Ctrl+K O",
                 "isNative": false,
@@ -1872,10 +1870,10 @@
     "windowsState": {
         "lastActiveWindow": {
             "workspaceIdentifier": {
-                "id": "042caae02f49e7fca0d9f845a02e3a06",
-                "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace"
+                "id": "77f35f266b2704abb99b6f16ff5252d6",
+                "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/snippets.code-workspace"
             },
-            "backupPath": "/home/loganmancuso/.config/VSCodium/Backups/042caae02f49e7fca0d9f845a02e3a06",
+            "backupPath": "/home/loganmancuso/.config/VSCodium/Backups/77f35f266b2704abb99b6f16ff5252d6",
             "uiState": {
                 "mode": 0,
                 "x": 0,
