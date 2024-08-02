@@ -6,5 +6,8 @@
     "terminal.integrated.fontSize": 18,
     "explorer.confirmDragAndDrop": false,
     "editor.tabSize": 2,
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    "scm.repositories.sortOrder": "path",
+    "scm.alwaysShowRepositories": true,
+    "git.repositoryScanMaxDepth": -1
 }
