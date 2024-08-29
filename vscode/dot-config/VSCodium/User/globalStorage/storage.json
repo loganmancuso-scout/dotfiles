@@ -5,11 +5,18 @@
             "file:///home/loganmancuso/SourceControl/Personal/dotfiles": "__default__profile__",
             "file:///home/loganmancuso/SourceControl": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Personal/obsidian": "__default__profile__",
-            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace": "__default__profile__",
-            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Personal/Infrastructure/Applications/vault": "__default__profile__",
-            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/local.code-workspace": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Personal/Infrastructure/Proxmox/global-secrets": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/active.code-workspace": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Personal/Infrastructure/Local/cloud-init-auto": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/templates.code-workspace": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/instances.code-workspace": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Personal/Infrastructure/Applications/nextcloud": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/apps.code-workspace": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Personal/obsidian/.obsidian/plugins/obsidian-icon-folder": "__default__profile__",
+            "file:///home/loganmancuso/SourceControl/Workspaces/Personal/local.code-workspace": "__default__profile__",
             "file:///home/loganmancuso/SourceControl/Workspaces/snippets.code-workspace": "__default__profile__"
         },
         "emptyWindows": {}
@@ -19,14 +26,6 @@
     "telemetry.machineId": "8a607d61f8e707c04d6764ecb52f5387dc7164cb35d746699ef39ccb0295b5b5",
     "backupWorkspaces": {
         "workspaces": [
-            {
-                "id": "c038d93884f4410abbf63901a3aa848f",
-                "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/local.code-workspace"
-            },
-            {
-                "id": "042caae02f49e7fca0d9f845a02e3a06",
-                "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace"
-            },
             {
                 "id": "77f35f266b2704abb99b6f16ff5252d6",
                 "configURIPath": "file:///home/loganmancuso/SourceControl/Workspaces/snippets.code-workspace"
@@ -94,17 +93,6 @@
                                     "id": "openRecentWorkspace",
                                     "uri": {
                                         "$mid": 1,
-                                        "external": "file:///home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace",
-                                        "path": "/home/loganmancuso/SourceControl/Workspaces/wiki.code-workspace",
-                                        "scheme": "file"
-                                    },
-                                    "enabled": true,
-                                    "label": "~/SourceControl/Workspaces/wiki (Workspace)"
-                                },
-                                {
-                                    "id": "openRecentWorkspace",
-                                    "uri": {
-                                        "$mid": 1,
                                         "external": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/local.code-workspace",
                                         "path": "/home/loganmancuso/SourceControl/Workspaces/Personal/local.code-workspace",
                                         "scheme": "file"
@@ -116,12 +104,45 @@
                                     "id": "openRecentFolder",
                                     "uri": {
                                         "$mid": 1,
-                                        "external": "file:///home/loganmancuso/SourceControl/Personal/Infrastructure/Applications/vault",
-                                        "path": "/home/loganmancuso/SourceControl/Personal/Infrastructure/Applications/vault",
+                                        "external": "file:///home/loganmancuso/SourceControl/Personal/obsidian/.obsidian/plugins/obsidian-icon-folder",
+                                        "path": "/home/loganmancuso/SourceControl/Personal/obsidian/.obsidian/plugins/obsidian-icon-folder",
                                         "scheme": "file"
                                     },
                                     "enabled": true,
-                                    "label": "~/SourceControl/Personal/Infrastructure/Applications/vault"
+                                    "label": "~/SourceControl/Personal/obsidian/.obsidian/plugins/obsidian-icon-folder"
+                                },
+                                {
+                                    "id": "openRecentWorkspace",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/apps.code-workspace",
+                                        "path": "/home/loganmancuso/SourceControl/Workspaces/Personal/apps.code-workspace",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/SourceControl/Workspaces/Personal/apps (Workspace)"
+                                },
+                                {
+                                    "id": "openRecentFolder",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/SourceControl/Personal/Infrastructure/Applications/nextcloud",
+                                        "path": "/home/loganmancuso/SourceControl/Personal/Infrastructure/Applications/nextcloud",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/SourceControl/Personal/Infrastructure/Applications/nextcloud"
+                                },
+                                {
+                                    "id": "openRecentWorkspace",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/instances.code-workspace",
+                                        "path": "/home/loganmancuso/SourceControl/Workspaces/Personal/instances.code-workspace",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/SourceControl/Workspaces/Personal/instances (Workspace)"
                                 },
                                 {
                                     "id": "openRecentWorkspace",
@@ -138,6 +159,28 @@
                                     "id": "openRecentWorkspace",
                                     "uri": {
                                         "$mid": 1,
+                                        "external": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/active.code-workspace",
+                                        "path": "/home/loganmancuso/SourceControl/Workspaces/Personal/active.code-workspace",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/SourceControl/Workspaces/Personal/active (Workspace)"
+                                },
+                                {
+                                    "id": "openRecentFolder",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/SourceControl/Personal/Infrastructure/Proxmox/global-secrets",
+                                        "path": "/home/loganmancuso/SourceControl/Personal/Infrastructure/Proxmox/global-secrets",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/SourceControl/Personal/Infrastructure/Proxmox/global-secrets"
+                                },
+                                {
+                                    "id": "openRecentWorkspace",
+                                    "uri": {
+                                        "$mid": 1,
                                         "external": "file:///home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace",
                                         "path": "/home/loganmancuso/SourceControl/Workspaces/Personal/infra.code-workspace",
                                         "scheme": "file"
@@ -146,40 +189,84 @@
                                     "label": "~/SourceControl/Workspaces/Personal/infra (Workspace)"
                                 },
                                 {
-                                    "id": "openRecentFolder",
-                                    "uri": {
-                                        "$mid": 1,
-                                        "external": "file:///home/loganmancuso/SourceControl/Personal/obsidian",
-                                        "path": "/home/loganmancuso/SourceControl/Personal/obsidian",
-                                        "scheme": "file"
-                                    },
-                                    "enabled": true,
-                                    "label": "~/SourceControl/Personal/obsidian"
-                                },
-                                {
-                                    "id": "openRecentFolder",
-                                    "uri": {
-                                        "$mid": 1,
-                                        "external": "file:///home/loganmancuso/SourceControl",
-                                        "path": "/home/loganmancuso/SourceControl",
-                                        "scheme": "file"
-                                    },
-                                    "enabled": true,
-                                    "label": "~/SourceControl"
-                                },
-                                {
-                                    "id": "openRecentFolder",
-                                    "uri": {
-                                        "$mid": 1,
-                                        "external": "file:///home/loganmancuso/SourceControl/Personal/dotfiles",
-                                        "path": "/home/loganmancuso/SourceControl/Personal/dotfiles",
-                                        "scheme": "file"
-                                    },
-                                    "enabled": true,
-                                    "label": "~/SourceControl/Personal/dotfiles"
-                                },
-                                {
                                     "id": "vscode.menubar.separator"
+                                },
+                                {
+                                    "id": "openRecentFile",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/Downloads/Your%20return%20for%20Loft%20order%20%23770063599859%281%29.eml",
+                                        "path": "/home/loganmancuso/Downloads/Your return for Loft order #770063599859(1).eml",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/Downloads/Your return for Loft order #770063599859(1).eml"
+                                },
+                                {
+                                    "id": "openRecentFile",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/.ssh/config",
+                                        "path": "/home/loganmancuso/.ssh/config",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/.ssh/config"
+                                },
+                                {
+                                    "id": "openRecentFile",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/Downloads/Untitled-2.json",
+                                        "path": "/home/loganmancuso/Downloads/Untitled-2.json",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/Downloads/Untitled-2.json"
+                                },
+                                {
+                                    "id": "openRecentFile",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/Downloads/Untitled-1.json",
+                                        "path": "/home/loganmancuso/Downloads/Untitled-1.json",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/Downloads/Untitled-1.json"
+                                },
+                                {
+                                    "id": "openRecentFile",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh",
+                                        "path": "/home/loganmancuso/Documents/Backups/os-init/bootstrap/init-debian.sh",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/Documents/Backups/os-init/bootstrap/init-debian.sh"
+                                },
+                                {
+                                    "id": "openRecentFile",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/SourceControl/Personal/Infrastructure/Proxmox/template-machine/env/prod/ubuntu/init.tmpl",
+                                        "path": "/home/loganmancuso/SourceControl/Personal/Infrastructure/Proxmox/template-machine/env/prod/ubuntu/init.tmpl",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/SourceControl/Personal/Infrastructure/Proxmox/template-machine/env/prod/ubuntu/init.tmpl"
+                                },
+                                {
+                                    "id": "openRecentFile",
+                                    "uri": {
+                                        "$mid": 1,
+                                        "external": "file:///home/loganmancuso/SourceControl/Personal/Infrastructure/Proxmox/template-lxc/scripts/ubuntu/init.sh",
+                                        "path": "/home/loganmancuso/SourceControl/Personal/Infrastructure/Proxmox/template-lxc/scripts/ubuntu/init.sh",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/SourceControl/Personal/Infrastructure/Proxmox/template-lxc/scripts/ubuntu/init.sh"
                                 },
                                 {
                                     "id": "openRecentFile",
@@ -213,28 +300,6 @@
                                     },
                                     "enabled": true,
                                     "label": "~/Downloads/openSUSE-Tumbleweed-NET-x86_64-Snapshot20240730-Media.iso.sha256"
-                                },
-                                {
-                                    "id": "openRecentFile",
-                                    "uri": {
-                                        "$mid": 1,
-                                        "external": "file:///home/loganmancuso/.config/hypr/UserConfigs/Monitors.conf",
-                                        "path": "/home/loganmancuso/.config/hypr/UserConfigs/Monitors.conf",
-                                        "scheme": "file"
-                                    },
-                                    "enabled": true,
-                                    "label": "~/.config/hypr/UserConfigs/Monitors.conf"
-                                },
-                                {
-                                    "id": "openRecentFile",
-                                    "uri": {
-                                        "$mid": 1,
-                                        "external": "file:///home/loganmancuso/.ssh/authorized_keys",
-                                        "path": "/home/loganmancuso/.ssh/authorized_keys",
-                                        "scheme": "file"
-                                    },
-                                    "enabled": true,
-                                    "label": "~/.ssh/authorized_keys"
                                 },
                                 {
                                     "id": "vscode.menubar.separator"
@@ -281,8 +346,7 @@
                     },
                     {
                         "id": "saveAll",
-                        "label": "Save A&&ll",
-                        "enabled": false
+                        "label": "Save A&&ll"
                     },
                     {
                         "id": "vscode.menubar.separator"
@@ -292,6 +356,13 @@
                         "label": "Share",
                         "submenu": {
                             "items": [
+                                {
+                                    "id": "github.copyVscodeDevLinkFile",
+                                    "label": "Copy vscode.dev Link"
+                                },
+                                {
+                                    "id": "vscode.menubar.separator"
+                                },
                                 {
                                     "id": "workbench.profiles.actions.exportProfile",
                                     "label": "Export Profile (Default)..."
@@ -763,8 +834,7 @@
                                 },
                                 {
                                     "id": "editor.action.toggleMinimap",
-                                    "label": "&&Minimap",
-                                    "checked": true
+                                    "label": "&&Minimap"
                                 },
                                 {
                                     "id": "breadcrumbs.toggle",
@@ -824,6 +894,13 @@
                                 {
                                     "id": "workbench.action.splitEditorRight",
                                     "label": "Split &&Right"
+                                },
+                                {
+                                    "id": "vscode.menubar.separator"
+                                },
+                                {
+                                    "id": "workbench.action.joinEditorInGroup",
+                                    "label": "Join in &&Group"
                                 },
                                 {
                                     "id": "vscode.menubar.separator"
@@ -946,8 +1023,7 @@
                     },
                     {
                         "id": "workbench.action.navigateToLastEditLocation",
-                        "label": "&&Last Edit Location",
-                        "enabled": false
+                        "label": "&&Last Edit Location"
                     },
                     {
                         "id": "vscode.menubar.separator"
@@ -1618,6 +1694,11 @@
                 "isNative": false,
                 "userSettingsLabel": "ctrl+k ctrl+\\"
             },
+            "workbench.action.joinEditorInGroup": {
+                "label": "Ctrl+K Ctrl+Shift+\\",
+                "isNative": false,
+                "userSettingsLabel": "ctrl+k ctrl+shift+\\"
+            },
             "workbench.action.copyEditorToNewWindow": {
                 "label": "Ctrl+K O",
                 "isNative": false,
@@ -1643,10 +1724,6 @@
                 "label": "Ctrl+Shift+D",
                 "userSettingsLabel": "ctrl+shift+d"
             },
-            "workbench.actions.view.problems": {
-                "label": "Ctrl+Shift+M",
-                "userSettingsLabel": "ctrl+shift+m"
-            },
             "workbench.action.output.toggleOutput": {
                 "label": "Ctrl+K Ctrl+H",
                 "isNative": false,
@@ -1655,10 +1732,6 @@
             "workbench.debug.action.toggleRepl": {
                 "label": "Ctrl+Shift+Y",
                 "userSettingsLabel": "ctrl+shift+y"
-            },
-            "workbench.action.terminal.toggleTerminal": {
-                "label": "Ctrl+`",
-                "userSettingsLabel": "ctrl+`"
             },
             "editor.action.toggleWordWrap": {
                 "label": "Alt+Z",
@@ -1824,8 +1897,8 @@
                 "userSettingsLabel": "shift+f9"
             },
             "workbench.action.terminal.new": {
-                "label": "Ctrl+Shift+`",
-                "userSettingsLabel": "ctrl+shift+`"
+                "label": "Ctrl+T",
+                "userSettingsLabel": "ctrl+t"
             },
             "workbench.action.terminal.split": {
                 "label": "Ctrl+Shift+5",
@@ -1862,7 +1935,7 @@
             "editorPartMinWidth": 220,
             "titleBarHeight": 0,
             "activityBarWidth": 48,
-            "sideBarWidth": 498,
+            "sideBarWidth": 348,
             "statusBarHeight": 22,
             "windowBorder": false
         }

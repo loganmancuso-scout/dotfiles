@@ -1,12 +1,12 @@
 ## Mobile ##
-Host bytevault.local
+Host bytevault.vpc
   HostName 192.168.1.10
   User root
   Port 22
   IdentityFile ~/.ssh/id_ed25519
   StrictHostKeyChecking yes
 
-Host mightymouse.local
+Host mightymouse.vpc
   HostName 192.168.1.11
   User root
   Port 22
@@ -17,52 +17,52 @@ Host mightymouse.local
 Host 192.168.10.*
   User instance-user
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host prod-thoth.local
+Host prod-thoth-instance.vpc
   HostName 192.168.10.5
   User instance-user
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host prod-ingress-instance.local
+Host prod-ingress-instance.vpc
   HostName 192.168.10.2
   User instance-user
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host prod-utility-instance.local
+Host prod-utility-instance.vpc
   HostName 192.168.10.6
   User instance-user
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host prod-k8-manager.local
-  HostName 192.168.10.10
-  User instance-user
-  Port 22
-  IdentityFile ~/.ssh/id_ed25519
-  StrictHostKeyChecking no
-
-Host prod-sandbox-instance.local
+Host prod-sandbox-instance.vpc
   HostName 192.168.10.240
   User instance-user
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
 ## IOT ##
-Host iot-rickey.local
+Host labmachine.iot
   HostName 192.168.3.3
-   User octo-user
-   Port 22
-   IdentityFile ~/.ssh/id_ed25519
+  User lab-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  
+Host rickey.iot
+  # HostName 192.168.3.5 #eth
+  HostName 192.168.3.4 #wlan
+  User octo-user
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
 
-Host iot-pizero.local
+Host pizero.iot
   HostName 192.168.3.5
   User assistant-user
   Port 22
@@ -74,30 +74,30 @@ Host 192.168.3.*
   IdentityFile ~/.ssh/id_ed25519
   StrictHostKeyChecking no
 
-## LAN ##
-Host 100.64.*.*
+## DEV-LAN ##
+Host 100.10.*.*
   User instance-user
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host dev-infra-instance.local
-  HostName 100.64.0.5
+Host dev-infra-instance.dev
+  HostName 100.10.0.5
   User instance-user
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host dev-proxmox.local
-  HostName 100.64.0.10
+Host dev-proxmox.dev
+  HostName 100.10.0.10
   User root
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host dev-thoth.local
-  HostName 100.64.0.15
+Host dev-thoth.dev
+  HostName 100.10.0.15
   User instance-user
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
