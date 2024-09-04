@@ -1,7 +1,7 @@
 {
     "editor.acceptSuggestionOnEnter": "off",
     "editor.detectIndentation": false,
-    "editor.fontFamily": "'JetBrainsMonoNL Nerd Font Propo'",
+    "editor.fontFamily": "'JetBrainsMono NFM'",
     "editor.minimap.enabled": false,
     "editor.tabSize": 2,
     "explorer.confirmDelete": false,

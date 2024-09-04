@@ -16,11 +16,11 @@ function main() {
   echo "memory: $(free | grep Mem | awk '{print $3/$2 * 100.0"%"}')"
   echo "user: $(whoami)"
   echo "time: $(date)"
-  stow -vv --dotfiles --target=$HOME --adopt bash
-  stow -vv --dotfiles --target=$HOME --adopt git
-  stow -vv --dotfiles --target=$HOME --adopt nvim
-  stow -vv --dotfiles --target=$HOME --adopt ssh
-  stow -vv --dotfiles --target=$HOME --adopt vscode
+  stow -vv --dotfiles --target=$HOME bash
+  stow -vv --dotfiles --target=$HOME git
+  stow -vv --dotfiles --target=$HOME nvim
+  stow -vv --dotfiles --target=$HOME ssh
+  stow -vv --dotfiles --target=$HOME vscode
   
   # stow -D -vv --dotfiles --target=$HOME bash
 }
