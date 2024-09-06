@@ -16,5 +16,7 @@
     "window.confirmSaveUntitledWorkspace": false,
     "workbench.editor.enablePreview": false,
     "workbench.sideBar.location": "right",
-    "workbench.startupEditor": "none",   
+    "workbench.startupEditor": "none",
+    "security.workspace.trust.untrustedFiles": "open",
+    
 }
