@@ -1,4 +1,9 @@
 *.log
-# *.vscdb
+# VSCodium
+vscode/
+!vscode/dot-config/VSCodium/User/*.json
+# systemd
+systemd/
+!systemd/dot-config/systemd/user/*.service
 # Cache/
 # CachedData/

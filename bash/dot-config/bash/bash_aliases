@@ -7,11 +7,11 @@
 
 ## Set Prompt ##
 export STARSHIP_CONFIG=$HOME/.config/bash/personal.toml
+eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 
 ## Environment Variables ##
 export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
-export PATH=$PATH:$HOME/SourceControl/OpenSource/luthermonson/quiso
 export PATH=$PATH:$HOME/.local/bin
 
 ## BitWarden Authentication ##
@@ -50,8 +50,10 @@ alias tfc="find . -maxdepth 1 -type l -delete"
 alias tffmt="tofu fmt -recursive"
 alias tfsclear='tofu state rm $(tofu state list)'
 
+## Navigation Helpers ##
 alias ll='ls -1la'
-alias cd='>/dev/null pushd'
+alias cd='z'
+# alias cd='>/dev/null pushd'
 # alias popd='>/dev/null popd'
 
 function tfauth() {
@@ -96,7 +98,7 @@ vagrant(){
     -w "${PWD}" \
     --network host \
     vagrantlibvirt/vagrant-libvirt:latest \
-      vagrant $@
+    vagrant $@
 }
 
 ## RDP into Work Laptop Using BitWarden ##

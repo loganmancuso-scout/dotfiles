@@ -21,7 +21,12 @@ function main() {
   stow -vv --dotfiles --target=$HOME nvim
   stow -vv --dotfiles --target=$HOME ssh
   stow -vv --dotfiles --target=$HOME vscode
-  
+  stow -vv --dotfiles --target=$HOME zoxide
+  stow -vv --dotfiles --target=$HOME systemd
+  systemctl --user daemon-reload
+  systemctl --user enable nextcloud.service
+  systemctl --user start nextcloud.service
+
   # stow -D -vv --dotfiles --target=$HOME bash
 }
 

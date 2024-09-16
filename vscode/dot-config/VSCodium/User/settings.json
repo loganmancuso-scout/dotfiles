@@ -18,5 +18,7 @@
     "workbench.sideBar.location": "right",
     "workbench.startupEditor": "none",
     "security.workspace.trust.untrustedFiles": "open",
+    "update.showReleaseNotes": false,
+    "git.openRepositoryInParentFolders": "never",
     
 }
