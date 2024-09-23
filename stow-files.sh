@@ -16,13 +16,13 @@ function main() {
   echo "memory: $(free | grep Mem | awk '{print $3/$2 * 100.0"%"}')"
   echo "user: $(whoami)"
   echo "time: $(date)"
-  stow -vv --dotfiles --target=$HOME bash
-  stow -vv --dotfiles --target=$HOME git
-  stow -vv --dotfiles --target=$HOME nvim
-  stow -vv --dotfiles --target=$HOME ssh
-  stow -vv --dotfiles --target=$HOME vscode
-  stow -vv --dotfiles --target=$HOME zoxide
-  stow -vv --dotfiles --target=$HOME systemd
+  stow -vv --dotfiles --adopt --target=$HOME bash
+  stow -vv --dotfiles --adopt --target=$HOME git
+  stow -vv --dotfiles --adopt --target=$HOME nvim
+  stow -vv --dotfiles --adopt --target=$HOME ssh
+  stow -vv --dotfiles --adopt --target=$HOME vscode
+  stow -vv --dotfiles --adopt --target=$HOME zoxide
+  stow -vv --dotfiles --adopt --target=$HOME systemd
   systemctl --user daemon-reload
   systemctl --user enable nextcloud.service
   systemctl --user start nextcloud.service
