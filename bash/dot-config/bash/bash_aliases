@@ -18,7 +18,7 @@ export PATH=$PATH:$HOME/.local/bin
 function bw-auth() {
   # Check if BW_SESSION is set in the current environment
   if [ -z "$BW_SESSION" ]; then
-    # echo "BW_SESSION is not set."
+    echo "BW_SESSION is not set."
     # Check if the /tmp/bw.env file exists and source it
     if [ -f /tmp/bw.env ]; then
       # echo "Sourcing BW_SESSION from /tmp/bw.env"
