@@ -20,6 +20,7 @@ function main() {
   stow -vv --dotfiles --adopt --target=$HOME git
   stow -vv --dotfiles --adopt --target=$HOME nvim
   stow -vv --dotfiles --adopt --target=$HOME ssh
+  stow -vv --dotfiles --adopt --target=$HOME starship
   stow -vv --dotfiles --adopt --target=$HOME vscode
   stow -vv --dotfiles --adopt --target=$HOME zoxide
   stow -vv --dotfiles --adopt --target=$HOME systemd
