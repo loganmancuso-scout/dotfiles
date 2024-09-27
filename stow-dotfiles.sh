@@ -7,10 +7,10 @@
 ##############################################################################
 
 # Redirect all output to log file
-exec > >(tee -a "stow-dotfiles.log") 2>&1
+exec > >(tee -a "init-debian.log") 2>&1
 
 # Function for stowing files using GNU Stow
-function stow() {
+function stow_dotfiles() {
   echo "stowing dotfiles..."
   stow -vv --dotfiles --adopt --target=$HOME bash
   stow -vv --dotfiles --adopt --target=$HOME git
@@ -26,7 +26,7 @@ function stow() {
 }
 
 # Function for unstowing files
-function unstow() {
+function unstow_dotfiles() {
   echo "Unstowing dotfiles..."
   stow -D -vv --dotfiles --target=$HOME bash
   stow -D -vv --dotfiles --target=$HOME git
@@ -35,10 +35,13 @@ function unstow() {
   stow -D -vv --dotfiles --target=$HOME starship
   stow -D -vv --dotfiles --target=$HOME vscode
   stow -D -vv --dotfiles --target=$HOME zoxide
+  systemctl --user daemon-reload
+  systemctl --user stop nextcloud.service
+  systemctl --user disable nextcloud.service
   stow -D -vv --dotfiles --target=$HOME systemd
 }
 
-# Main function to handle arguments
+# Main function to handle options
 function main() {
   echo "System Information:"
   echo "hostname: $(cat /etc/hostname)"
@@ -47,21 +50,38 @@ function main() {
   echo "user: $(whoami)"
   echo "time: $(date)"
 
+  # Use getopt for long option parsing
+  OPTIONS=$(getopt -o "" --long stow,unstow -- "$@")
+  
+  # Check if getopt succeeded
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to parse options."
+    exit 1
+  fi
+
+  # Reorder options and arguments
+  eval set -- "$OPTIONS"
+
   # Parse options
-  while [[ "$#" -gt 0 ]]; do
+  while true; do
     case "$1" in
       --stow)
-        stow
+        stow_dotfiles
+        shift
         ;;
       --unstow)
-        unstow
+        unstow_dotfiles
+        shift
+        ;;
+      --)
+        shift
+        break
         ;;
       *)
         echo "Unknown option: $1"
         exit 1
         ;;
     esac
-    shift
   done
 }
 
