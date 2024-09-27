@@ -58,4 +58,4 @@ if ! shopt -oq posix; then
   fi
 fi
 
-source ~/.config/bash/bash_aliases
+source ~/.config/bash/aliases
