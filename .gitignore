@@ -9,7 +9,7 @@ README.md
 
 # bash
 !bash/dot-bashrc
-!bash/dot-config/bash/*
+!bash/dot-config/bash/**
 
 # git
 !git/
@@ -19,7 +19,7 @@ README.md
 
 # ssh
 !ssh/dot-ssh/config
-!ssh/dot-ssh/known-hosts
+!ssh/dot-ssh/known_hosts
 
 # starship
 !starship/dot-config/starship.toml
