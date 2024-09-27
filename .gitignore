@@ -1,18 +1,34 @@
-*.log
+# Ignore everything
+*
 
-# VSCodium
-vscode/*
-!vscode/dot-config/
-!vscode/dot-config/VSCodium/
-!vscode/dot-config/VSCodium/User/
-!vscode/dot-config/VSCodium/User/*.json
+# Allow directories to be included, but not files within them
+!*/
+
+README.md
+!stow-dotfiles.sh
+
+# bash
+!bash/dot-bashrc
+!bash/dot-config/bash/*
+
+# git
+!git/
+
+# nvim
+!nvim/dot-config/**
+
+# ssh
+!ssh/dot-ssh/config
+!ssh/dot-ssh/known-hosts
+
+# starship
+!starship/dot-config/starship.toml
 
 # systemd
-systemd/*
-!systemd/dot-config/
-!systemd/dot-config/systemd/
-!systemd/dot-config/systemd/user/
 !systemd/dot-config/systemd/user/*.service
 
-# Cache/
-# CachedData/
+# vscodium
+!vscode/dot-config/VSCodium/User/*.json
+
+# zoxide
+!zoxide/dot-local/share/zoxide/db.zo
