@@ -10,7 +10,7 @@ eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 
 ## Environment Variables ##
-export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
+# export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
 export PATH=$PATH:$HOME/.local/bin
 
 ## BitWarden Authentication ##
@@ -54,6 +54,7 @@ alias ll='ls -1la'
 alias cd='z'
 # alias cd='>/dev/null pushd'
 # alias popd='>/dev/null popd'
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
 
 function tfauth() {
   bw-auth
@@ -85,19 +86,6 @@ function tfunseal() {
   vault operator unseal $UNSEAL_KEY_3
   vault status
   vault login $VAULT_DEV_ROOT_TOKEN_ID
-}
-
-# Vagrant LibVirt #
-vagrant(){
-  docker run -it --rm \
-    -e LIBVIRT_DEFAULT_URI \
-    -v /var/run/libvirt/:/var/run/libvirt/ \
-    -v ~/.vagrant.d:/.vagrant.d \
-    -v $(realpath "${PWD}"):${PWD} \
-    -w "${PWD}" \
-    --network host \
-    vagrantlibvirt/vagrant-libvirt:latest \
-    vagrant $@
 }
 
 ## RDP into Work Laptop Using BitWarden ##

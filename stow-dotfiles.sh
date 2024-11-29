@@ -7,7 +7,7 @@
 ##############################################################################
 
 # Redirect all output to log file
-exec > >(tee -a "init-debian.log") 2>&1
+exec > >(tee -a "stow-dotfiles.log") 2>&1
 
 # Function for stowing files using GNU Stow
 function stow_dotfiles() {

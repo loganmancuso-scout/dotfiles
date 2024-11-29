@@ -1,102 +1,109 @@
+## MGMT ##
+Host opnsense
+  HostName opnsense.mgmt.home.arpa
+  User loganmancuso
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+
 ## Mobile ##
-Host bytevault.vpc
-  HostName 192.168.1.10
+Host bytevault
+  HostName bytevault.cluster.vpc.home.arpa
+  User root
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking yes
+
+Host mightymouse
+  HostName mightymouse.cluster.vpc.home.arpa
   User root
   Port 22
   IdentityFile ~/.ssh/id_ed25519
   StrictHostKeyChecking yes
 
 ## VPC ##
-Host 192.168.10.*
+Host 192.168.1*.*
   User instance-user
   Port 22
   IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host thoth.vpc
-  HostName 192.168.10.5
+Host *.cluster.vpc.home.arpa
   User instance-user
   Port 22
   IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host ingress.vpc
-  HostName 192.168.10.2
+Host thoth
+  HostName thoth.infra.vpc.home.arpa
   User instance-user
   Port 22
   IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host utility.vpc
-  HostName 192.168.10.6
+Host ingress
+  HostName proxy.public.vpc.home.arpa
   User instance-user
   Port 22
   IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host sandbox.vpc
-  HostName 192.168.10.240
+Host utility
+  HostName 192.168.17.6
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/instance_key
+  StrictHostKeyChecking no
+
+Host sentry
+  HostName 192.168.15.10
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/instance_key
+  StrictHostKeyChecking no
+
+Host sandbox
+  HostName 192.168.17.240
   User instance-user
   Port 22
   IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
 ## Edge ##
-Host labmachine.edge
-  # HostName 192.168.5.11 #eth
-  HostName 192.168.5.12 #wlan
+Host labmachine
+  # HostName labmachine-eth.edge.home.arpa #eth
+  HostName labmachine.edge.home.arpa #wlan
   User lab-user
   Port 22
   IdentityFile ~/.ssh/id_ed25519
   
-Host rickey.edge
-  HostName 192.168.5.16 #eth
-  # HostName 192.168.5.15 #wlan
+Host rickey
+  HostName rickey.edge.home.arpa #eth
+  HostName rickey-wlan.edge.home.arpa #wlan
   User octo-user
   Port 22
   IdentityFile ~/.ssh/id_ed25519
 
-Host pizero.edge
-  HostName 192.168.5.9
+Host pizero
+  HostName pizero.edge.home.arpa
   User assistant-user
   Port 22
   IdentityFile ~/.ssh/id_ed25519
 
-Host mightymouse.edge
-  HostName 192.168.5.20
-  User loganmancuso
-  Port 22
-  IdentityFile ~/.ssh/id_ed25519
-
-Host 192.168.5.*
+Host 192.168.248.*
   User instance-user
   Port 22
   IdentityFile ~/.ssh/id_ed25519
   StrictHostKeyChecking no
 
 ## DEV-LAN ##
-Host 100.10.*.*
-  User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
-
-Host dev-infra-instance.dev
-  HostName 100.10.0.5
-  User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
-
-Host dev-proxmox.dev
-  HostName 100.10.0.10
+Host dev-proxmox.local
+  HostName 100.64.0.10
   User root
   Port 22
-  IdentityFile ~/.ssh/instance_key
+  IdentityFile ~/.ssh/id_ed25519
   StrictHostKeyChecking no
-
-Host dev-thoth.dev
-  HostName 100.10.0.15
+  
+Host 100.64.*.*
   User instance-user
   Port 22
   IdentityFile ~/.ssh/instance_key

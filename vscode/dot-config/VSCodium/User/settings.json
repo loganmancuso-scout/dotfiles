@@ -12,7 +12,6 @@
     "scm.alwaysShowRepositories": true,
     "scm.repositories.sortOrder": "path",
     "terminal.integrated.enableMultiLinePasteWarning": "never",
-    "terminal.integrated.fontSize": 18,
     "window.confirmSaveUntitledWorkspace": false,
     "workbench.editor.enablePreview": false,
     "workbench.sideBar.location": "right",
@@ -20,5 +19,9 @@
     "security.workspace.trust.untrustedFiles": "open",
     "update.showReleaseNotes": false,
     "git.openRepositoryInParentFolders": "never",
-    
+    "vscode-neovim.neovimExecutablePaths.linux": "/snap/nvim/current/usr/bin/nvim",
+    "extensions.experimental.affinity": {
+      "asvetliakov.vscode-neovim": 1
+    },
+    "debug.console.fontSize": 13,
 }
