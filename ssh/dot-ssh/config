@@ -6,19 +6,36 @@ Host opnsense
   IdentityFile ~/.ssh/id_ed25519
 
 ## Mobile ##
+
+Host cleopatra
+  HostName cleopatra.trusted.home.arpa # mobile address
+  # HostName 100.54.0.3 # vpn address
+  User loganmancuso
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+Host phone
+  HostName oneplus.trusted.home.arpa # mobile address
+  # HostName 100.54.0.2 # vpn address
+  User u0_a417
+  Port 8022
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
 Host bytevault
   HostName bytevault.cluster.vpc.home.arpa
   User root
   Port 22
   IdentityFile ~/.ssh/id_ed25519
-  StrictHostKeyChecking yes
+  StrictHostKeyChecking no
 
 Host mightymouse
   HostName mightymouse.cluster.vpc.home.arpa
   User root
   Port 22
   IdentityFile ~/.ssh/id_ed25519
-  StrictHostKeyChecking yes
+  StrictHostKeyChecking no
 
 ## VPC ##
 Host 192.168.1*.*
@@ -42,6 +59,27 @@ Host thoth
 
 Host ingress
   HostName proxy.public.vpc.home.arpa
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/instance_key
+  StrictHostKeyChecking no
+
+Host swarm-manager
+  HostName 192.168.17.21
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/instance_key
+  StrictHostKeyChecking no
+
+Host swarm-worker1
+  HostName 192.168.17.22
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/instance_key
+  StrictHostKeyChecking no
+
+Host swarm-worker2
+  HostName 192.168.17.23
   User instance-user
   Port 22
   IdentityFile ~/.ssh/instance_key

@@ -44,10 +44,99 @@ alias tfr="tofu apply -refresh-only"
 alias tfp="tofu plan"
 alias tfs="tofu state"
 alias tfw="tofu workspace"
-alias tfi="tofu init --reconfigure --upgrade && tofu workspace list"
+alias tfi="tofu init --reconfigure --upgrade"
 alias tfc="find . -maxdepth 1 -type l -delete"
 alias tffmt="tofu fmt -recursive"
 alias tfsclear='tofu state rm $(tofu state list)'
+# custom apply for deploying lxc and machine templates
+function tf-template() (
+  # Function to display usage
+  usage() {
+    echo "Error: -e <env> and -a <action> are required."
+    echo "Usage: custom_command -e <env> -a <action> [-o <os>] [-v <version>] [-r <revision>]"
+    return 1
+  }
+
+  # Parse arguments using getopts with short and long options
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -a|--action)
+        action="$2"
+        shift 2
+        ;;
+      -e|--env)
+        env="$2"
+        shift 2
+        ;;
+      -o|--os)
+        os="$2"
+        shift 2
+        ;;
+      -v|--version)
+        version="$2"
+        shift 2
+        ;;
+      -r|--revision)
+        revision="$2"
+        shift 2
+        ;;
+      -h|--help)
+        usage
+        ;;
+      *)
+        echo "Unknown option: $1"
+        usage
+        exit 1
+        ;;
+    esac
+  done
+
+  # Check if required argument 'env' is provided
+  if [[ -z "$env" || -z "$action" ]]; then
+    usage
+    exit 1
+  fi
+
+  # Function to find paths
+  find_paths() {
+    local base_path="$1"
+    local depth="$2"
+
+    # Iterate over directories based on depth
+    for dir in $(find "$base_path" -mindepth "$depth" -maxdepth "$depth" -type d); do
+      # do the tofu work here
+      echo "## $dir ##"
+      find . -maxdepth 1 -type l -delete
+      ln -s "$dir"/* .
+      tofu init --reconfigure --upgrade
+      tofu $action
+    done
+  }
+
+  # Main function to handle cases
+  build_paths() {
+    local base_path="./env/$env"
+
+    # Case selection based on provided arguments
+    if [ -n "$revision" ]; then
+      # Case: env, os, version, and revision
+      find_paths "$base_path/$os/$version/$revision" 0
+    elif [ -n "$version" ]; then
+      # Case: env, os, and version
+      find_paths "$base_path/$os/$version" 1
+    elif [ -n "$os" ]; then
+      # Case: env and os
+      find_paths "$base_path/$os" 2
+    else
+      # Case: only env
+      find_paths "$base_path" 3
+    fi
+  }
+
+  # Call the main function
+  build_paths
+)
+export -f tf-template
 
 ## Navigation Helpers ##
 alias ll='ls -1la'
