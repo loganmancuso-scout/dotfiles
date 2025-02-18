@@ -1,46 +1,46 @@
 format = """
-$username\
-$hostname\
-$directory\
-$git_branch\
-$git_state\
-$git_status\
-$cmd_duration\
-$line_break\
-$python\
-$character"""
+$os$terraform$directory$git_branch$git_status 
+$cmd_duration$character\
+"""
 
-[directory]
-style = "blue"
+[line_break]
+disabled = true
 
 [character]
-success_symbol = "[❯](purple)"
-error_symbol = "[❯](red)"
-vimcmd_symbol = "[❮](green)"
+success_symbol = '[❯](bold #A6E3A1)'
+error_symbol = '[❯](bold #F38BA8)'
+format = '$symbol '
+disabled = false
+
+[os]
+format = '[$symbol ]($style)'
+style = 'fg:#FFFFFF'
+disabled = false 
+
+[os.symbols]
+Linux = '󰌽'
+Pop = '󰌽'
+Windows = '󰍹'
+
+[terraform]
+format = '[$workspace ]($style)'
+style = 'fg:#B4BEFE'
+
+[directory]
+style = 'fg:#E8A2AF'
+format = '[$path ]($style)'
+truncation_length = 2
 
 [git_branch]
-format = "[$branch]($style)"
-style = "bright-black"
+symbol = ''
+style = 'fg:#A6E3A1'
+format = '[$symbol$branch]($style)'
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
-style = "cyan"
-conflicted = "​"
-untracked = "​"
-modified = "​"
-staged = "​"
-renamed = "​"
-deleted = "​"
-stashed = "≡"
-
-[git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
-style = "bright-black"
+style = 'fg:#A6E3A1'
+format = '([$all_status$ahead_behind]($style))'
 
 [cmd_duration]
-format = "[$duration]($style) "
-style = "yellow"
-
-[python]
-format = "[$virtualenv]($style) "
-style = "bright-black"
+min_time = 2000
+style = 'fg:#FAB387'
+format = '[󰔛 $duration ]($style)'

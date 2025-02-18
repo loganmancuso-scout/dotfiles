@@ -24,4 +24,5 @@
       "asvetliakov.vscode-neovim": 1
     },
     "debug.console.fontSize": 13,
+    "workbench.colorTheme": "Catppuccin Mocha",
 }

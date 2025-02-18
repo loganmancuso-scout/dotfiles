@@ -13,7 +13,9 @@ eval "$(starship init bash)"
 # export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
 export PATH=$PATH:$HOME/.local/bin
 
-## BitWarden Authentication ##
+alias pentable="/usr/lib/pentablet/PenTablet"
+
+# #BitWarden Authentication ##
 function bw-auth() {
   # Check if BW_SESSION is set in the current environment
   if [ -z "$BW_SESSION" ]; then
