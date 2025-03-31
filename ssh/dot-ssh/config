@@ -93,7 +93,14 @@ Host utility
   StrictHostKeyChecking no
 
 Host sentry
-  HostName 192.168.15.10
+  HostName sentry.infra.vpc.home.arpa
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/instance_key
+  StrictHostKeyChecking no
+
+Host glacial
+  HostName glacial.infra.vpc.home.arpa
   User instance-user
   Port 22
   IdentityFile ~/.ssh/instance_key
@@ -113,7 +120,13 @@ Host labmachine
   User lab-user
   Port 22
   IdentityFile ~/.ssh/id_ed25519
-  
+
+Host asus-labmachine
+  HostName asus-labmachine.edge.home.arpa
+  User lab-user
+  Port 22
+
+
 Host rickey
   HostName rickey.edge.home.arpa #eth
   HostName rickey-wlan.edge.home.arpa #wlan

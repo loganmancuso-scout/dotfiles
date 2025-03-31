@@ -25,4 +25,9 @@
     },
     "debug.console.fontSize": 13,
     "workbench.colorTheme": "Catppuccin Mocha",
+    "chat.commandCenter.enabled": false,
+    "search.exclude": {
+      "**/.git": true,
+      "**/.terraform": true
+    },
 }

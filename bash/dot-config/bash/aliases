@@ -9,6 +9,7 @@
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 
+# pushd "$HOME/SourceControl"
 ## Environment Variables ##
 # export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
 export PATH=$PATH:$HOME/.local/bin
@@ -219,6 +220,7 @@ function newdate() {
 alias whatsmyip="ifconfig | grep --color=always 'inet'"
 alias fastping="ping -c 100 -s.2 $1"
 alias ports="netstat -tulanp"
+alias flushdns="sudo resolvectl flush-caches"
 
 # Basic Default Function #
 function delete() {

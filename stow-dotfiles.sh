@@ -19,6 +19,7 @@ function stow_dotfiles() {
   stow -vv --dotfiles --adopt --target=$HOME starship
   stow -vv --dotfiles --adopt --target=$HOME vscode
   stow -vv --dotfiles --adopt --target=$HOME zoxide
+  stow -vv --dotfiles --adopt --target=$HOME zsh
   stow -vv --dotfiles --adopt --target=$HOME systemd
   systemctl --user daemon-reload
   systemctl --user enable nextcloud.service
@@ -35,6 +36,7 @@ function unstow_dotfiles() {
   stow -D -vv --dotfiles --target=$HOME starship
   stow -D -vv --dotfiles --target=$HOME vscode
   stow -D -vv --dotfiles --target=$HOME zoxide
+  stow -D -vv --dotfiles --target=$HOME zsh
   systemctl --user daemon-reload
   systemctl --user stop nextcloud.service
   systemctl --user disable nextcloud.service
