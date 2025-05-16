@@ -1,10 +1,5 @@
 #!/bin/bash
-##############################################################################
-#
-# Author: Logan Mancuso
-# Created: 07.31.2024
-#
-##############################################################################
+# Author: Logan Mancuso | LastEdit: 2024-05-16
 
 # Redirect all output to log file
 exec > >(tee -a "stow-dotfiles.log") 2>&1
