@@ -30,4 +30,5 @@
       "**/.git": true,
       "**/.terraform": true
     },
+    "diffEditor.ignoreTrimWhitespace": false,
 }

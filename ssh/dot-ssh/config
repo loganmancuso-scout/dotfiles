@@ -37,6 +37,13 @@ Host mightymouse
   IdentityFile ~/.ssh/id_ed25519
   StrictHostKeyChecking no
 
+Host ragnarok
+  HostName ragnarok.cluster.vpc.home.arpa
+  User root
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
 ## VPC ##
 Host 192.168.1*.*
   User instance-user
@@ -85,7 +92,7 @@ Host swarm-worker2
   IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host utility
+Host home
   HostName 192.168.17.6
   User instance-user
   Port 22
