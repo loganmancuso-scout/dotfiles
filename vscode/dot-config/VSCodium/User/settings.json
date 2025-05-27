@@ -31,4 +31,5 @@
       "**/.terraform": true
     },
     "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.activityBar.location": "top",
 }
