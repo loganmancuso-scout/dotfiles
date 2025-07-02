@@ -32,4 +32,9 @@
     },
     "diffEditor.ignoreTrimWhitespace": false,
     "workbench.activityBar.location": "top",
+    "window.newWindowProfile": "Default",
+    "python.createEnvironment.trigger": "off",
+    "workbench.editor.editorActionsLocation": "hidden",
+    "python.terminal.activateEnvironment": false,
+    "window.title": "${rootName}${separator}${profileName}",
 }

@@ -8,7 +8,7 @@ Host opnsense
 ## Mobile ##
 
 Host cleopatra
-  HostName cleopatra.trusted.home.arpa # mobile address
+  HostName cleopatra.edge.home.arpa # mobile address
   # HostName 100.54.0.3 # vpn address
   User loganmancuso
   Port 22
@@ -16,7 +16,7 @@ Host cleopatra
   StrictHostKeyChecking no
 
 Host phone
-  HostName oneplus.trusted.home.arpa # mobile address
+  HostName oneplus.edge.home.arpa # mobile address
   # HostName 100.54.0.2 # vpn address
   User u0_a417
   Port 8022
@@ -132,7 +132,6 @@ Host asus-labmachine
   HostName asus-labmachine.edge.home.arpa
   User lab-user
   Port 22
-
 
 Host rickey
   HostName rickey.edge.home.arpa #eth
