@@ -1,12 +1,19 @@
-# Author: Logan Mancuso | LastEdit: 2024-05-16
+##############################################################################
+#
+# Author: Logan Mancuso
+# Created: 11.29.2023
+#
+##############################################################################
 
 ## Set Prompt ##
-eval "$(zoxide init bash)"
-eval "$(starship init bash)"
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+
+source $HOME/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # pushd "$HOME/SourceControl"
 ## Environment Variables ##
-# export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
+export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
 export PATH=$PATH:$HOME/.local/bin
 
 alias pentable="/usr/lib/pentablet/PenTablet"
@@ -49,7 +56,6 @@ function tf-template() (
     echo "Usage: custom_command -e <env> -a <action> [-o <os>] [-v <version>] [-r <revision>]"
     return 1
   }
-
   # Parse arguments using getopts with short and long options
   while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -102,7 +108,7 @@ function tf-template() (
       find . -maxdepth 1 -type l -delete
       ln -s "$dir"/* .
       tofu init --reconfigure --upgrade
-      tofu $action
+      tofu $action --auto-approve
     done
   }
 
@@ -129,7 +135,6 @@ function tf-template() (
   # Call the main function
   build_paths
 )
-export -f tf-template
 
 ## Navigation Helpers ##
 alias ll='ls -1la'
@@ -174,7 +179,7 @@ function tfunseal() {
 function workrdp() {
   bw-auth
   echo "Retrieving RDP Vault Secret"
-  local vault_json=$(bw get item "bw-work" --session "$BW_SESSION")
+  local vault_json=$(bw get item "bw-kopis" --session "$BW_SESSION")
   if [ $? -ne 0 ]; then
     echo "Failed to retrieve item from Bitwarden."
     return 1
@@ -193,17 +198,45 @@ function workrdp() {
 }
 
 ## Programming Helper ##
-# changes the date on a file if it has Created date tag
+# changes the date on a file if it has Author tag
 function newdate() {
-  today_=$(date +%m.%d.%Y)
-  to_replace_="Created:"
-  # git_list=$(git show --pretty="" --name-only)
-  for passed_ in $@; do 
-    temp=$(echo ${passed_} | cut -d'/' -f2-)
-    sed -i "0,\|.* $to_replace_.*|{s|$to_replace_.*|$to_replace_ $today_|g1}" ${temp}
-    echo "--- ${temp} --- $to_replace_ $today_"
+  today_=$(date +%Y-%m-%d)
+  tag_="LastEdit:"
+  updated_files=()
+
+  process_file() {
+    local file_="$1"
+    [[ -f "$file_" ]] || return
+
+    if grep -q "$tag_" "$file_"; then
+      sed -i "s/\($tag_ \)[0-9\-]*/\1$today_/g" "$file_"
+      updated_files+=("$file_")
+    elif grep -q "Author:" "$file_"; then
+      sed -i "s/\(Author:.*\)/\1 | $tag_ $today_/" "$file_"
+      updated_files+=("$file_")
+    fi
+  }
+
+  for arg in "$@"; do
+    if [[ -d "$arg" ]]; then
+      while IFS= read -r -d '' file_; do
+        process_file "$file_"
+      done < <(find "$arg" -type f -print0)
+    elif [[ -f "$arg" ]]; then
+      process_file "$arg"
+    else
+      echo "Warning: '$arg' is not a valid file or directory" >&2
+    fi
   done
+
+  if (( ${#updated_files[@]} > 0 )); then
+    echo "Updated ${#updated_files[@]} file(s) with '$tag_ $today_':"
+    printf ' - %s\n' "${updated_files[@]}"
+  else
+    echo "No files were updated."
+  fi
 }
+
 
 ## Sys Helpers ##
 # System Admin
