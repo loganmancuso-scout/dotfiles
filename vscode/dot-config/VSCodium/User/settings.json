@@ -37,4 +37,7 @@
     "workbench.editor.editorActionsLocation": "hidden",
     "python.terminal.activateEnvironment": false,
     "window.title": "${rootName}${separator}${profileName}",
+    "continue.remoteConfigServerUrl": "",
+    "continue.telemetryEnabled": false,
+    "CodeGPT.apiKey": "Ollama",
 }

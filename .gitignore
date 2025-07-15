@@ -11,6 +11,9 @@ README.md
 !bash/dot-bashrc
 !bash/dot-config/bash/aliases
 
+# continue
+!continue/dot-continue/config.yaml
+
 # git
 !git/
 

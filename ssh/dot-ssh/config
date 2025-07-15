@@ -113,6 +113,13 @@ Host glacial
   IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
+Host localai
+  HostName localai.app.vpc.home.arpa
+  User instance-user
+  Port 22
+  IdentityFile ~/.ssh/instance_key
+  StrictHostKeyChecking no
+
 Host sandbox
   HostName 192.168.17.240
   User instance-user

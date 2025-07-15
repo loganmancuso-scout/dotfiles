@@ -1,0 +1,23 @@
+name: Remote Assistant
+version: 1.0.0
+schema: v1
+
+models:
+  - name: Code LLaMA Remote
+    provider: ollama
+    model: codellama:7b
+    apiBase: http://localai.app.vpc.home.arpa:11434
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase

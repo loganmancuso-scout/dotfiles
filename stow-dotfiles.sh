@@ -8,6 +8,7 @@ exec > >(tee -a "stow-dotfiles.log") 2>&1
 function stow_dotfiles() {
   echo "stowing dotfiles..."
   stow -vv --dotfiles --adopt --target=$HOME bash
+  stow -vv --dotfiles --adopt --target=$HOME continue
   stow -vv --dotfiles --adopt --target=$HOME git
   stow -vv --dotfiles --adopt --target=$HOME nvim
   stow -vv --dotfiles --adopt --target=$HOME ssh
@@ -25,6 +26,7 @@ function stow_dotfiles() {
 function unstow_dotfiles() {
   echo "Unstowing dotfiles..."
   stow -D -vv --dotfiles --target=$HOME bash
+  stow -D -vv --dotfiles --target=$HOME continue
   stow -D -vv --dotfiles --target=$HOME git
   stow -D -vv --dotfiles --target=$HOME nvim
   stow -D -vv --dotfiles --target=$HOME ssh
