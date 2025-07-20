@@ -71,27 +71,6 @@ Host ingress
   IdentityFile ~/.ssh/instance_key
   StrictHostKeyChecking no
 
-Host swarm-manager
-  HostName 192.168.17.21
-  User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
-
-Host swarm-worker1
-  HostName 192.168.17.22
-  User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
-
-Host swarm-worker2
-  HostName 192.168.17.23
-  User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
-
 Host home
   HostName 192.168.17.6
   User instance-user
@@ -128,35 +107,31 @@ Host sandbox
   StrictHostKeyChecking no
 
 ## Edge ##
-Host labmachine
-  # HostName labmachine-eth.edge.home.arpa #eth
-  HostName labmachine.edge.home.arpa #wlan
-  User lab-user
+Host asus
+  # HostName rm-asus-eth.edge.home.arpa #eth
+  HostName rm-asus.edge.home.arpa #wlan
+  User labuser
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/edge_instance_key
+  StrictHostKeyChecking no
 
-Host asus-labmachine
-  HostName asus-labmachine.edge.home.arpa
-  User lab-user
+Host orangepizero3
+  HostName rm-orangepizero3.edge.home.arpa #eth
+  # HostName rm-orangepizero3-wlan.edge.home.arpa #wlan
+  User labuser
   Port 22
+  IdentityFile ~/.ssh/edge_instance_key
 
-Host rickey
-  HostName rickey.edge.home.arpa #eth
-  HostName rickey-wlan.edge.home.arpa #wlan
-  User octo-user
+Host pizerow
+  HostName rm-pizerow.edge.home.arpa
+  User labuser
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/edge_instance_key
 
-Host pizero
-  HostName pizero.edge.home.arpa
-  User assistant-user
+Host 192.168.3.*
+  User labuser
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
-
-Host 192.168.248.*
-  User instance-user
-  Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/edge_instance_key
   StrictHostKeyChecking no
 
 ## DEV-LAN ##
