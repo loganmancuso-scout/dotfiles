@@ -1,7 +1,8 @@
 {
     "editor.acceptSuggestionOnEnter": "off",
     "editor.detectIndentation": false,
-    "editor.fontFamily": "'JetBrainsMono NFM'",
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "'SauceCodePro NFM'",
     "editor.minimap.enabled": false,
     "editor.tabSize": 2,
     "explorer.confirmDelete": false,
@@ -40,4 +41,5 @@
     "continue.remoteConfigServerUrl": "",
     "continue.telemetryEnabled": false,
     "CodeGPT.apiKey": "Ollama",
+    "terminal.integrated.fontFamily": "'SauceCodePro NFM'",
 }
