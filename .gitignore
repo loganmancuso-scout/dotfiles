@@ -39,4 +39,6 @@ README.md
 # zsh
 !zsh/dot-config/zsh/aliases
 zsh/dot-config/zsh/zsh-autosuggestions
+!zsh/dot-config/zsh/zsh-autosuggestions/zsh-autosuggestions.sh
+!zsh/dot-config/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.sh
 !zsh/dot-zshrc
