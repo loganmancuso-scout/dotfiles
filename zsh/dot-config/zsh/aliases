@@ -13,8 +13,9 @@ source $HOME/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # pushd "$HOME/SourceControl"
 ## Environment Variables ##
-export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
+# export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
 export PATH=$PATH:$HOME/.local/bin
+export KUBECONFIG=$HOME/.kube/config
 
 alias pentable="/usr/lib/pentablet/PenTablet"
 

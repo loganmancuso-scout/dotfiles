@@ -23,7 +23,6 @@ Pop = '󰌽'
 Windows = '󰍹'
 
 [terraform]
-disabled = true
 format = '[$workspace ]($style)'
 style = 'fg:#B4BEFE'
 
