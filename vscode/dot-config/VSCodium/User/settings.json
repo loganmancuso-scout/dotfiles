@@ -42,4 +42,6 @@
     "continue.telemetryEnabled": false,
     "CodeGPT.apiKey": "Ollama",
     "terminal.integrated.fontFamily": "'SauceCodePro NFM'",
+    "workbench.productIconTheme": "material-product-icons",
+    "workbench.iconTheme": "material-icon-theme",
 }
