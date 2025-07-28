@@ -143,7 +143,7 @@ function tfauth() {
   bw-auth
   # Retrieve the JSON from Bitwarden
   echo "Retrieving Hashi Vault Secrets"
-  local vault_json=$(bw get item "Hashi Vault" --session "$BW_SESSION")
+  local vault_json=$(bw get item "tofu-infrastructure" --session "$BW_SESSION")
   if [ $? -ne 0 ]; then
     echo "Failed to retrieve item from Bitwarden."
     return 1
@@ -163,12 +163,11 @@ function tfauth() {
 
 function tfunseal() {
   tfauth
-  vault status
-  vault operator unseal $UNSEAL_KEY_1
-  vault operator unseal $UNSEAL_KEY_2
-  vault operator unseal $UNSEAL_KEY_3
-  vault status
-  vault login $VAULT_DEV_ROOT_TOKEN_ID
+  export VAULT_ADDR="https://vault.local"
+  vault status -tls-skip-verify
+  vault operator unseal -tls-skip-verify $UNSEAL_KEY_1
+  vault status -tls-skip-verify
+  vault login -tls-skip-verify token=$VAULT_TOKEN 
 }
 
 ## RDP into Work Laptop Using BitWarden ##

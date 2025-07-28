@@ -2,7 +2,7 @@
 # Author: Logan Mancuso | LastEdit: 2024-05-16
 
 # Redirect all output to log file
-exec > >(tee -a "stow-dotfiles.log") 2>&1
+exec > >(tee "stow-dotfiles.log") 2>&1
 
 # Function for stowing files using GNU Stow
 function stow_dotfiles() {
@@ -18,8 +18,8 @@ function stow_dotfiles() {
   stow -vv --dotfiles --adopt --target=$HOME zsh
   stow -vv --dotfiles --adopt --target=$HOME systemd
   systemctl --user daemon-reload
-  systemctl --user enable nextcloud.service
-  systemctl --user start nextcloud.service
+  # systemctl --user enable nextcloud.service
+  # systemctl --user start nextcloud.service
 }
 
 # Function for unstowing files
@@ -35,8 +35,8 @@ function unstow_dotfiles() {
   stow -D -vv --dotfiles --target=$HOME zoxide
   stow -D -vv --dotfiles --target=$HOME zsh
   systemctl --user daemon-reload
-  systemctl --user stop nextcloud.service
-  systemctl --user disable nextcloud.service
+  # systemctl --user stop nextcloud.service
+  # systemctl --user disable nextcloud.service
   stow -D -vv --dotfiles --target=$HOME systemd
 }
 
