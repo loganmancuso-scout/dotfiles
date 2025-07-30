@@ -142,8 +142,8 @@ alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/m
 function tfauth() {
   bw-auth
   # Retrieve the JSON from Bitwarden
-  echo "Retrieving Hashi Vault Secrets"
-  local vault_json=$(bw get item "tofu-infrastructure" --session "$BW_SESSION")
+  echo "Retrieving Tofu Secrets"
+  local vault_json=$(bw get item "Tofu Secrets" --session "$BW_SESSION")
   if [ $? -ne 0 ]; then
     echo "Failed to retrieve item from Bitwarden."
     return 1
@@ -157,7 +157,7 @@ function tfauth() {
   fi
 
   # Evaluate the export commands to set the environment variables
-  echo "Setting Hashi Vault Secrets"
+  echo "Setting Tofu Secrets"
   eval "$export_commands"
 }
 

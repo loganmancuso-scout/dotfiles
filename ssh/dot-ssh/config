@@ -1,9 +1,11 @@
+# Author: Logan Mancuso | LastEdit: 2025-05-16
+
 ## MGMT ##
 Host opnsense
   HostName opnsense.mgmt.home.arpa
   User loganmancuso
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/personal_ed
 
 ## Mobile ##
 
@@ -12,7 +14,7 @@ Host cleopatra
   # HostName 100.54.0.3 # vpn address
   User loganmancuso
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/personal_ed
   StrictHostKeyChecking no
 
 Host phone
@@ -20,28 +22,28 @@ Host phone
   # HostName 100.54.0.2 # vpn address
   User u0_a417
   Port 8022
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/personal_ed
   StrictHostKeyChecking no
 
 Host bytevault
   HostName bytevault.cluster.vpc.home.arpa
   User root
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/personal_ed
   StrictHostKeyChecking no
 
 Host mightymouse
   HostName mightymouse.cluster.vpc.home.arpa
   User root
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/personal_ed
   StrictHostKeyChecking no
 
 Host ragnarok
   HostName ragnarok.cluster.vpc.home.arpa
   User root
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/personal_ed
   StrictHostKeyChecking no
 
 ## VPC ##
@@ -139,7 +141,7 @@ Host dev-proxmox.local
   HostName 100.64.0.10
   User root
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/personal_ed
   StrictHostKeyChecking no
   
 Host 100.64.*.*

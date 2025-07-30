@@ -4,11 +4,10 @@
 	signingkey = 0F5FCC0292CA0340
 [safe]
   directory = /home/loganmancuso/SourceControl/*
-  directory = /home/loganmancuso/Documents/*
 [core]
   autocrlf = input
 [core]
-  sshCommand = "ssh -i ~/.ssh/id_ed25519"
+  sshCommand = "ssh -i ~/.ssh/public_ed"
 [commit]
 	gpgsign = true
 [checkout]
