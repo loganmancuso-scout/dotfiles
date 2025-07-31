@@ -4,13 +4,15 @@
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 
-# pushd "$HOME/SourceControl"
 ## Environment Variables ##
-# export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:mh=00:pi=40;33'
 export PATH=$PATH:$HOME/.local/bin
 export KUBECONFIG=$HOME/.kube/config
 
-alias pentable="/usr/lib/pentablet/PenTablet"
+## Navigation Helpers ##
+alias ll='ls -1la'
+alias cd='z'
+
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
 
 # #BitWarden Authentication ##
 function bw-auth() {
@@ -37,107 +39,10 @@ function bw-auth() {
 }
 
 ## OpenTofu ##
-# alias tf="tofu"
 alias tfi="tofu init --reconfigure --upgrade"
 alias tfc="find . -maxdepth 1 -type l -delete"
 alias tffmt="tofu fmt -recursive"
 alias tfsclear='tofu state rm $(tofu state list)'
-# custom apply for deploying lxc and machine templates
-function tf-template() (
-  # Function to display usage
-  usage() {
-    echo "Error: -e <env> and -a <action> are required."
-    echo "Usage: custom_command -e <env> -a <action> [-o <os>] [-v <version>] [-r <revision>]"
-    return 1
-  }
-
-  # Parse arguments using getopts with short and long options
-  while [[ $# -gt 0 ]]; do
-    case "$1" in
-      -a|--action)
-        action="$2"
-        shift 2
-        ;;
-      -e|--env)
-        env="$2"
-        shift 2
-        ;;
-      -o|--os)
-        os="$2"
-        shift 2
-        ;;
-      -v|--version)
-        version="$2"
-        shift 2
-        ;;
-      -r|--revision)
-        revision="$2"
-        shift 2
-        ;;
-      -h|--help)
-        usage
-        ;;
-      *)
-        echo "Unknown option: $1"
-        usage
-        exit 1
-        ;;
-    esac
-  done
-
-  # Check if required argument 'env' is provided
-  if [[ -z "$env" || -z "$action" ]]; then
-    usage
-    exit 1
-  fi
-
-  # Function to find paths
-  find_paths() {
-    local base_path="$1"
-    local depth="$2"
-
-    # Iterate over directories based on depth
-    for dir in $(find "$base_path" -mindepth "$depth" -maxdepth "$depth" -type d); do
-      # do the tofu work here
-      echo "## $dir ##"
-      find . -maxdepth 1 -type l -delete
-      ln -s "$dir"/* .
-      tofu init --reconfigure --upgrade
-      tofu $action
-    done
-  }
-
-  # Main function to handle cases
-  build_paths() {
-    local base_path="./env/$env"
-
-    # Case selection based on provided arguments
-    if [ -n "$revision" ]; then
-      # Case: env, os, version, and revision
-      find_paths "$base_path/$os/$version/$revision" 0
-    elif [ -n "$version" ]; then
-      # Case: env, os, and version
-      find_paths "$base_path/$os/$version" 1
-    elif [ -n "$os" ]; then
-      # Case: env and os
-      find_paths "$base_path/$os" 2
-    else
-      # Case: only env
-      find_paths "$base_path" 3
-    fi
-  }
-
-  # Call the main function
-  build_paths
-)
-export -f tf-template
-
-## Navigation Helpers ##
-alias ll='ls -1la'
-alias cd='z'
-# alias cd='>/dev/null pushd'
-# alias popd='>/dev/null popd'
-alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
 
 function tfauth() {
   bw-auth
@@ -170,28 +75,6 @@ function tfunseal() {
   vault login -tls-skip-verify token=$VAULT_TOKEN 
 }
 
-## RDP into Work Laptop Using BitWarden ##
-function workrdp() {
-  bw-auth
-  echo "Retrieving RDP Vault Secret"
-  local vault_json=$(bw get item "bw-work" --session "$BW_SESSION")
-  if [ $? -ne 0 ]; then
-    echo "Failed to retrieve item from Bitwarden."
-    return 1
-  fi
-  # Parse the domain from the item JSON jq -r '.fields[] | "export \(.name)=\(.value)"')
-  local domain=$(echo "$vault_json" | jq -r '.fields[] | select(.name == "domain") | .value')
-  # Parse the username from the item JSON
-  local user=$(echo "$vault_json" | jq -r '.fields[] | select(.name == "username") | .value')
-  # Parse the lan_ip (eth0) from the item JSON
-  local lan_ip=$(echo "$vault_json" | jq -r '.fields[] | select(.name == "eth0") | .value')
-  local mac=$(echo "$vault_json" | jq -r '.fields[] | select(.name == "mac") | .value')
-  # Use jq to extract the name and value fields and prefix them with 'export'
-  local password=$(echo "$vault_json" | jq -r '.login.password') 
-  echo "wakeonlan $mac"
-  echo "xfreerdp /u:$user /d:$domain /v:$lan_ip:3389 /dynamic-resolution /multimon /audio-mode:1 /network:LAN +clipboard +fonts /cert:ignore /p:$password" 
-}
-
 ## Programming Helper ##
 # changes the date on a file if it has Created date tag
 function newdate() {
@@ -212,7 +95,7 @@ alias fastping="ping -c 100 -s.2 $1"
 alias ports="netstat -tulanp"
 alias flushdns="sudo resolvectl flush-caches"
 
-# Basic Default Function #
+# Basic Functions #
 function delete() {
   for item in $@; do
     mv $item $HOME/.local/share/Trash/files

@@ -1,0 +1,13 @@
+[Unit]
+Description=Backup Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c ''
+ExecStop=/bin/bash -c ''
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
