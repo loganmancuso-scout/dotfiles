@@ -3,6 +3,7 @@
 ## Set Prompt ##
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
+eval "$(fzf --bash)"
 
 ## Environment Variables ##
 export PATH=$PATH:$HOME/.local/bin

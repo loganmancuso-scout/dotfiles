@@ -3,10 +3,12 @@
 ## Set Prompt ##
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+source <(fzf --zsh)
 
 ## Environment Variables ##
 export PATH=$PATH:$HOME/.local/bin
 export KUBECONFIG=$HOME/.kube/config
+export QT_QPA_PLATFORM="xcb" # xpentablet needs this for wayland
 
 ## Navigation Helpers ##
 alias ll='ls -1la'
