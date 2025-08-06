@@ -13,6 +13,7 @@ export QT_QPA_PLATFORM="xcb" # xpentablet needs this for wayland
 ## Navigation Helpers ##
 alias ll='ls -1la'
 alias cd='z'
+alias inv='nvim $(fzf -m --preview="batcat --color=always --style=numbers --line-range=:500 {}")'
 
 alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
 
