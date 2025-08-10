@@ -8,7 +8,7 @@ README.md
 !stow-dotfiles.sh
 
 # aliases
-!aliases/dot-config/aliases
+!aliases/dot-config/**
 
 # bash
 !bash/dot-bashrc

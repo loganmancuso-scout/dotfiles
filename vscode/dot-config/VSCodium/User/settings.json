@@ -44,4 +44,9 @@
     "terminal.integrated.fontFamily": "'SauceCodePro NFM'",
     "workbench.productIconTheme": "material-product-icons",
     "workbench.iconTheme": "material-icon-theme",
+    "yaml.schemas": {
+      "/home/loganmancuso/.vscode-oss/extensions/continue.continue-1.0.21-linux-x64/config-yaml-schema.json": [
+        ".continue/**/*.yaml"
+      ]
+    },
 }
