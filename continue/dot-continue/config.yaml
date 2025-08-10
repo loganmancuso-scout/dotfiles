@@ -5,7 +5,7 @@ schema: v1
 models:
   - name: Code LLaMA Remote
     provider: ollama
-    model: codellama:7b
+    model: deepseek-r1-128k:latest
     apiBase: http://localai.app.vpc.home.arpa:11434
     roles:
       - chat
