@@ -32,6 +32,7 @@ README.md
 
 # vscodium
 !vscode/dot-config/VSCodium/User/*.json
+!vscode/dot-vscode-oss/extensions/extensions.json
 
 # zoxide
 !zoxide/dot-local/share/zoxide/db.zo
