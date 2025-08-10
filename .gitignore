@@ -7,9 +7,11 @@
 README.md
 !stow-dotfiles.sh
 
+# aliases
+!aliases/dot-config/aliases
+
 # bash
 !bash/dot-bashrc
-!bash/dot-config/bash/aliases
 
 # continue
 !continue/dot-continue/config.yaml
@@ -38,7 +40,6 @@ README.md
 !zoxide/dot-local/share/zoxide/db.zo
 
 # zsh
-!zsh/dot-config/zsh/aliases
 !zsh/dot-config/zsh/zsh-autosuggestions
 !zsh/dot-config/zsh/zsh-autosuggestions/zsh-*
 !zsh/dot-zshrc
