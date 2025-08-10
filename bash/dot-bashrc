@@ -58,4 +58,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-source ~/.config/bash/aliases
+# Custom Aliases #
+[ -f ~/.config/aliases ] && source ~/.config/aliases
+
+## Set Prompt ##
+eval "$(zoxide init bash)"
+eval "$(starship init bash)"
+source <(fzf --bash)

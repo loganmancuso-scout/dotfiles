@@ -7,6 +7,7 @@ exec > >(tee "stow-dotfiles.log") 2>&1
 # Function for stowing files using GNU Stow
 function stow_dotfiles() {
   echo "stowing dotfiles..."
+  stow -vv --dotfiles --adopt --target=$HOME aliases
   stow -vv --dotfiles --adopt --target=$HOME bash
   stow -vv --dotfiles --adopt --target=$HOME continue
   stow -vv --dotfiles --adopt --target=$HOME git
@@ -25,6 +26,7 @@ function stow_dotfiles() {
 # Function for unstowing files
 function unstow_dotfiles() {
   echo "Unstowing dotfiles..."
+  stow -D -vv --dotfiles --target=$HOME aliases
   stow -D -vv --dotfiles --target=$HOME bash
   stow -D -vv --dotfiles --target=$HOME continue
   stow -D -vv --dotfiles --target=$HOME git
