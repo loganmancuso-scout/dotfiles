@@ -62,6 +62,7 @@ fi
 [ -f ~/.config/aliases ] && source ~/.config/aliases
 
 ## Set Prompt ##
+export _ZO_DOCTOR=0
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 source <(fzf --bash)
