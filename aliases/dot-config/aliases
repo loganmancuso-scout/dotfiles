@@ -8,8 +8,9 @@ export QT_QPA_PLATFORM="xcb" # xpentablet needs this for wayland
 
 ## Aliases ##
 alias ll='ls -1la'
-alias inv='nvim $(fzf -m --preview="batcat --color=always --style=numbers --line-range=:500 {}")'
-alias l='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
+alias x='exa --icons' # ls alternative
+alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
+alias ff='nvim $(fzf -m --preview="batcat --color=always --style=numbers --line-range=:500 {}")'
 
 # #BitWarden Authentication ##
 function bw-auth() {
