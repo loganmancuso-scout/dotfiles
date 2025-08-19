@@ -1,7 +1,7 @@
 [user]
   email = logan.mancuso@scoutmotors.com
   name = Logan Mancuso
-	signingkey = 848D63DEAB1070A606AA6C1861D6BB238FBDFFC8
+  signingkey = 848D63DEAB1070A606AA6C1861D6BB238FBDFFC8
 [safe]
   directory = /Users/logan.mancuso/SourceControl/*
 [core]
