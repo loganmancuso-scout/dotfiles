@@ -39,6 +39,7 @@ export HOMEBREW_PREFIX="$HOME/.homebrew"
 export HOMEBREW_REPOSITORY="$HOME/.homebrew"
 export HOMEBREW_CELLAR="$HOME/.homebrew/Cellar"
 export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+export GPG_TTY=$(tty)
 
 # Custom Aliases #
 [ -f ~/.config/aliases ] && source ~/.config/aliases
