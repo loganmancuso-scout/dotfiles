@@ -2,6 +2,12 @@
 
 ## Environment Variables ##
 export EDITOR=nvim
+export _ZO_DOCTOR=0
+export HOMEBREW_PREFIX="$HOME/.homebrew"
+export HOMEBREW_REPOSITORY="$HOME/.homebrew"
+export HOMEBREW_CELLAR="$HOME/.homebrew/Cellar"
+export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+export GPG_TTY=$(tty)
 export PATH=$PATH:$HOME/.local/bin
 export KUBECONFIG=$HOME/.kube/config
 
