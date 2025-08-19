@@ -7,7 +7,7 @@
 [core]
   autocrlf = input
 [core]
-  sshCommand = "ssh -i ~/.ssh/scout_public"
+  sshCommand = "ssh -i ~/.ssh/scout-public"
 [init]
 	defaultBranch = main
 [commit]
