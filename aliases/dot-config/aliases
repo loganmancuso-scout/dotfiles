@@ -7,9 +7,9 @@ export KUBECONFIG=$HOME/.kube/config
 
 ## Aliases ##
 alias ll='ls -1la'
-alias x='exa --icons' # ls alternative
+alias x='eza --icons' # ls alternative
 alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
-alias ff='nvim $(fzf -m --preview="batcat --color=always --style=numbers --line-range=:500 {}")'
+alias ff='nvim $(fzf -m --preview="bat --color=always --style=numbers --line-range=:500 {}")'
 
 ## Terraform ##
 alias tfi="terraform init --reconfigure --upgrade"

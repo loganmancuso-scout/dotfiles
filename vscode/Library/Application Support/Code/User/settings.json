@@ -8,7 +8,7 @@
     "scm.inputFontSize": 14,
     "terminal.integrated.fontSize": 14,
     "chat.editor.fontSize": 14,
-    "editor.fontFamily": "'Sauce Code Pro Mono'",
-    "editor.inlineSuggest.fontFamily": "'Sauce Code Pro Mono'",
-    "terminal.integrated.fontFamily": "'Sauce Code Pro Mono'"
+    "editor.fontFamily": "'SauceCodePro NFM'",
+    "editor.inlineSuggest.fontFamily": "'SauceCodePro NFM'",
+    "terminal.integrated.fontFamily": "'SauceCodePro NFM'"
 }
