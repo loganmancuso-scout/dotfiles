@@ -24,11 +24,10 @@ alias tffmt="terraform fmt -recursive"
 alias tfsclear='terraform state rm $(terraform state list)'
 
 ## Programming Helper ##
-# changes the date on a file if it has Created date tag
+# changes the date on a file if it has LastEdit date tag
 function newdate() {
   today_=$(date +%m.%d.%Y)
-  to_replace_="Created:"
-  # git_list=$(git show --pretty="" --name-only)
+  to_replace_="| LastEdit:"
   for passed_ in $@; do 
     temp=$(echo ${passed_} | cut -d'/' -f2-)
     sed -i "0,\|.* $to_replace_.*|{s|$to_replace_.*|$to_replace_ $today_|g1}" ${temp}
