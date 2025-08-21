@@ -24,6 +24,22 @@ alias tffmt="terraform fmt -recursive"
 alias tfsclear='terraform state rm $(terraform state list)'
 
 ## Programming Helper ##
+
+function newfile() {
+  local filename="$1"
+  local today=$(date +%Y-%m-%d)
+  if [ -z "$filename" ]; then
+    echo "Usage: newfile <filename>"
+    return 1
+  fi
+  {
+    echo "# PROPRIETARY: Scout Motors Inc."
+    echo "# Author: Logan Mancuso | LastEdit: $today"
+    echo
+  } > "$filename"
+  echo "Created $filename with header."
+}
+
 # changes the date on a file if it has LastEdit date tag
 function newdate() {
   local today=$(date +%Y-%m-%d)
