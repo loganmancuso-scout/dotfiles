@@ -10,5 +10,7 @@
     "chat.editor.fontSize": 14,
     "editor.fontFamily": "'SauceCodePro NFM'",
     "editor.inlineSuggest.fontFamily": "'SauceCodePro NFM'",
-    "terminal.integrated.fontFamily": "'SauceCodePro NFM'"
+    "terminal.integrated.fontFamily": "'SauceCodePro NFM'",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false
 }
