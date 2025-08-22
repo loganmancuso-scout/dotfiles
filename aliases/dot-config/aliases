@@ -34,7 +34,8 @@ function newfile() {
   fi
   {
     echo "# PROPRIETARY: Scout Motors Inc."
-    echo "# Author: Logan Mancuso | LastEdit: $today"
+    echo "## Author: Logan Mancuso | LastEdit: $today"
+    echo "### Description:"
     echo
   } > "$filename"
   echo "Created $filename with header."
