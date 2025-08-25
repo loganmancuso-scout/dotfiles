@@ -1,7 +1,7 @@
 # Author: Logan Mancuso | LastEdit: 2025-05-16
 
 format = """
-$os$terraform$directory$git_branch$git_status 
+$os$shell$terraform$directory$git_branch$git_status 
 $cmd_duration$character\
 """
 
@@ -21,8 +21,15 @@ disabled = false
 
 [os.symbols]
 Linux = '󰌽'
-Pop = '󰌽'
-Windows = '󰍹'
+Windows = ''
+Macos = ''
+
+[shell]
+zsh_indicator = "󰬡"
+bash_indicator = "󱆃"
+powershell_indicator = "\ue683"
+style = 'fg:#FFFFFF'
+disabled = false
 
 [terraform]
 format = '[$workspace ]($style)'

@@ -12,5 +12,6 @@
     "editor.inlineSuggest.fontFamily": "'SauceCodePro NFM'",
     "terminal.integrated.fontFamily": "'SauceCodePro NFM'",
     "editor.tabSize": 2,
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "workbench.startupEditor": "none"
 }

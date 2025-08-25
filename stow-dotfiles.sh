@@ -11,6 +11,7 @@ function stow_dotfiles() {
   stow -vv --dotfiles --adopt --target=$HOME bash
   stow -vv --dotfiles --adopt --target=$HOME git
   stow -vv --dotfiles --adopt --target=$HOME nvim
+  stow -vv --dotfiles --adopt --target=$HOME powershell
   stow -vv --dotfiles --adopt --target=$HOME ssh
   stow -vv --dotfiles --adopt --target=$HOME starship
   stow -vv --dotfiles --adopt --target=$HOME vscode
@@ -25,6 +26,7 @@ function unstow_dotfiles() {
   stow -D -vv --dotfiles --target=$HOME bash
   stow -D -vv --dotfiles --target=$HOME git
   stow -D -vv --dotfiles --target=$HOME nvim
+  stow -D -vv --dotfiles --target=$HOME powershell
   stow -D -vv --dotfiles --target=$HOME ssh
   stow -D -vv --dotfiles --target=$HOME starship
   stow -D -vv --dotfiles --target=$HOME vscode
