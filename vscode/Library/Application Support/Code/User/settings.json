@@ -13,5 +13,6 @@
     "terminal.integrated.fontFamily": "'SauceCodePro NFM'",
     "editor.tabSize": 2,
     "editor.detectIndentation": false,
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    "github.copilot.nextEditSuggestions.enabled": true
 }

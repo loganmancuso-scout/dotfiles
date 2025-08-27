@@ -41,6 +41,31 @@ function newfile() {
   echo "Created $filename with header."
 }
 
+function adoptfile(){
+  local ext="$1"
+  local today=$(date +%Y-%m-%d)
+  if [ -z "$ext" ]; then
+    echo "Usage: ensure_header .sh"
+    return 1
+  fi
+  for file in *"$ext"; do
+    [ -f "$file" ] || continue
+    # Check first 5 lines for header
+    if ! head -n 5 "$file" | grep -q "# PROPRIETARY: Scout Motors Inc."; then
+      tmpfile=$(mktemp)
+      {
+        echo "# PROPRIETARY: Scout Motors Inc."
+        echo "## Author: Logan Mancuso | LastEdit: $today"
+        echo "### Description:"
+        echo
+        cat "$file"
+      } > "$tmpfile"
+      mv "$tmpfile" "$file"
+      echo "Header inserted: $file"
+    fi
+  done
+}
+
 # changes the date on a file if it has LastEdit date tag
 function newdate() {
   local today=$(date +%Y-%m-%d)
