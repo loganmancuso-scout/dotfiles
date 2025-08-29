@@ -42,3 +42,4 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 source <(fzf --zsh)
+source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh

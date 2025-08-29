@@ -25,6 +25,11 @@ alias tfsclear='terraform state rm $(terraform state list)'
 
 ## Programming Helper ##
 
+function login(){
+  export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Local/username")
+  export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Local/password")
+}
+
 function newfile() {
   local filename="$1"
   local today=$(date +%Y-%m-%d)
@@ -35,7 +40,6 @@ function newfile() {
   {
     echo "# PROPRIETARY: Scout Motors Inc."
     echo "## Author: Logan Mancuso | LastEdit: $today"
-    echo "### Description:"
     echo
   } > "$filename"
   echo "Created $filename with header."
@@ -56,7 +60,6 @@ function adoptfile(){
       {
         echo "# PROPRIETARY: Scout Motors Inc."
         echo "## Author: Logan Mancuso | LastEdit: $today"
-        echo "### Description:"
         echo
         cat "$file"
       } > "$tmpfile"

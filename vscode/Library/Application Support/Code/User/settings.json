@@ -14,5 +14,8 @@
     "editor.tabSize": 2,
     "editor.detectIndentation": false,
     "workbench.startupEditor": "none",
-    "github.copilot.nextEditSuggestions.enabled": true
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "explorer.confirmDragAndDrop": false,
+    "github.copilot.chat.agent.autoFix": false
 }
