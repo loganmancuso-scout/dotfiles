@@ -18,18 +18,17 @@ alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
 alias ff='nvim $(fzf -m --preview="bat --color=always --style=numbers --line-range=:500 {}")'
 
 ## Terraform ##
+alias tf="terraform"
 alias tfi="terraform init --reconfigure --upgrade"
 alias tfc="find . -maxdepth 1 -type l -delete"
 alias tffmt="terraform fmt -recursive"
 alias tfsclear='terraform state rm $(terraform state list)'
-
-## Programming Helper ##
-
-function login(){
+function tflogin(){
   export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Local/username")
   export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Local/password")
 }
 
+## Programming Helper ##
 function newfile() {
   local filename="$1"
   local today=$(date +%Y-%m-%d)
