@@ -1,11 +1,15 @@
-# Author: Logan Mancuso | LastEdit: 2025-05-16
+# Author: Logan Mancuso | LastEdit: 2025-09-07
+
+Host *
+  IdentityAgent ~/.1password/agent.sock
+  Port 22
+  StrictHostKeyChecking no
 
 ## MGMT ##
 Host opnsense
   HostName opnsense.mgmt.home.arpa
   User loganmancuso
-  Port 22
-  IdentityFile ~/.ssh/personal_ed
+  # IdentityFile ~/.ssh/personal_ed
 
 ## Mobile ##
 
@@ -13,139 +17,76 @@ Host cleopatra
   HostName cleopatra.edge.home.arpa # mobile address
   # HostName 100.54.0.3 # vpn address
   User loganmancuso
-  Port 22
-  IdentityFile ~/.ssh/personal_ed
-  StrictHostKeyChecking no
 
 Host phone
   HostName oneplus.edge.home.arpa # mobile address
   # HostName 100.54.0.2 # vpn address
   User u0_a417
   Port 8022
-  IdentityFile ~/.ssh/personal_ed
-  StrictHostKeyChecking no
 
 Host bytevault
   HostName bytevault.cluster.vpc.home.arpa
   User root
-  Port 22
-  IdentityFile ~/.ssh/personal_ed
-  StrictHostKeyChecking no
 
 Host mightymouse
   HostName mightymouse.cluster.vpc.home.arpa
   User root
-  Port 22
-  IdentityFile ~/.ssh/personal_ed
-  StrictHostKeyChecking no
 
 Host ragnarok
   HostName ragnarok.cluster.vpc.home.arpa
   User root
-  Port 22
-  IdentityFile ~/.ssh/personal_ed
-  StrictHostKeyChecking no
 
 ## VPC ##
 Host 192.168.1*.*
   User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
 
 Host *.cluster.vpc.home.arpa
   User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
 
 Host thoth
   HostName thoth.infra.vpc.home.arpa
-  User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
 
 Host ingress
   HostName proxy.public.vpc.home.arpa
-  User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
 
 Host home
   HostName 192.168.17.6
   User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
 
 Host sentry
   HostName sentry.infra.vpc.home.arpa
   User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
 
 Host glacial
   HostName glacial.infra.vpc.home.arpa
   User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
 
 Host localai
   HostName localai.app.vpc.home.arpa
   User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
 
 Host sandbox
   HostName 192.168.17.240
   User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no
 
 ## Edge ##
 Host asus
   # HostName rm-asus-eth.edge.home.arpa #eth
   HostName rm-asus.edge.home.arpa #wlan
   User labuser
-  Port 22
-  IdentityFile ~/.ssh/edge_instance_key
-  StrictHostKeyChecking no
 
 Host orangepizero3
   HostName rm-orangepizero3.edge.home.arpa #eth
   # HostName rm-orangepizero3-wlan.edge.home.arpa #wlan
   User labuser
-  Port 22
-  IdentityFile ~/.ssh/edge_instance_key
-
-Host pizerow
-  HostName rm-pizerow.edge.home.arpa
-  User labuser
-  Port 22
-  IdentityFile ~/.ssh/edge_instance_key
 
 Host 192.168.3.*
   User labuser
-  Port 22
-  IdentityFile ~/.ssh/edge_instance_key
-  StrictHostKeyChecking no
 
 ## DEV-LAN ##
 Host dev-proxmox.local
   HostName 100.64.0.10
   User root
-  Port 22
-  IdentityFile ~/.ssh/personal_ed
-  StrictHostKeyChecking no
   
 Host 100.64.*.*
   User instance-user
-  Port 22
-  IdentityFile ~/.ssh/instance_key
-  StrictHostKeyChecking no

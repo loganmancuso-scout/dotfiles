@@ -39,6 +39,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 [ -f ~/.config/aliases ] && source ~/.config/aliases
 
 ## Set Prompt ##
+source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 export _ZO_DOCTOR=0
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"

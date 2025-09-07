@@ -1,4 +1,4 @@
-# Author: Logan Mancuso | LastEdit: 2024-05-16
+# Author: Logan Mancuso | LastEdit: 2025-09-07
 
 ## Environment Variables ##
 export EDITOR=nvim
@@ -37,6 +37,8 @@ function bw-auth() {
 }
 
 ## OpenTofu ##
+alias k="kubectl"
+alias tf="tofu"
 alias tfi="tofu init --reconfigure --upgrade"
 alias tfc="find . -maxdepth 1 -type l -delete"
 alias tffmt="tofu fmt -recursive"
@@ -74,16 +76,42 @@ function tfunseal() {
 }
 
 ## Programming Helper ##
-# changes the date on a file if it has Created date tag
 function newdate() {
-  today_=$(date +%m.%d.%Y)
-  to_replace_="Created:"
-  # git_list=$(git show --pretty="" --name-only)
-  for passed_ in $@; do 
-    temp=$(echo ${passed_} | cut -d'/' -f2-)
-    sed -i "0,\|.* $to_replace_.*|{s|$to_replace_.*|$to_replace_ $today_|g1}" ${temp}
-    echo "--- ${temp} --- $to_replace_ $today_"
+  today_=$(date +%Y-%m-%d)
+  tag_="LastEdit:"
+  updated_files=()
+
+  process_file() {
+    local file_="$1"
+    [[ -f "$file_" ]] || return
+
+    if grep -q "$tag_" "$file_"; then
+      sed -i "s/\($tag_ \)[0-9\-]*/\1$today_/g" "$file_"
+      updated_files+=("$file_")
+    elif grep -q "Author:" "$file_"; then
+      sed -i "s/\(Author:.*\)/\1 | $tag_ $today_/" "$file_"
+      updated_files+=("$file_")
+    fi
+  }
+
+  for arg in "$@"; do
+    if [[ -d "$arg" ]]; then
+      while IFS= read -r -d '' file_; do
+        process_file "$file_"
+      done < <(find "$arg" -type f -print0)
+    elif [[ -f "$arg" ]]; then
+      process_file "$arg"
+    else
+      echo "Warning: '$arg' is not a valid file or directory" >&2
+    fi
   done
+
+  if (( ${#updated_files[@]} > 0 )); then
+    echo "Updated ${#updated_files[@]} file(s) with '$tag_ $today_':"
+    printf ' - %s\n' "${updated_files[@]}"
+  else
+    echo "No files were updated."
+  fi
 }
 
 ## Sys Helpers ##
@@ -110,71 +138,6 @@ function stopwatch() {
 function timer() {
   while true; do 
     echo -ne "$(date +%H:%M:%S:%N)\r";
-  done
-}
-
-## update linux ##
-function os-update() {
-  # Get os name via uname
-  declare -A osInfo;
-  osInfo[/etc/redhat-release]=dnf # yum
-  osInfo[/etc/arch-release]=pacman
-  osInfo[/etc/gentoo-release]=emerge
-  osInfo[/etc/SuSE-release]=zypp
-  osInfo[/etc/debian_version]=apt-get
-  osInfo[/etc/alpine-release]=apk
-
-  for f in "${!osInfo[@]}"; do
-    if [[ -f $f ]]; then
-      echo "Updating Using Package Manager: '${osInfo[$f]}'"
-      case ${osInfo[$f]} in
-        apt-get)
-          sudo snap refresh
-          sudo apt-get update
-          sudo apt-get upgrade -y
-          sudo apt-get dist-upgrade -y
-          sudo apt-get autoremove -y
-          break
-        ;;
-        dnf)
-          sudo dnf check-update
-          sudo dnf update -y
-          sudo dnf upgrade -y
-          sudo rpmconf -a
-          sudo dnf repoquery --unsatisfied
-          sudo dnf repoquery --duplicates
-          sudo dnf list extras
-          sudo dnf autoremove -y
-          break
-        ;;
-        pacman)
-          sudo pacman -Syy
-          sudo pacman -Su --noconfirm
-          break
-        ;;
-        emerge)
-          sudo emerge --sync
-          sudo emerge -uDNav @world
-          sudo emerge --depclean
-          break
-        ;;
-        zypp)
-          sudo zypper refresh
-          sudo zypper update -y
-          sudo zypper dist-upgrade -y
-          sudo zypper clean
-          break
-        ;;
-        apk)
-          sudo apk update
-          sudo apk upgrade
-          break
-        ;;
-        *)
-          echo "ERROR: Cannot Find Package Manager"
-        ;;
-      esac
-    fi
   done
 }
 
