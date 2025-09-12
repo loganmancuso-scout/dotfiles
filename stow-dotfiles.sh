@@ -1,42 +1,15 @@
 #!/bin/bash
-# Author: Logan Mancuso | LastEdit: 2024-05-16
+# Author: Logan Mancuso | LastEdit: 2025-09-07
 
 # Redirect all output to log file
 exec > >(tee "stow-dotfiles.log") 2>&1
 
-# Function for stowing files using GNU Stow
-function stow_dotfiles() {
-  echo "stowing dotfiles..."
-  stow -vv --dotfiles --adopt --target=$HOME aliases
-  stow -vv --dotfiles --adopt --target=$HOME bash
-  stow -vv --dotfiles --adopt --target=$HOME git
-  stow -vv --dotfiles --adopt --target=$HOME nvim
-  stow -vv --dotfiles --adopt --target=$HOME powershell
-  stow -vv --dotfiles --adopt --target=$HOME ssh
-  stow -vv --dotfiles --adopt --target=$HOME starship
-  stow -vv --dotfiles --adopt --target=$HOME vscode
-  stow -vv --dotfiles --adopt --target=$HOME zoxide
-  stow -vv --dotfiles --adopt --target=$HOME zsh
-}
-
-# Function for unstowing files
-function unstow_dotfiles() {
-  echo "Unstowing dotfiles..."
-  stow -D -vv --dotfiles --target=$HOME aliases
-  stow -D -vv --dotfiles --target=$HOME bash
-  stow -D -vv --dotfiles --target=$HOME git
-  stow -D -vv --dotfiles --target=$HOME nvim
-  stow -D -vv --dotfiles --target=$HOME powershell
-  stow -D -vv --dotfiles --target=$HOME ssh
-  stow -D -vv --dotfiles --target=$HOME starship
-  stow -D -vv --dotfiles --target=$HOME vscode
-  stow -D -vv --dotfiles --target=$HOME zoxide
-  stow -D -vv --dotfiles --target=$HOME zsh
-}
-
 # Main function to handle options
 function main() {
   echo "System Information:"
+  echo "hostname: $(cat /etc/hostname)"
+  echo "cpu: $(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')"
+  echo "memory: $(free | grep Mem | awk '{print $3/$2 * 100.0"%"}')"
   echo "user: $(whoami)"
   echo "time: $(date)"
 
@@ -52,15 +25,27 @@ function main() {
   # Reorder options and arguments
   eval set -- "$OPTIONS"
 
+  declare -a dotfiles=("aliases" "bash" "git" "nvim" "powershell" "ssh" "starship" "vscode" "zoxide" "zsh")
+
   # Parse options
   while true; do
     case "$1" in
       --stow)
-        stow_dotfiles
+        echo "stowing dotfiles..."
+        for dot in "${dotfiles[@]}"; do
+          stow -vv --dotfiles --adopt --target="$HOME" "$dot"
+        done
+        # leaving thses comments here to remind me how to recycle services if i add a job to the systemd folder
+        # systemctl --user daemon-reload
+        # systemctl --user enable nextcloud.service
+        # systemctl --user start nextcloud.service
         shift
         ;;
       --unstow)
-        unstow_dotfiles
+        echo "Unstowing dotfiles..."
+        for dot in "${dotfiles[@]}"; do
+          stow -vv --dotfiles --adopt --target="$HOME" "$dot"
+        done
         shift
         ;;
       --)

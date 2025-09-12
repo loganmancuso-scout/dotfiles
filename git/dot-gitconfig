@@ -1,7 +1,11 @@
 [user]
   email = logan.mancuso@scoutmotors.com
   name = Logan Mancuso
-  signingkey = 848D63DEAB1070A606AA6C1861D6BB238FBDFFC8
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMbGXnZD4zpYPsAsvqtalK6S3sjDrPxICil74FDFY62T
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 [safe]
   directory = /Users/logan.mancuso/SourceControl/*
 [core]
