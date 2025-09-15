@@ -84,7 +84,7 @@ if ! shopt -oq posix; then
 fi
 
 # Custom Aliases #
-[ -f ~/.config/aliases ] && source ~/.config/aliases
+[ -f $HOME/.config/aliases ] && source $HOME/.config/aliases
 
 ## Set Prompt ##
 eval "$(zoxide init bash)"

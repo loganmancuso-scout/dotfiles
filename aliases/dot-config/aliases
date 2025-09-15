@@ -1,4 +1,4 @@
-# Author: Logan Mancuso | LastEdit: 2025-08-25
+# Author: Logan Mancuso | LastEdit: 2025-09-15
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -6,10 +6,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 export EDITOR=nvim
 export _ZO_DOCTOR=0
 export GPG_TTY=$(tty)
-# export PATH=$PATH:$HOME/.local/bin:/opt/homebrew/opt/openjdk/bin
+export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
 export KUBECONFIG=$HOME/.kube/config
-
-# export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+alias assume=". assume" # required alias for assume role tool
 
 ## Aliases ##
 alias ll='ls -1la'
@@ -39,7 +38,7 @@ function newfile() {
     return 1
   fi
   {
-    echo "## Author: Logan Mancuso | LastEdit: $today"
+    echo "## Author: Logan Mancuso | LastEdit: 2025-09-15$today"
     echo
   } > "$filename"
   echo "Created $filename with header."
@@ -57,11 +56,11 @@ function newdate() {
 
     if grep -q "$tag_" "$file_"; then
       echo "1"
-      sed -i "s/\($tag_ \)[0-9\-]*/\1$today_/g" "$file_"
+        sed -i '' "s/\($tag_ \)[0-9\-]*/\1$today_/g" "$file_"
       updated_files+=("$file_")
     elif grep -q "Author:" "$file_"; then
       echo "2"
-      sed -i "s/\(Author:.*\)/\1 | $tag_ $today_/" "$file_"
+        sed -i '' "s/\(Author:.*\)/\1 | $tag_ $today_/" "$file_"
       updated_files+=("$file_")
     fi
   }

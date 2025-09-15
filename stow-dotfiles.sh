@@ -1,15 +1,9 @@
 #!/bin/bash
-# Author: Logan Mancuso | LastEdit: 2025-09-07
-
-# Redirect all output to log file
-exec > >(tee "stow-dotfiles.log") 2>&1
+# Author: Logan Mancuso | LastEdit: 2025-09-15
 
 # Main function to handle options
 function main() {
   echo "System Information:"
-  echo "hostname: $(cat /etc/hostname)"
-  echo "cpu: $(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')"
-  echo "memory: $(free | grep Mem | awk '{print $3/$2 * 100.0"%"}')"
   echo "user: $(whoami)"
   echo "time: $(date)"
 
@@ -44,7 +38,7 @@ function main() {
       --unstow)
         echo "Unstowing dotfiles..."
         for dot in "${dotfiles[@]}"; do
-          stow -vv --dotfiles --adopt --target="$HOME" "$dot"
+          stow -D -vv --target="$HOME" "$dot"
         done
         shift
         ;;

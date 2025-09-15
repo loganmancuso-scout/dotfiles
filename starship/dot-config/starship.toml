@@ -1,4 +1,4 @@
-# Author: Logan Mancuso | LastEdit: 2025-05-16
+# Author: Logan Mancuso | LastEdit: 2025-09-15
 
 format = """
 $os$shell$terraform$directory$git_branch$git_status 

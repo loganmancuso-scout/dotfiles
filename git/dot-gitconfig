@@ -6,6 +6,7 @@
   format = ssh
 [gpg "ssh"]
   program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+	allowedSignersFile = /Users/logan.mancuso/.ssh/allowed_signers
 [safe]
   directory = /Users/logan.mancuso/SourceControl/*
 [core]
