@@ -1,12 +1,13 @@
 # Author: Logan Mancuso | LastEdit: 2025-09-15
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+set -o vi
 
 ## Environment Variables ##
 export EDITOR=nvim
 export _ZO_DOCTOR=0
 export GPG_TTY=$(tty)
-export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH"
 export KUBECONFIG=$HOME/.kube/config
 alias assume=". assume" # required alias for assume role tool
 

@@ -1,0 +1,49 @@
+# Ignore everything
+*
+!.gitignore
+
+# Allow directories to be included, but not files within them
+!*/
+
+README.md
+!stow-dotfiles.sh
+
+# aliases
+!aliases/dot-config/**
+
+# bash
+!bash/dot-bashrc
+
+# git
+!git/dot-gitconfig
+
+# nvim
+!nvim/dot-config/nvim/*.json
+nvim/dot-config/nvim/*lock.json
+!nvim/dot-config/nvim/*.toml
+!nvim/dot-config/nvim/*.lua
+
+# powershell
+!powershell/dot-config/powershell/**
+
+# ssh
+!ssh/dot-ssh/config
+!ssh/dot-ssh/known_hosts
+
+# starship
+!starship/dot-config/starship.toml
+
+# vscodium
+!vscode/Library/Application\ Support/Code/User/*.json
+
+# zellij
+!zellij/dot-config/zellij/*.kdl
+!zellij/dot-config/zellij/themes/**
+
+# zoxide
+zoxide/dot-local/**
+!zoxide/dot-local/share/zoxide/db.zo
+
+# zsh
+!zsh/dot-config/zsh/zsh-autosuggestions/**
+!zsh/dot-zshrc
