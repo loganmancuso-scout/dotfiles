@@ -1,9 +1,6 @@
 #!/bin/bash
 # Author: Logan Mancuso | LastEdit: 2025-09-07
 
-# Redirect all output to log file
-exec > >(tee "stow-dotfiles.log") 2>&1
-
 # Main function to handle options
 function main() {
   echo "System Information:"
@@ -25,7 +22,7 @@ function main() {
   # Reorder options and arguments
   eval set -- "$OPTIONS"
 
-  declare -a dotfiles=("aliases" "bash" "continue" "git" "nvim" "ssh" "starship" "vscode" "zoxide" "zsh")
+  declare -a dotfiles=("aliases" "bash" "continue" "git" "nvim" "ssh" "starship" "vscode" "zellij" "zoxide" "zsh")
 
   # Parse options
   while true; do
@@ -33,7 +30,7 @@ function main() {
       --stow)
         echo "stowing dotfiles..."
         for dot in "${dotfiles[@]}"; do
-          stow -vv --dotfiles --adopt --target="$HOME" "$dot"
+          stow -v --dotfiles --adopt --target="$HOME" "$dot"
         done
         # leaving thses comments here to remind me how to recycle services if i add a job to the systemd folder
         # systemctl --user daemon-reload
@@ -44,7 +41,7 @@ function main() {
       --unstow)
         echo "Unstowing dotfiles..."
         for dot in "${dotfiles[@]}"; do
-          stow -vv --dotfiles --adopt --target="$HOME" "$dot"
+          stow -D -v "$dot"
         done
         shift
         ;;

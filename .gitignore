@@ -17,10 +17,12 @@ README.md
 !continue/dot-continue/config.yaml
 
 # git
-!git/
+!git/dot-gitconfig
 
 # nvim
-!nvim/dot-config/**
+!nvim/dot-config/nvim/*.lua
+!nvim/dot-config/nvim/*.json
+!nvim/dot-config/nvim/*.toml
 
 # ssh
 !ssh/dot-ssh/config
@@ -36,10 +38,14 @@ README.md
 !vscode/dot-config/VSCodium/User/*.json
 !vscode/dot-vscode-oss/extensions/extensions.json
 
+# zellij
+!zellih/dot-config/zellij/*.kdl
+!zellih/dot-config/zellij/**/*.kdl
+
 # zoxide
 !zoxide/dot-local/share/zoxide/db.zo
 
 # zsh
-!zsh/dot-config/zsh/zsh-autosuggestions
-!zsh/dot-config/zsh/zsh-autosuggestions/zsh-*
+zsh/dot-config/zsh/zsh-autosuggestions/**
+!zsh/dot-config/zsh/zsh-autosuggestions/*.zsh
 !zsh/dot-zshrc
