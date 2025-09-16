@@ -19,7 +19,7 @@ function main() {
   # Reorder options and arguments
   eval set -- "$OPTIONS"
 
-  declare -a dotfiles=("aliases" "bash" "git" "nvim" "powershell" "ssh" "starship" "vscode" "zellij" "zoxide" "zsh")
+  declare -a dotfiles=("aliases" "bash" "ghostty" "git" "nvim" "powershell" "ssh" "starship" "vscode" "zellij" "zoxide" "zsh")
 
   # Parse options
   while true; do
@@ -27,7 +27,7 @@ function main() {
     --stow)
       echo "stowing dotfiles..."
       for dot in "${dotfiles[@]}"; do
-        stow -vv --dotfiles --adopt --target="$HOME" "$dot"
+        stow -v --dotfiles --adopt --target=$HOME $dot
       done
       # leaving thses comments here to remind me how to recycle services if i add a job to the systemd folder
       # systemctl --user daemon-reload
@@ -38,7 +38,7 @@ function main() {
     --unstow)
       echo "Unstowing dotfiles..."
       for dot in "${dotfiles[@]}"; do
-        stow -D -vv --target="$HOME" "$dot"
+        stow -D -v $dot
       done
       shift
       ;;

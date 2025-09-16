@@ -17,5 +17,6 @@
     "github.copilot.nextEditSuggestions.enabled": true,
     "security.workspace.trust.untrustedFiles": "open",
     "explorer.confirmDragAndDrop": false,
-    "github.copilot.chat.agent.autoFix": false
+    "github.copilot.chat.agent.autoFix": false,
+    "workbench.colorTheme": "Default Dark+"
 }

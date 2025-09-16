@@ -14,21 +14,24 @@ README.md
 # bash
 !bash/dot-bashrc
 
+# ghostty
+!ghostty/dot-config/ghostty/config
+
 # git
 !git/dot-gitconfig
 
 # nvim
 !nvim/dot-config/nvim/*.json
-nvim/dot-config/nvim/*lock.json
 !nvim/dot-config/nvim/*.toml
 !nvim/dot-config/nvim/*.lua
 
 # powershell
-!powershell/dot-config/powershell/**
+!powershell/dot-config/powershell/*.ps1
 
 # ssh
 !ssh/dot-ssh/config
 !ssh/dot-ssh/known_hosts
+!ssh/dot-ssh/allowed_signers
 
 # starship
 !starship/dot-config/starship.toml
