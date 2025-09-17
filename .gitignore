@@ -11,6 +11,9 @@ README.md
 # aliases
 !aliases/dot-config/**
 
+# aws
+!aws/dot-aws/config
+
 # bash
 !bash/dot-bashrc
 

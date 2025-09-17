@@ -1,0 +1,129 @@
+[profile aft-management]
+sso_session = ScoutIT
+sso_account_id = 211125305344
+sso_role_name = ScoutAdmin
+
+[profile audit]
+sso_session = ScoutIT
+sso_account_id = 767398011067
+sso_role_name = ScoutAdmin
+
+[profile co-sales-and-ops-planning-dev]
+sso_session = ScoutIT
+sso_account_id = 102732511748
+sso_role_name = ScoutAdmin
+
+[profile data-app-dev]
+sso_session = ScoutIT
+sso_account_id = 917050833553
+sso_role_name = ScoutAdmin
+
+[profile data-app-prd]
+sso_session = ScoutIT
+sso_account_id = 390403895777
+sso_role_name = ScoutAdmin
+
+[profile data-dev]
+sso_session = ScoutIT
+sso_account_id = 904233117546
+sso_role_name = ScoutAdmin
+
+[profile data-prd]
+sso_session = ScoutIT
+sso_account_id = 202533496690
+sso_role_name = ScoutAdmin
+
+[profile data-sbx-001]
+sso_session = ScoutIT
+sso_account_id = 211125687613
+sso_role_name = ScoutAdmin
+
+[profile digital-dev]
+sso_session = ScoutIT
+sso_account_id = 637423590138
+sso_role_name = ScoutAdmin
+
+[profile digital-prd]
+sso_session = ScoutIT
+sso_account_id = 891377266805
+sso_role_name = ScoutAdmin
+
+[profile digital-sbx-001]
+sso_session = ScoutIT
+sso_account_id = 590184084454
+sso_role_name = ScoutAdmin
+
+[profile digital-stg]
+sso_session = ScoutIT
+sso_account_id = 590184084454
+sso_role_name = ScoutAdmin
+
+[profile integration-dev]
+sso_session = ScoutIT
+sso_account_id = 313128722785
+sso_role_name = ScoutAdmin
+
+[profile integration-prd]
+sso_session = ScoutIT
+sso_account_id = 420887743921
+sso_role_name = ScoutAdmin
+
+[profile integration-sbx-001]
+sso_session = ScoutIT
+sso_account_id = 688377333567
+sso_role_name = ScoutAdmin
+
+[profile log-archive]
+sso_session = ScoutIT
+sso_account_id = 767397712398
+sso_role_name = ScoutAdmin
+
+[profile pe-network-dev]
+sso_session = ScoutIT
+sso_account_id = 637423266247
+sso_role_name = ScoutAdmin
+
+[profile pe-network-prd]
+sso_session = ScoutIT
+sso_account_id = 851725195265
+sso_role_name = ScoutAdmin
+
+[profile plant-app-prd]
+sso_session = ScoutIT
+sso_account_id = 219677711572
+sso_role_name = ScoutAdmin
+
+[profile ScoutMotorsInc]
+sso_session = ScoutIT
+sso_account_id = 975050178428
+sso_role_name = ScoutAdmin
+
+[profile scout-tools-dev]
+sso_session = ScoutIT
+sso_account_id = 637423390624
+sso_role_name = ScoutAdmin
+
+[profile scout-tools-prd]
+sso_session = ScoutIT
+sso_account_id = 471112692300
+sso_role_name = ScoutAdmin
+
+[profile vehicle-connectivity-sbx-001]
+sso_session = ScoutIT
+sso_account_id = 038462751872
+sso_role_name = ScoutAdmin
+
+[profile vehicle-infotainment-dev]
+sso_session = ScoutIT
+sso_account_id = 654654214560
+sso_role_name = ScoutAdmin
+
+[profile wiz-outpost]
+sso_session = ScoutIT
+sso_account_id = 736744502616
+sso_role_name = ScoutAdmin
+
+[sso-session ScoutIT]
+sso_start_url = https://d-9a6771986f.awsapps.com/start
+sso_region = us-east-2
+sso_registration_scopes = sso:account:access

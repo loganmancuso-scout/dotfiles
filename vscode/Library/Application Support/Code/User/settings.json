@@ -18,5 +18,6 @@
     "security.workspace.trust.untrustedFiles": "open",
     "explorer.confirmDragAndDrop": false,
     "github.copilot.chat.agent.autoFix": false,
-    "workbench.colorTheme": "Default Dark+"
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "editor.minimap.enabled": false
 }
