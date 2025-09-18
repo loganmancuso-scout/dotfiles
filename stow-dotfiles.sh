@@ -38,7 +38,7 @@ function main() {
     --unstow)
       echo "Unstowing dotfiles..."
       for dot in "${dotfiles[@]}"; do
-        stow -D -v $dot
+        stow -D -vv $dot
       done
       shift
       ;;
