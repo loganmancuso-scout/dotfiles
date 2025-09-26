@@ -11,6 +11,7 @@ export PATH="/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH"
 export KUBECONFIG=$HOME/.kube/config
 alias assume=". assume" # required alias for assume role tool
 
+
 ## Aliases ##
 alias ll='ls -1la'
 alias x='eza --icons' # ls alternative
@@ -26,8 +27,8 @@ alias tfc="find . -maxdepth 1 -type l -delete"
 alias tffmt="terraform fmt -recursive"
 alias tfsclear='terraform state rm $(terraform state list)'
 function tflogin(){
-  export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Local/username")
-  export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Local/password")
+  export NUTANIX_USERNAME=$(op read "op://Employee/AWS Nc2 Prism Element/username")
+  export NUTANIX_PASSWORD=$(op read "op://Employee/AWS Nc2 Prism Element/password")
 }
 
 ## Programming Helper ##

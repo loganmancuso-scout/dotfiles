@@ -20,5 +20,7 @@
     "github.copilot.chat.agent.autoFix": false,
     "workbench.colorTheme": "Catppuccin Mocha",
     "editor.minimap.enabled": false,
-    "git.confirmSync": false
+    "git.confirmSync": false,
+    "terminal.integrated.stickyScroll.enabled": false,
+    "extensions.ignoreRecommendations": true
 }
