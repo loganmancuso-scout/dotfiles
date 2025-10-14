@@ -35,6 +35,7 @@ README.md
 !ssh/dot-ssh/config
 !ssh/dot-ssh/known_hosts
 !ssh/dot-ssh/allowed_signers
+!ssh/dot-ssh/1Password/config
 
 # starship
 !starship/dot-config/starship.toml
