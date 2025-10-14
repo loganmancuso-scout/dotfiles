@@ -14,7 +14,6 @@
     "editor.tabSize": 2,
     "editor.detectIndentation": false,
     "workbench.startupEditor": "none",
-    "github.copilot.nextEditSuggestions.enabled": true,
     "security.workspace.trust.untrustedFiles": "open",
     "explorer.confirmDragAndDrop": false,
     "github.copilot.chat.agent.autoFix": false,
@@ -22,5 +21,14 @@
     "editor.minimap.enabled": false,
     "git.confirmSync": false,
     "terminal.integrated.stickyScroll.enabled": false,
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+    "github.copilot.nextEditSuggestions.fixes": false,
+    "github.copilot.renameSuggestions.triggerAutomatically": false,
+    "github.copilot.enable": {
+      "*": false,
+      "plaintext": false,
+      "markdown": false,
+      "scminput": false
+    },
+    "update.showReleaseNotes": false
 }

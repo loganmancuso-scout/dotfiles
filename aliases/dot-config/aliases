@@ -4,16 +4,21 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 set -o vi
 
 ## Environment Variables ##
+export TERM=xterm-256color
 export EDITOR=nvim
 export _ZO_DOCTOR=0
 export GPG_TTY=$(tty)
 export PATH="/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH"
 export KUBECONFIG=$HOME/.kube/config
 alias assume=". assume" # required alias for assume role tool
-
+alias macsudo="/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sudo"
 
 ## Aliases ##
-alias ll='ls -1la'
+# dangerous overrides 
+alias cd='z'
+alias ls='eza --icons'
+
+alias ll='eza --icons -a'
 alias x='eza --icons' # ls alternative
 alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
 alias ff='nvim $(fzf -m --preview="bat --color=always --style=numbers --line-range=:500 {}")'
@@ -27,8 +32,8 @@ alias tfc="find . -maxdepth 1 -type l -delete"
 alias tffmt="terraform fmt -recursive"
 alias tfsclear='terraform state rm $(terraform state list)'
 function tflogin(){
-  export NUTANIX_USERNAME=$(op read "op://Employee/AWS Nc2 Prism Element/username")
-  export NUTANIX_PASSWORD=$(op read "op://Employee/AWS Nc2 Prism Element/password")
+  export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Prism Central Local/username")
+  export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Prism Central Local/password")
 }
 
 ## Programming Helper ##

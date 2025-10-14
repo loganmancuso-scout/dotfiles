@@ -4,3 +4,21 @@ Include /Users/logan.mancuso/.colima/ssh_config
 
 Host *
   IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+# prism central
+Host prism-central
+  User nutanix
+  HostName 172.25.117.94
+  # VIP
+
+Host prism-central-vm-0
+  User nutanix
+  HostName 172.25.116.68
+
+Host prism-central-vm-1
+  User nutanix
+  HostName 172.25.116.236
+
+Host prism-central-vm-2
+  User nutanix
+  HostName 172.25.117.63

@@ -26,3 +26,5 @@
 	helper = 1password
 [push]
 	autoSetupRemote = true
+[pull]
+	rebase = true
