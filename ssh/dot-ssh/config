@@ -1,9 +1,11 @@
 # Author: Logan Mancuso | LastEdit: 2025-09-15
 
 Include /Users/logan.mancuso/.colima/ssh_config
+Include /Users/logan.mancuso/.ssh/1Password/config
 
-Host *
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+# Host *
+#  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 
 # prism central
 Host prism-central

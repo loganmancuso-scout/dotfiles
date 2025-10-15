@@ -32,8 +32,11 @@ alias tfc="find . -maxdepth 1 -type l -delete"
 alias tffmt="terraform fmt -recursive"
 alias tfsclear='terraform state rm $(terraform state list)'
 function tflogin(){
-  export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Prism Central Local/username")
-  export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Prism Central Local/password")
+  export NUTANIX_USER=$(op read "op://Employee/Nutanix Prism Central/username")
+  export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Prism Central/username")
+  export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Prism Central/password")
+  export OP_CLI_PATH="$(which op)"
+  export OP_SERVICE_ACCOUNT_TOKEN=$(op service-account create terraform --expires-in 24h --vault PlantIT:read_items --vault Personal:read_items)
 }
 
 ## Programming Helper ##

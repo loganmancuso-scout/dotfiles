@@ -17,6 +17,9 @@ README.md
 # bash
 !bash/dot-bashrc
 
+# colima
+!colima/dot-colima/default/default.yaml
+
 # ghostty
 !ghostty/dot-config/ghostty/config
 
