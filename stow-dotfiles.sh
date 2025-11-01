@@ -22,7 +22,7 @@ function main() {
   # Reorder options and arguments
   eval set -- "$OPTIONS"
 
-  declare -a dotfiles=("aliases" "bash" "continue" "git" "nvim" "ssh" "starship" "vscode" "zellij" "zoxide" "zsh")
+  declare -a dotfiles=("aliases" "bash" "continue" "ghostty" "git" "nvim" "ssh" "starship" "vscode" "zellij" "zoxide" "zsh")
 
   # Parse options
   while true; do
