@@ -176,7 +176,7 @@ monitor-hosts() {
       local ping_status=$([[ -n "$ping_out" ]] && echo "UP" || echo "DOWN")
 
       # TCP check
-      nc -z -w 3 "$host" "$port" >/dev/null 2>&1
+      nc -z -G 2 -w 2 "$host" "$port" >/dev/null 2>&1
       local tcp_status=$([[ $? -eq 0 ]] && echo "PORT $port OPEN" || echo "PORT $port CLOSED")
 
       # Log to file (uniform columns)
