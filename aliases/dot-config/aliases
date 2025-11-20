@@ -35,8 +35,8 @@ function tflogin(){
   export NUTANIX_USER=$(op read "op://Employee/Nutanix Prism Central/username")
   export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Prism Central/username")
   export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Prism Central/password")
-  export OP_CLI_PATH="$(which op)"
-  export OP_SERVICE_ACCOUNT_TOKEN=$(op service-account create terraform --expires-in 24h --vault PlantIT:read_items --vault Personal:read_items)
+  # export OP_CLI_PATH="$(which op)"
+  # export OP_SERVICE_ACCOUNT_TOKEN=$(op service-account create terraform --expires-in 24h --vault PlantIT:read_items --vault Personal:read_items)
 }
 
 ## Programming Helper ##
@@ -104,6 +104,93 @@ alias flushdns="sudo resolvectl flush-caches"
 alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
 
 # Basic Functions #
+ping-time() {
+    # Usage: ping-time <ping-args>
+    while true; do
+        ts=$(date '+%m/%d-%H:%M:%S')
+        out=$(ping "$@" -c 1 | grep 'time=')
+        echo "$ts\t$out"
+        sleep 1
+    done
+}
+
+
+# Spinner function (background)
+monitor-spinner() {
+  local start_time="$1"
+  local spinner='|/-\\'
+  local spin_idx=0
+  while true; do
+    local elapsed=$(( $(date +%s) - start_time ))
+    local spin_char=$(printf "%s" "$spinner" | cut -c$((spin_idx+1)))
+    printf "\r[%s] Monitoring... Elapsed: %ds" "$spin_char" "$elapsed"
+    spin_idx=$(( (spin_idx + 1) % 4 ))
+    sleep 0.1
+  done
+}
+
+# Main monitor function
+monitor-hosts() {
+  local interval="30s"
+  local silent=false
+  local port=22
+  local hosts=()
+
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --interval)
+        interval="$2"; shift 2 ;;
+      --silent)
+        silent=true; shift ;;
+      --port)
+        port="$2"; shift 2 ;;
+      *)
+        hosts+=("$1"); shift ;;
+    esac
+  done
+
+  if [[ ${#hosts[@]} -eq 0 ]]; then
+    echo "Usage: monitor_hosts [--interval <time>] [--silent] [--port <port>] <host1> [host2 ...]"
+    return 1
+  fi
+
+  local start_time=$(date +%s)
+  local spinner_pid=""
+
+  if [[ "$silent" == true ]]; then
+    monitor-spinner "$start_time" &
+    spinner_pid=$!
+  fi
+
+  local running=true
+  trap 'running=false; [[ -n "$spinner_pid" ]] && kill "$spinner_pid" 2>/dev/null; printf "\n"' SIGINT EXIT
+
+  while $running; do
+    for host in "${hosts[@]}"; do
+      local ts=$(date '+%m/%d %H:%M:%S')
+      local logfile="monitor_${host}.log"
+
+      # Ping check
+      local ping_out=$(ping -c 1 "$host" 2>/dev/null | grep 'time=')
+      local ping_status=$([[ -n "$ping_out" ]] && echo "UP" || echo "DOWN")
+
+      # TCP check
+      nc -z -w 3 "$host" "$port" >/dev/null 2>&1
+      local tcp_status=$([[ $? -eq 0 ]] && echo "PORT $port OPEN" || echo "PORT $port CLOSED")
+
+      # Log to file
+      echo "$ts | $host | $ping_status | $tcp_status" >> "$logfile"
+
+      if [[ "$silent" == false ]]; then
+        echo "$ts | $host | $ping_status | $tcp_status"
+      fi
+    done
+    sleep "$interval"
+  done
+}
+
+
 function delete() {
   for item in $@; do
     mv $item $HOME/.local/share/Trash/files

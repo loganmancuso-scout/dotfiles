@@ -4,8 +4,12 @@ Include /Users/logan.mancuso/.colima/ssh_config
 Include /Users/logan.mancuso/.ssh/1Password/config
 
 
-# Host *
-#  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+Host *
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+Host cleopatra
+  User loganmancuso
+  HostName cleopatra.edge.home.arpa
 
 # prism central
 Host prism-central
@@ -24,3 +28,15 @@ Host prism-central-vm-1
 Host prism-central-vm-2
   User nutanix
   HostName 172.25.117.63
+
+Host prism-element
+  User nutanix
+  HostName 172.25.113.46
+
+Host loganmancuso
+  User ubuntu
+  HostName 172.25.116.105
+
+Host nkp-jumpbox
+  User ubuntu
+  HostName 172.25.116.230

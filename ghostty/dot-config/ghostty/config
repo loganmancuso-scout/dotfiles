@@ -10,4 +10,4 @@ background-opacity = 0.97
 window-height = 40
 window-width = 90
 
-keybind = performable:super+c=copy_to_clipboard
+keybind = performable:cmd+c=copy_to_clipboard
