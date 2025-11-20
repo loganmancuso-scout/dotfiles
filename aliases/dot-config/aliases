@@ -172,18 +172,18 @@ monitor-hosts() {
       local logfile="monitor_${host}.log"
 
       # Ping check
-      local ping_out=$(ping -c 1 "$host" 2>/dev/null | grep 'time=')
+      local ping_out=$(ping -c 1 "$host" | grep 'time=')
       local ping_status=$([[ -n "$ping_out" ]] && echo "UP" || echo "DOWN")
 
       # TCP check
       nc -z -w 3 "$host" "$port" >/dev/null 2>&1
       local tcp_status=$([[ $? -eq 0 ]] && echo "PORT $port OPEN" || echo "PORT $port CLOSED")
 
-      # Log to file
-      echo "$ts | $host | $ping_status | $tcp_status" >> "$logfile"
+      # Log to file (uniform columns)
+      printf "%s | %-12s | %-4s | %-16s\n" "$ts" "$host" "$ping_status" "$tcp_status" >> "$logfile"
 
       if [[ "$silent" == false ]]; then
-        echo "$ts | $host | $ping_status | $tcp_status"
+        printf "%s | %-12s | %-4s | %-16s\n" "$ts" "$host" "$ping_status" "$tcp_status"
       fi
     done
     sleep "$interval"
@@ -193,7 +193,7 @@ monitor-hosts() {
 
 function delete() {
   for item in $@; do
-    mv $item $HOME/.local/share/Trash/files
+    mv $item $HOME/.Trash
   done
 }
 
