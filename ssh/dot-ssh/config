@@ -13,6 +13,10 @@ Host opnsense
 
 ## Mobile ##
 
+Host scout
+  HostName worklaptop-wlan.edge.home.arpa
+  User logan.mancuso
+  
 Host cleopatra
   HostName cleopatra.edge.home.arpa # mobile address
   # HostName 100.54.0.3 # vpn address
