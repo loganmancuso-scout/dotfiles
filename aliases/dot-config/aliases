@@ -8,6 +8,7 @@ export EDITOR=nvim
 export PATH=$PATH:$HOME/.local/bin
 export KUBECONFIG=$HOME/.kube/config
 export QT_QPA_PLATFORM="xcb" # xpentablet needs this for wayland
+export TERM=xterm-256color
 
 ## Aliases ##
 # dangerous overrides 

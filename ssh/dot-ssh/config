@@ -2,14 +2,12 @@
 
 Host *
   IdentityAgent ~/.1password/agent.sock
-  Port 22
   StrictHostKeyChecking no
 
 ## MGMT ##
 Host opnsense
   HostName opnsense.mgmt.home.arpa
   User loganmancuso
-  # IdentityFile ~/.ssh/personal_ed
 
 ## Mobile ##
 
@@ -28,6 +26,12 @@ Host phone
   User u0_a417
   Port 8022
 
+Host tablet
+  HostName tablet.edge.home.arpa # mobile address
+  # HostName 100.54.0.4 # vpn address
+  User u0_a130
+  Port 8022
+
 Host bytevault
   HostName bytevault.cluster.vpc.home.arpa
   User root
@@ -41,17 +45,14 @@ Host ragnarok
   User root
 
 ## VPC ##
-Host 192.168.1*.*
-  User instance-user
-
-Host *.cluster.vpc.home.arpa
-  User instance-user
 
 Host thoth
   HostName thoth.infra.vpc.home.arpa
+  User instance-user
 
 Host ingress
   HostName proxy.public.vpc.home.arpa
+  User instance-user
 
 Host home
   HostName 192.168.17.6

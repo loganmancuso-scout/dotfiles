@@ -50,4 +50,8 @@
       ]
     },
     "redhat.telemetry.enabled": false,
+    "hediet.vscode-drawio.resizeImages": null,
+    "files.associations": {
+      "config": "raw"
+    },
 }
