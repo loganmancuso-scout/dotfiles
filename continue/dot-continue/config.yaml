@@ -3,9 +3,19 @@ version: 1.0.0
 schema: v1
 
 models:
-  - name: Gemma4:4b
+  - name: deepseek-r1:14b
     provider: ollama
-    model: gemma3:4b
+    model: deepseek-r1:14b
+    apiBase: http://localai.app.vpc.home.arpa:11434
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+
+  - name: Gemma3:12b
+    provider: ollama
+    model: gemma3:12b
     apiBase: http://localai.app.vpc.home.arpa:11434
     roles:
       - chat
