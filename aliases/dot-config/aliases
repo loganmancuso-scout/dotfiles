@@ -41,7 +41,8 @@ function tflogin() {
   export AWS_SECRET_ACCESS_KEY="$(op item get "minio tenant" --vault "automation" --fields label=password --reveal)"
   # set op service account secret token
   echo "Setting 1Password Secrets"
-  export OP_SERVICE_ACCOUNT_TOKEN="$(op item get "Service Account Auth Token: opentofu" --fields label=credential --reveal)"
+  export OP_CONNECT_TOKEN="$(op item get "Home Access Token: OpenTofu" --fields label=credential --reveal)"
+  
 }
 
 function tfunseal() {
