@@ -19,13 +19,15 @@ alias ll='eza --icons -a'
 alias x='eza --icons' # ls alternative
 alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
 alias ff='nvim $(fzf -m --preview="bat --color=always --style=numbers --line-range=:500 {}")'
+# remove all symlinks in current directory
+alias lnrm="find . -maxdepth 1 -type l -delete"
 
 alias k="kubectl"
 
 ## OpenTofu ##
 alias tf="tofu"
 alias tfi="tofu init --reconfigure --upgrade"
-alias tfc="find . -maxdepth 1 -type l -delete"
+alias tfc="rm -rf .terraform/ .terraform.lock.hcl"
 alias tffmt="tofu fmt -recursive"
 alias tfsclear='tofu state rm $(tofu state list)'
 
@@ -37,8 +39,8 @@ function tflogin() {
   export UNSEAL_KEY_1="$(op item get "Tofu OpenBao" --fields label="UNSEAL_KEY_1")"
   echo "Setting Minio Secrets"
   # set minio secret token and secret id
-  export AWS_ACCESS_KEY_ID="$(op item get "minio tenant" --vault "automation" --fields label=username)"
-  export AWS_SECRET_ACCESS_KEY="$(op item get "minio tenant" --vault "automation" --fields label=password --reveal)"
+  export AWS_ACCESS_KEY_ID="$(op item get "Minio Access Key" --vault "automation" --fields label=username)"
+  export AWS_SECRET_ACCESS_KEY="$(op item get "Minio Access Key" --vault "automation" --fields label=password --reveal)"
   # set op service account secret token
   echo "Setting 1Password Secrets"
   export OP_CONNECT_TOKEN="$(op item get "Home Access Token: OpenTofu" --fields label=credential --reveal)"

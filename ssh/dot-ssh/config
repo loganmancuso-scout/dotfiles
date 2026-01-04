@@ -38,7 +38,7 @@ Host bytevault
 
 Host mightymouse
   HostName mightymouse.cluster.vpc.home.arpa
-  User root
+  User root-user
 
 Host ragnarok
   HostName ragnarok.cluster.vpc.home.arpa
@@ -51,7 +51,7 @@ Host thoth
   User instance-user
 
 Host ingress
-  HostName proxy.public.vpc.home.arpa
+  HostName ingress.public.vpc.home.arpa
   User instance-user
 
 Host home
