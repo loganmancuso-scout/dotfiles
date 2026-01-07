@@ -6,6 +6,7 @@ Include /Users/logan.mancuso/.ssh/1Password/config
 
 Host *
   IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  StrictHostKeyChecking no
 
 Host cleopatra
   User loganmancuso
@@ -15,11 +16,10 @@ Host cleopatra
 Host prism-central
   User nutanix
   HostName 172.25.117.94
-  # VIP
 
 Host prism-central-vm-0
   User nutanix
-  HostName 172.25.116.68
+  HostName 172.25.116.58
 
 Host prism-central-vm-1
   User nutanix
@@ -33,6 +33,22 @@ Host prism-element
   User nutanix
   HostName 172.25.113.46
 
+Host prism-element-node-0
+  User nutanix
+  HostName 172.25.112.82
+
+Host prism-element-node-1
+  User nutanix
+  HostName 172.25.113.124
+
+Host prism-element-node-2
+  User nutanix
+  HostName 172.25.113.161
+
+Host kommander
+  User konvoy
+  HostName 172.25.116.15
+
 Host loganmancuso
   User ubuntu
   HostName 172.25.116.105
@@ -40,3 +56,4 @@ Host loganmancuso
 Host nkp-jumpbox
   User ubuntu
   HostName 172.25.116.230
+
