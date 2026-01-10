@@ -25,8 +25,6 @@ alias lnrm="find . -maxdepth 1 -type l -delete"
 alias k="kubectl"
 
 ## OpenTofu ##
-alias tf="tofu"
-alias tfi="tofu init --reconfigure --upgrade"
 alias tfc="rm -rf .terraform/ .terraform.lock.hcl"
 alias tffmt="tofu fmt -recursive"
 alias tfsclear='tofu state rm $(tofu state list)'
