@@ -6,8 +6,8 @@ set -o vi
 ## Environment Variables ##
 export EDITOR=nvim
 export PATH=$PATH:$HOME/.local/bin
-export KUBECONFIG=$HOME/.kube/config
-export QT_QPA_PLATFORM="xcb" # xpentablet needs this for wayland
+# export KUBECONFIG=$HOME/.kube/config
+# export QT_QPA_PLATFORM="xcb" # xpentablet needs this for wayland
 export TERM=xterm-256color
 
 ## Aliases ##
@@ -35,10 +35,10 @@ function tflogin() {
   export VAULT_ADDR="$(op item get "Tofu OpenBao" --format json | jq -r '.urls[0].href')"
   export VAULT_TOKEN="$(op item get "Tofu OpenBao" --fields label=password --reveal)"
   export UNSEAL_KEY_1="$(op item get "Tofu OpenBao" --fields label="UNSEAL_KEY_1")"
-  echo "Setting Minio Secrets"
-  # set minio secret token and secret id
-  export AWS_ACCESS_KEY_ID="$(op item get "Minio Access Key" --vault "automation" --fields label=username)"
-  export AWS_SECRET_ACCESS_KEY="$(op item get "Minio Access Key" --vault "automation" --fields label=password --reveal)"
+  echo "Setting RustFS Secrets"
+  # set rustfs secret token and secret id
+  export AWS_ACCESS_KEY_ID="$(op item get "rustfs accesskey" --vault "automation" --fields label=username)"
+  export AWS_SECRET_ACCESS_KEY="$(op item get "rustfs accesskey" --vault "automation" --fields label=password --reveal)"
   # set op service account secret token
   echo "Setting 1Password Secrets"
   export OP_CONNECT_TOKEN="$(op item get "Home Access Token: OpenTofu" --fields label=credential --reveal)"
