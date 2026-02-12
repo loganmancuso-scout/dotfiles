@@ -86,6 +86,17 @@ fi
 # Custom Aliases #
 [ -f $HOME/.config/aliases ] && source $HOME/.config/aliases
 
+## Kubeconfig Completion (Bash) ##
+_kubeconfig_completion() {
+  local kubeconfig_dir="$HOME/.kube"
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+
+  if [ -d "$kubeconfig_dir" ]; then
+    COMPREPLY=( $(compgen -W "$(ls -1 "$kubeconfig_dir" | grep -E '(config|.*-kubeconfig\.yaml)' | sed 's/-kubeconfig\.yaml$//' | sed 's/^config$/config/')" -- "$cur") )
+  fi
+}
+complete -o bashdefault -o default -o nospace -F _kubeconfig_completion kubeconfig
+
 ## Set Prompt ##
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"

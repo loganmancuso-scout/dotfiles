@@ -57,3 +57,10 @@ Host nkp-jumpbox
   User ubuntu
   HostName 172.25.116.230
 
+Host aws-dpp-nat-old
+  user ubuntu
+  HostName 172.25.123.89
+
+Host aws-dpp-nat
+  User ec2-user
+  HostName 172.25.112.213

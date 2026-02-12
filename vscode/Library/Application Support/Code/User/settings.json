@@ -30,5 +30,10 @@
       "markdown": false,
       "scminput": false
     },
-    "update.showReleaseNotes": false
+    "update.showReleaseNotes": false,
+    "chat.editing.confirmEditRequestRemoval": false,
+    "chat.viewSessions.orientation": "stacked",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.aiStats.enabled": false,
+    "git.ignoreRebaseWarning": true
 }
