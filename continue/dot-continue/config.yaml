@@ -1,7 +1,6 @@
 name: Remote Assistant
 version: 1.0.0
 schema: v1
-
 models:
   - name: deepseek-r1:14b
     provider: ollama
@@ -12,7 +11,6 @@ models:
       - edit
       - apply
       - autocomplete
-
   - name: Gemma3:12b
     provider: ollama
     model: gemma3:12b
@@ -22,7 +20,6 @@ models:
       - edit
       - apply
       - autocomplete
-
   - name: llama3.2:latest
     provider: ollama
     model: llama3.2:latest
@@ -32,7 +29,6 @@ models:
       - edit
       - apply
       - autocomplete
-
   - name: qwen3-coder:30b
     provider: ollama
     model: qwen3-coder:30b

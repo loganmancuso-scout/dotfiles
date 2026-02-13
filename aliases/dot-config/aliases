@@ -42,7 +42,47 @@ function tflogin() {
   # set op service account secret token
   echo "Setting 1Password Secrets"
   export OP_CONNECT_TOKEN="$(op item get "Home Access Token: OpenTofu" --fields label=credential --reveal)"
-  
+}
+
+## Kubernetes Helpers ##
+function kubeconfig() {
+  local kubeconfig_dir="$HOME/.kube"
+  local config_name="$1"
+
+  if [ -z "$config_name" ]; then
+    echo "Available kubeconfigs:"
+    [ -d "$kubeconfig_dir" ] && ls -1 "$kubeconfig_dir" | grep -E '(config|.*-kubeconfig\.yaml)' | sed 's/^/  /'
+    return 0
+  fi
+
+  # Check if it's the local config
+  if [ "$config_name" = "config" ]; then
+    export KUBECONFIG="$kubeconfig_dir/config"
+    echo "✓ Switched to $config_name"
+    kubectl cluster-info 2>/dev/null | head -1 || echo "  (kubeconfig set)"
+    return 0
+  fi
+
+  # Check for name-kubeconfig.yaml pattern
+  local config_file="$kubeconfig_dir/$config_name-kubeconfig.yaml"
+  if [ -f "$config_file" ]; then
+    export KUBECONFIG="$config_file"
+    echo "✓ Switched to $config_name"
+    kubectl cluster-info 2>/dev/null | head -1 || echo "  (kubeconfig set)"
+    return 0
+  fi
+
+  # Try exact filename
+  config_file="$kubeconfig_dir/$config_name"
+  if [ -f "$config_file" ]; then
+    export KUBECONFIG="$config_file"
+    echo "✓ Switched to $config_name"
+    kubectl cluster-info 2>/dev/null | head -1 || echo "  (kubeconfig set)"
+    return 0
+  fi
+
+  echo "Error: Kubeconfig '$config_name' not found in $kubeconfig_dir"
+  return 1
 }
 
 function tfunseal() {

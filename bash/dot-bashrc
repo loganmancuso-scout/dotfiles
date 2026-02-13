@@ -61,6 +61,17 @@ fi
 # Custom Aliases #
 [ -f ~/.config/aliases ] && source ~/.config/aliases
 
+## Kubeconfig Completion (Bash) ##
+_kubeconfig_completion() {
+  local kubeconfig_dir="$HOME/.kube"
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+
+  if [ -d "$kubeconfig_dir" ]; then
+    COMPREPLY=( $(compgen -W "$(ls -1 "$kubeconfig_dir" | grep -E '(config|.*-kubeconfig\.yaml)' | sed 's/-kubeconfig\.yaml$//' | sed 's/^config$/config/')" -- "$cur") )
+  fi
+}
+complete -o bashdefault -o default -o nospace -F _kubeconfig_completion kubeconfig
+
 ## Set Prompt ##
 export _ZO_DOCTOR=0
 eval "$(zoxide init bash)"

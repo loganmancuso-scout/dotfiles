@@ -38,6 +38,19 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # Custom Aliases #
 [ -f ~/.config/aliases ] && source ~/.config/aliases
 
+## Kubeconfig Completion (Zsh) ##
+_kubeconfig_completion() {
+  local kubeconfig_dir="$HOME/.kube"
+  local -a configs
+
+  if [ -d "$kubeconfig_dir" ]; then
+    configs=( $(ls -1 "$kubeconfig_dir" | grep -E '(config|.*-kubeconfig\.yaml)' | sed 's/-kubeconfig\.yaml$//' | sed 's/^config$/config/') )
+  fi
+
+  _describe 'kubeconfig' configs
+}
+compdef _kubeconfig_completion kubeconfig
+
 ## Set Prompt ##
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 export _ZO_DOCTOR=0
