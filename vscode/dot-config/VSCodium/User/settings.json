@@ -15,7 +15,6 @@
     "terminal.integrated.enableMultiLinePasteWarning": "never",
     "window.confirmSaveUntitledWorkspace": false,
     "workbench.editor.enablePreview": false,
-    "workbench.sideBar.location": "right",
     "workbench.startupEditor": "none",
     "security.workspace.trust.untrustedFiles": "open",
     "update.showReleaseNotes": false,
@@ -55,4 +54,6 @@
       "config": "raw"
     },
     "continue.showInlineTip": false,
+    "chat.disableAIFeatures": false,
+    "workbench.sideBar.location": "right",
 }

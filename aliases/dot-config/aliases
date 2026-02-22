@@ -1,6 +1,6 @@
 # Author: Logan Mancuso | LastEdit: 2025-09-07
 
-# set vim mode 
+# set vim mode
 set -o vi
 
 ## Environment Variables ##
@@ -11,7 +11,7 @@ export PATH=$PATH:$HOME/.local/bin
 export TERM=xterm-256color
 
 ## Aliases ##
-# dangerous overrides 
+# dangerous overrides
 alias cd='z'
 alias ls='eza --icons'
 
@@ -30,18 +30,19 @@ alias tffmt="tofu fmt -recursive"
 alias tfsclear='tofu state rm $(tofu state list)'
 
 function tflogin() {
-  echo "Setting OpenBao Secrets"
+  local env=$1
+  echo "Setting $env-OpenBao Secrets"
   # set vault url and vault token and unseal key
-  export VAULT_ADDR="$(op item get "Tofu OpenBao" --format json | jq -r '.urls[0].href')"
-  export VAULT_TOKEN="$(op item get "Tofu OpenBao" --fields label=password --reveal)"
-  export UNSEAL_KEY_1="$(op item get "Tofu OpenBao" --fields label="UNSEAL_KEY_1")"
-  echo "Setting RustFS Secrets"
+  export VAULT_ADDR="$(op item get "Tofu $env-OpenBao" --format json | jq -r '.urls[0].href')"
+  export VAULT_TOKEN="$(op item get "Tofu $env-OpenBao" --fields label=password --reveal)"
+  export UNSEAL_KEY_1="$(op item get "Tofu $env-OpenBao" --fields label="UNSEAL_KEY_1")"
+  echo "Setting $env-RustFS Secrets"
   # set rustfs secret token and secret id
-  export AWS_ACCESS_KEY_ID="$(op item get "rustfs accesskey" --vault "automation" --fields label=username)"
-  export AWS_SECRET_ACCESS_KEY="$(op item get "rustfs accesskey" --vault "automation" --fields label=password --reveal)"
+  export AWS_ACCESS_KEY_ID="$(op item get "rustfs $env-accesskey" --vault "automation" --fields label=username)"
+  export AWS_SECRET_ACCESS_KEY="$(op item get "rustfs $env-accesskey" --vault "automation" --fields label=password --reveal)"
   # set op service account secret token
-  echo "Setting 1Password Secrets"
-  export OP_CONNECT_TOKEN="$(op item get "Home Access Token: OpenTofu" --fields label=credential --reveal)"
+  echo "Setting $env-1Password Secrets"
+  export OP_CONNECT_TOKEN="$(op item get "$env Access Token: OpenTofu" --fields label=credential --reveal)"
 }
 
 ## Kubernetes Helpers ##
@@ -90,7 +91,7 @@ function tfunseal() {
   vault status -tls-skip-verify
   vault operator unseal -tls-skip-verify $UNSEAL_KEY_1
   vault status -tls-skip-verify
-  vault login -tls-skip-verify token=$VAULT_TOKEN 
+  vault login -tls-skip-verify token=$VAULT_TOKEN
 }
 
 ## Programming Helper ##
@@ -148,13 +149,13 @@ function delete() {
 }
 
 function stopwatch() {
-  local date1=`date +%s`; while true; do 
+  local date1=`date +%s`; while true; do
     echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
   done
 }
 
 function timer() {
-  while true; do 
+  while true; do
     echo -ne "$(date +%H:%M:%S:%N)\r";
   done
 }

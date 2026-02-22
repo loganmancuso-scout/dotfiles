@@ -22,6 +22,7 @@ disabled = false
 [os.symbols]
 Linux = '󰌽'
 Pop = '󰌽'
+Ubuntu = '󰌽'
 Windows = '󰍹'
 
 [terraform]
