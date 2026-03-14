@@ -10,11 +10,7 @@
   directory = /home/loganmancuso/SourceControl/*
 [core]
   autocrlf = input
-[core]
-  sshCommand = "ssh -i ~/.ssh/public_ed"
 [commit]
 	gpgsign = true
-[checkout]
-	defaultRemote = gitlab
 [init]
 	defaultBranch = main

@@ -32,6 +32,11 @@ Host tablet
   User u0_a130
   Port 8022
 
+
+Host proxmox-dev
+  HostName 100.54.0.10
+  User root
+
 Host bytevault
   HostName bytevault.cluster.vpc.home.arpa
   User root

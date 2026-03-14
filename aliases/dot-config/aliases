@@ -31,6 +31,22 @@ alias tfsclear='tofu state rm $(tofu state list)'
 
 function tflogin() {
   local env=$1
+  
+  # Validate environment parameter
+  if [ -z "$env" ]; then
+    echo "Error: Environment parameter required"
+    echo "Usage: tflogin <environment>"
+    echo "Example: tflogin dev-core"
+    return 1
+  fi
+  
+  # Validate environment is one of the supported values
+  if [[ "$env" != "dev-core" && "$env" != "core" ]]; then
+    echo "Error: Invalid environment '$env'"
+    echo "Supported environments: dev-core, core"
+    return 1
+  fi
+  
   echo "Setting $env-OpenBao Secrets"
   # set vault url and vault token and unseal key
   export VAULT_ADDR="$(op item get "Tofu $env-OpenBao" --format json | jq -r '.urls[0].href')"
@@ -43,6 +59,14 @@ function tflogin() {
   # set op service account secret token
   echo "Setting $env-1Password Secrets"
   export OP_CONNECT_TOKEN="$(op item get "$env Access Token: OpenTofu" --fields label=credential --reveal)"
+}
+
+function tfunseal() {
+  [[ -z "$UNSEAL_KEY_1" || -z "$VAULT_TOKEN" ]] && tflogin
+  vault status -tls-skip-verify
+  vault operator unseal -tls-skip-verify $UNSEAL_KEY_1
+  vault status -tls-skip-verify
+  vault login -tls-skip-verify token=$VAULT_TOKEN
 }
 
 ## Kubernetes Helpers ##
@@ -84,14 +108,6 @@ function kubeconfig() {
 
   echo "Error: Kubeconfig '$config_name' not found in $kubeconfig_dir"
   return 1
-}
-
-function tfunseal() {
-  [[ -z "$UNSEAL_KEY_1" || -z "$VAULT_TOKEN" ]] && tflogin
-  vault status -tls-skip-verify
-  vault operator unseal -tls-skip-verify $UNSEAL_KEY_1
-  vault status -tls-skip-verify
-  vault login -tls-skip-verify token=$VAULT_TOKEN
 }
 
 ## Programming Helper ##

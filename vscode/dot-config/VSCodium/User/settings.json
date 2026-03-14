@@ -56,4 +56,15 @@
     "continue.showInlineTip": false,
     "chat.disableAIFeatures": false,
     "workbench.sideBar.location": "right",
+    "chat.tools.urls.autoApprove": {
+      "https://gethomepage.dev": true,
+      "https://grafana.github.io": {
+        "approveRequest": true,
+        "approveResponse": false
+      },
+      "https://raw.githubusercontent.com": {
+        "approveRequest": false,
+        "approveResponse": true
+      }
+    },
 }
