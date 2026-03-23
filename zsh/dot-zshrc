@@ -56,3 +56,6 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 source <(fzf --zsh)
 source $HOME/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Added by GitButler installer
+export PATH="/Users/logan.mancuso/.local/bin:$PATH"
+eval "$(but completions zsh)"

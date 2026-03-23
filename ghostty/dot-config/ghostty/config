@@ -1,7 +1,7 @@
 # ~/.config/ghostty/config.toml
 
 font-family = "SauceCodePro NFM"
-font-size = 16
+font-size = 25
 
 theme = "Catppuccin Mocha"
 
@@ -9,5 +9,3 @@ background-opacity = 0.97
 
 window-height = 40
 window-width = 90
-
-keybind = performable:cmd+c=copy_to_clipboard

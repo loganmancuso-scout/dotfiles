@@ -45,17 +45,25 @@ Host prism-element-node-2
   User nutanix
   HostName 172.25.113.161
 
-Host kommander
+Host nkp-kommander
   User konvoy
   HostName 172.25.116.15
 
-Host loganmancuso
-  User ubuntu
-  HostName 172.25.116.105
+Host nkp-infrastructure
+  User konvoy
+  HostName 172.25.116.55
+
+Host nkp-application
+  User konvoy
+  HostName 172.25.116.15
 
 Host nkp-jumpbox
   User ubuntu
   HostName 172.25.116.230
+
+Host ndb-manager
+  User era
+  Hostname 172.25.66.20
 
 Host aws-dpp-nat-old
   user ubuntu
@@ -63,4 +71,4 @@ Host aws-dpp-nat-old
 
 Host aws-dpp-nat
   User ec2-user
-  HostName 172.25.112.213
+  HostName 172.25.112.223

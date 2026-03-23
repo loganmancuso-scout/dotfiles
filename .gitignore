@@ -1,15 +1,15 @@
-# Ignore everything
+# Ignore everything by default
 *
 !.gitignore
 
-# Allow directories to be included, but not files within them
+# Allow directories to be traversed, but not their files
 !*/
 
 README.md
 !stow-dotfiles.sh
 
 # aliases
-!aliases/dot-config/**
+!aliases/dot-config/aliases
 
 # aws
 !aws/dot-aws/config
@@ -18,7 +18,10 @@ README.md
 !bash/dot-bashrc
 
 # colima
-!colima/dot-colima/default/default.yaml
+!colima/dot-colima/_templates/default.yaml
+
+# docker
+!docker/dot-docker/config.json
 
 # ghostty
 !ghostty/dot-config/ghostty/config
@@ -30,6 +33,7 @@ README.md
 !nvim/dot-config/nvim/*.json
 !nvim/dot-config/nvim/*.toml
 !nvim/dot-config/nvim/*.lua
+!nvim/dot-config/nvim/lua/**/*.lua
 
 # powershell
 !powershell/dot-config/powershell/*.ps1
@@ -43,17 +47,19 @@ README.md
 # starship
 !starship/dot-config/starship.toml
 
-# vscodium
+# tmux
+!tmux/dot-config/tmux/tmux.conf
+
+# vscode
 !vscode/Library/Application\ Support/Code/User/*.json
 
 # zellij
 !zellij/dot-config/zellij/*.kdl
-!zellij/dot-config/zellij/themes/**
+!zellij/dot-config/zellij/themes/*.kdl
 
 # zoxide
 zoxide/dot-local/**
-!zoxide/dot-local/share/zoxide/db.zo
 
 # zsh
-!zsh/dot-config/zsh/zsh-autosuggestions/**
 !zsh/dot-zshrc
+!zsh/dot-config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh

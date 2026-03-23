@@ -1,46 +1,111 @@
 #!/bin/bash
-# Author: Logan Mancuso | LastEdit: 2025-09-15
+# Author: Logan Mancuso | LastEdit: 2026-03-23
 
-# Main function to handle options
+# ─────────────────────────────────────────
+# HELPERS
+# ─────────────────────────────────────────
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Directories at the repo root that are not stow packages
+EXCLUDE=(".git")
+
+function discover_packages() {
+  dotfiles=()
+  for dir in "$SCRIPT_DIR"/*/; do
+    local name
+    name="$(basename "$dir")"
+    [[ " ${EXCLUDE[*]} " == *" $name "* ]] && continue
+    dotfiles+=("$name")
+  done
+}
+
+function print_summary() {
+  local action="$1"
+  shift
+  local ok=("$@")
+
+  echo ""
+  echo "Discovered packages: ${dotfiles[*]}"
+  echo ""
+  echo "${action} results:"
+  for pkg in "${dotfiles[@]}"; do
+    if [[ " ${ok[*]} " == *" $pkg "* ]]; then
+      printf "  [OK]   %s\n" "$pkg"
+    else
+      printf "  [FAIL] %s\n" "$pkg"
+      failed+=("$pkg")
+    fi
+  done
+
+  echo ""
+  local total=${#dotfiles[@]}
+  local ok_count=${#ok[@]}
+  local fail_count=${#failed[@]}
+  echo "Done. $ok_count/${total} ${action,,}, ${fail_count} failed."
+
+  if [[ ${#failed[@]} -gt 0 ]]; then
+    echo "Failed packages: ${failed[*]}"
+    return 1
+  fi
+  return 0
+}
+
+# ─────────────────────────────────────────
+# MAIN
+# ─────────────────────────────────────────
 function main() {
   echo "System Information:"
-  echo "user: $(whoami)"
-  echo "time: $(date)"
+  echo "  user: $(whoami)"
+  echo "  time: $(date)"
 
-  # Use getopt for long option parsing
   OPTIONS=$(getopt -o "" --long stow,unstow -- "$@")
-
-  # Check if getopt succeeded
   if [[ $? -ne 0 ]]; then
     echo "Failed to parse options."
     exit 1
   fi
-
-  # Reorder options and arguments
   eval set -- "$OPTIONS"
 
-  declare -a dotfiles=("aliases" "bash" "ghostty" "git" "nvim" "powershell" "ssh" "starship" "vscode" "zellij" "zoxide" "zsh")
+  discover_packages
 
-  # Parse options
   while true; do
     case "$1" in
     --stow)
-      echo "stowing dotfiles..."
-      for dot in "${dotfiles[@]}"; do
-        stow -v --dotfiles --adopt --target=$HOME $dot
+      echo ""
+      echo "Stowing dotfiles..."
+      local ok=()
+      local failed=()
+      for pkg in "${dotfiles[@]}"; do
+        local err
+        err=$(stow -v --dotfiles --adopt --target="$HOME" "$pkg" 2>&1)
+        if [[ $? -eq 0 ]]; then
+          ok+=("$pkg")
+        else
+          echo "  [FAIL] $pkg: $err"
+        fi
       done
-      # leaving thses comments here to remind me how to recycle services if i add a job to the systemd folder
+      # leaving these comments here to remind me how to recycle services if i add a job to the systemd folder
       # systemctl --user daemon-reload
       # systemctl --user enable nextcloud.service
       # systemctl --user start nextcloud.service
-      shift
+      print_summary "Stowed" "${ok[@]}"
+      exit $?
       ;;
     --unstow)
+      echo ""
       echo "Unstowing dotfiles..."
-      for dot in "${dotfiles[@]}"; do
-        stow -D -vv $dot
+      local ok=()
+      local failed=()
+      for pkg in "${dotfiles[@]}"; do
+        local err
+        err=$(stow -D -vv "$pkg" 2>&1)
+        if [[ $? -eq 0 ]]; then
+          ok+=("$pkg")
+        else
+          echo "  [FAIL] $pkg: $err"
+        fi
       done
-      shift
+      print_summary "Unstowed" "${ok[@]}"
+      exit $?
       ;;
     --)
       shift
@@ -52,7 +117,9 @@ function main() {
       ;;
     esac
   done
+
+  echo "Usage: $0 --stow | --unstow"
+  exit 1
 }
 
-# Call main function with arguments
 main "$@"
