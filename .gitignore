@@ -18,7 +18,8 @@
 !bash/dot-bashrc
 
 # colima
-!colima/dot-colima
+!colima/
+!colima/**
 
 # docker
 !docker/dot-docker/config.json
