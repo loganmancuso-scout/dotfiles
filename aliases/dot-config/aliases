@@ -15,7 +15,7 @@ export PATH=$HOME/.opencode/bin:$PATH
 # ─────────────────────────────────────────
 # CORE
 # ─────────────────────────────────────────
-alias tablet-connect="scrcpy --max-size=1024 -d"
+alias tablet-connect="scrcpy --max-size=1024 -d --video-codec=av1 --video-encoder=c2.android.av1.encoder"
 alias cd='z'
 alias ls='eza --icons'
 alias ll='eza --icons -a'
