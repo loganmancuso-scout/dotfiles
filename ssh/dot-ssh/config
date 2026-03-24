@@ -32,18 +32,13 @@ Host tablet
   User u0_a130
   Port 8022
 
-
-Host proxmox-dev
-  HostName 100.54.0.10
-  User root
-
 Host bytevault
   HostName bytevault.cluster.vpc.home.arpa
   User root
 
-Host mightymouse
-  HostName mightymouse.core.vpc.home.arpa
-  User root-user
+Host core.cluster
+  HostName core.cluster.vpc.home.arpa
+  User cluster-user
 
 Host ragnarok
   HostName ragnarok.cluster.vpc.home.arpa
@@ -93,10 +88,12 @@ Host orangepizero3
 Host 192.168.3.*
   User labuser
 
-## DEV-LAN ##
-Host dev-proxmox.local
-  HostName 100.64.0.10
+  ## DEV-LAN ##
+
+Host dev-core.cluster
+  HostName 100.50.0.5
+  User cluster-user
+
+Host pve.dev-cluster
+  HostName 100.50.0.10
   User root
-  
-Host 100.64.*.*
-  User instance-user

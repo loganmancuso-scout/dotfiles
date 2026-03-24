@@ -1,32 +1,40 @@
-# Ignore everything
+# Ignore everything by default
 *
+!.gitignore
+!/README.md
 
-# Allow directories to be included, but not files within them
+# Allow directories to be traversed, but not their files
 !*/
 
-README.md
 !stow-dotfiles.sh
 
 # aliases
-!aliases/dot-config/**
+!aliases/dot-config/aliases
 
 # bash
 !bash/dot-bashrc
 
-# continue
-!continue/dot-continue/config.yaml
+# ghostty
+!ghostty/dot-config/ghostty/config
 
 # git
 !git/dot-gitconfig
 
 # nvim
-!nvim/dot-config/nvim/*.lua
 !nvim/dot-config/nvim/*.json
 !nvim/dot-config/nvim/*.toml
+!nvim/dot-config/nvim/init.lua
+!nvim/dot-config/nvim/lua/**/*.lua
+
+# opencode
+!opencode/dot-config/opencode/opencode.json
 
 # ssh
 !ssh/dot-ssh/config
 !ssh/dot-ssh/known_hosts
+!ssh/dot-ssh/allowed_signers
+!ssh/dot-ssh/1Password/
+!ssh/dot-ssh/1Password/config
 
 # starship
 !starship/dot-config/starship.toml
@@ -34,18 +42,15 @@ README.md
 # systemd
 !systemd/dot-config/systemd/user/*.service
 
-# vscodium
-!vscode/dot-config/VSCodium/User/*.json
+# tmux
+!tmux/dot-config/tmux/tmux.conf
+
+# vscode (VSCodium on Linux)
+!vscode/dot-config/VSCodium/User/settings.json
+!vscode/dot-config/VSCodium/User/keybindings.json
 !vscode/dot-vscode-oss/extensions/extensions.json
 
-# zellij
-!zellih/dot-config/zellij/*.kdl
-!zellih/dot-config/zellij/**/*.kdl
-
-# zoxide
-!zoxide/dot-local/share/zoxide/db.zo
-
 # zsh
-zsh/dot-config/zsh/zsh-autosuggestions/**
-!zsh/dot-config/zsh/zsh-autosuggestions/*.zsh
 !zsh/dot-zshrc
+!zsh/dot-config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+zsh/dot-config/zsh/zsh-autosuggestions/.gitignore

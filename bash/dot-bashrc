@@ -59,7 +59,7 @@ if ! shopt -oq posix; then
 fi
 
 # Custom Aliases #
-[ -f ~/.config/aliases ] && source ~/.config/aliases
+[ -f $HOME/.config/aliases ] && source $HOME/.config/aliases
 
 ## Kubeconfig Completion (Bash) ##
 _kubeconfig_completion() {
@@ -73,7 +73,6 @@ _kubeconfig_completion() {
 complete -o bashdefault -o default -o nospace -F _kubeconfig_completion kubeconfig
 
 ## Set Prompt ##
-export _ZO_DOCTOR=0
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 source <(fzf --bash)

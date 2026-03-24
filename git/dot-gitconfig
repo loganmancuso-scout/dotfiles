@@ -6,11 +6,23 @@
   format = ssh
 [gpg "ssh"]
   program = "/opt/1Password/op-ssh-sign"
+  allowedSignersFile = /home/loganmancuso/.ssh/allowed_signers
 [safe]
   directory = /home/loganmancuso/SourceControl/*
 [core]
   autocrlf = input
-[commit]
-	gpgsign = true
 [init]
 	defaultBranch = main
+[commit]
+	gpgsign = true
+[push]
+	autoSetupRemote = true
+[pull]
+	rebase = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[credential]
+	helper = 1password
