@@ -1,11 +1,11 @@
 # Ignore everything by default
 *
 !.gitignore
+!/README.md
 
 # Allow directories to be traversed, but not their files
 !*/
 
-README.md
 !stow-dotfiles.sh
 
 # aliases
@@ -18,7 +18,7 @@ README.md
 !bash/dot-bashrc
 
 # colima
-!colima/dot-colima/_templates/default.yaml
+!colima/dot-colima
 
 # docker
 !docker/dot-docker/config.json
@@ -51,15 +51,11 @@ README.md
 !tmux/dot-config/tmux/tmux.conf
 
 # vscode
-!vscode/Library/Application\ Support/Code/User/*.json
-
-# zellij
-!zellij/dot-config/zellij/*.kdl
-!zellij/dot-config/zellij/themes/*.kdl
-
-# zoxide
-zoxide/dot-local/**
+!vscode/Library/Application\ Support/Code/User/settings.json
+!vscode/Library/Application\ Support/Code/User/keybindings.json
+!vscode/Library/Application\ Support/Code/User/extensions.json
 
 # zsh
 !zsh/dot-zshrc
 !zsh/dot-config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+zsh/dot-config/zsh/zsh-autosuggestions/.gitignore
