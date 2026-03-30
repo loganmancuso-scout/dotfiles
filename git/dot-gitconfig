@@ -11,8 +11,6 @@
   directory = /Users/logan.mancuso/SourceControl/*
 [core]
   autocrlf = input
-[core]
-  sshCommand = "ssh -i ~/.ssh/scout"
 [init]
 	defaultBranch = main
 [commit]

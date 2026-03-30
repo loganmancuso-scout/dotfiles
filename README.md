@@ -21,6 +21,7 @@ This repository contains configuration files for various tools and applications 
 - `starship` - Starship prompt
 - `tmux` - tmux terminal multiplexer
 - `vscode` - Visual Studio Code settings
+- `zed` - Zed editor configuration (see [zed/README.md](zed/README.md) for setup)
 - `zsh` - Zsh shell configuration
 
 ## Prerequisites
