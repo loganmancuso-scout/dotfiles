@@ -30,6 +30,10 @@
 # git
 !git/dot-gitconfig
 
+# karabiner
+!karabiner/dot-config/karabiner/karabiner.json
+!karabiner/README.md
+
 # nvim
 !nvim/dot-config/nvim/*.json
 !nvim/dot-config/nvim/*.toml

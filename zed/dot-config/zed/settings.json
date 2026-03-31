@@ -60,4 +60,14 @@
   "format_on_save": "on",
   "remove_trailing_whitespace_on_save": true,
   "ensure_final_newline_on_save": true,
+  "file_types": {
+    "Helm": [
+      "**/templates/**/*.tpl",
+      "**/templates/**/*.yaml",
+      "**/templates/**/*.yml",
+      "**/helmfile.d/**/*.yaml",
+      "**/helmfile.d/**/*.yml",
+      "**/values*.yaml",
+    ],
+  },
 }

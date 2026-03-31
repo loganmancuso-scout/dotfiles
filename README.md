@@ -15,6 +15,7 @@ This repository contains configuration files for various tools and applications 
 - `docker` - Docker configuration
 - `ghostty` - Ghostty terminal emulator
 - `git` - Git configuration
+- `karabiner` - Karabiner Elements keyboard remapping (Linux-style shortcuts)
 - `nvim` - Neovim configuration
 - `powershell` - PowerShell configuration
 - `ssh` - SSH configuration
