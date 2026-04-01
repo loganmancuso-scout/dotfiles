@@ -24,15 +24,15 @@
 # docker
 !docker/dot-docker/config.json
 
+# fzf
+!fzf/dot-config/fzf/fzf.bash
+!fzf/dot-config/fzf/fzf.zsh
+
 # ghostty
 !ghostty/dot-config/ghostty/config
 
 # git
 !git/dot-gitconfig
-
-# karabiner
-!karabiner/dot-config/karabiner/karabiner.json
-!karabiner/README.md
 
 # nvim
 !nvim/dot-config/nvim/*.json
@@ -54,14 +54,15 @@
 
 # tmux
 !tmux/dot-config/tmux/tmux.conf
+!tmux/dot-config/tmux/tmux.conf.backup
+!tmux/dot-config/tmux/scripts/
+!tmux/dot-config/tmux/scripts/*.sh
+tmux/dot-config/tmux/plugins/
 
 # vscode
 !vscode/Library/Application\ Support/Code/User/settings.json
 !vscode/Library/Application\ Support/Code/User/keybindings.json
 !vscode/Library/Application\ Support/Code/User/extensions.json
-
-# zed
-!zed/dot-config/zed/settings.json
 
 # zsh
 !zsh/dot-zshrc

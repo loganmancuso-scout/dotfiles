@@ -86,6 +86,9 @@ fi
 # Custom Aliases #
 [ -f $HOME/.config/aliases ] && source $HOME/.config/aliases
 
+# FZF Configuration #
+[ -f $HOME/.config/fzf/fzf.bash ] && source $HOME/.config/fzf/fzf.bash
+
 ## Kubeconfig Completion (Bash) ##
 _kubeconfig_completion() {
   local kubeconfig_dir="$HOME/.kube"

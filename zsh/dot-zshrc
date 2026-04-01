@@ -38,6 +38,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # Custom Aliases #
 [ -f $HOME/.config/aliases ] && source $HOME/.config/aliases
 
+# FZF Configuration #
+[ -f $HOME/.config/fzf/fzf.zsh ] && source $HOME/.config/fzf/fzf.zsh
+
 ## Kubeconfig Completion (Zsh) ##
 _kubeconfig_completion() {
   local kubeconfig_dir="$HOME/.kube"

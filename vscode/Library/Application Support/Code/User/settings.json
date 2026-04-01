@@ -17,7 +17,6 @@
     "security.workspace.trust.untrustedFiles": "open",
     "explorer.confirmDragAndDrop": false,
     "github.copilot.chat.agent.autoFix": false,
-    "workbench.colorTheme": "Catppuccin Mocha",
     "editor.minimap.enabled": false,
     "git.confirmSync": false,
     "terminal.integrated.stickyScroll.enabled": false,
@@ -32,8 +31,11 @@
     },
     "update.showReleaseNotes": false,
     "chat.editing.confirmEditRequestRemoval": false,
-    "chat.viewSessions.orientation": "stacked",
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.aiStats.enabled": false,
-    "git.ignoreRebaseWarning": true
+    "git.ignoreRebaseWarning": true,
+    "window.autoDetectColorScheme": true,
+    "chat.mcp.gallery.enabled": true,
+    "chat.viewSessions.orientation": "stacked",
+    "workbench.editor.empty.hint": "hidden"
 }

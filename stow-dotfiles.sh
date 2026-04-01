@@ -41,7 +41,8 @@ function print_summary() {
   local total=${#dotfiles[@]}
   local ok_count=${#ok[@]}
   local fail_count=${#failed[@]}
-  echo "Done. $ok_count/${total} ${action,,}, ${fail_count} failed."
+  local action_lower=$(echo "$action" | tr '[:upper:]' '[:lower:]')
+  echo "Done. $ok_count/${total} ${action_lower}, ${fail_count} failed."
 
   if [[ ${#failed[@]} -gt 0 ]]; then
     echo "Failed packages: ${failed[*]}"
