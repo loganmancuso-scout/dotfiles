@@ -64,6 +64,25 @@ fi
 # FZF Configuration #
 [ -f $HOME/.config/fzf/fzf.bash ] && source $HOME/.config/fzf/fzf.bash
 
+## Git Completions (Bash) ##
+__git_complete g git
+__git_complete gs _git_status
+__git_complete ga _git_add
+__git_complete gc _git_commit
+__git_complete gp _git_push
+__git_complete gpl _git_pull
+__git_complete gl _git_log
+__git_complete gb _git_branch
+__git_complete gbd _git_branch
+__git_complete gf _git_fetch
+__git_complete gd _git_diff
+__git_complete gst _git_stash
+__git_complete gstp _git_stash
+__git_complete gco _git_switch
+__git_complete gnb _git_switch
+__git_complete gclean _git_switch
+__git_complete gwt _git_worktree
+
 ## Kubeconfig Completion (Bash) ##
 _kubeconfig_completion() {
   local kubeconfig_dir="$HOME/.kube"

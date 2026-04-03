@@ -41,6 +41,25 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # FZF Configuration #
 [ -f $HOME/.config/fzf/fzf.zsh ] && source $HOME/.config/fzf/fzf.zsh
 
+## Git Completions (Zsh) ##
+compdef _git g=git
+compdef _git gs='git status'
+compdef _git ga='git add'
+compdef _git gc='git commit'
+compdef _git gp='git push'
+compdef _git gpl='git pull'
+compdef _git gl='git log'
+compdef _git gb='git branch'
+compdef _git gbd='git branch'
+compdef _git gf='git fetch'
+compdef _git gd='git diff'
+compdef _git gst='git stash'
+compdef _git gstp='git stash'
+compdef _git gco='git switch'
+compdef _git gnb='git switch'
+compdef _git gclean='git switch'
+compdef _git gwt='git worktree'
+
 ## Kubeconfig Completion (Zsh) ##
 _kubeconfig_completion() {
   local kubeconfig_dir="$HOME/.kube"

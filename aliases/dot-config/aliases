@@ -22,6 +22,7 @@ alias ll='eza --icons -a'
 alias x='eza --icons'
 alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
 alias code="codium"
+alias bat="batcat"
 
 # remove all symlinks in current directory
 alias lnrm="find . -maxdepth 1 -type l -delete"
