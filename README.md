@@ -73,7 +73,12 @@ sudo apt install bat
 sudo apt install tmux
 
 # TPM (Tmux Plugin Manager)
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+
+# Catppuccin theme (loaded manually, not via TPM)
+git clone https://github.com/catppuccin/tmux ~/.config/tmux/plugins/catppuccin
+
+# Then open tmux and press prefix + I to install remaining plugins
 ```
 
 ## Install

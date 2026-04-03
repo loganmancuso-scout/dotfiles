@@ -61,6 +61,9 @@ fi
 # Custom Aliases #
 [ -f $HOME/.config/aliases ] && source $HOME/.config/aliases
 
+# FZF Configuration #
+[ -f $HOME/.config/fzf/fzf.bash ] && source $HOME/.config/fzf/fzf.bash
+
 ## Kubeconfig Completion (Bash) ##
 _kubeconfig_completion() {
   local kubeconfig_dir="$HOME/.kube"
@@ -76,3 +79,7 @@ complete -o bashdefault -o default -o nospace -F _kubeconfig_completion kubeconf
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 source <(fzf --bash)
+source "$HOME/.cargo/env"
+
+# cv4pve-cli completion
+source "/home/loganmancuso/.cv4pve/cli/completion.bash"
