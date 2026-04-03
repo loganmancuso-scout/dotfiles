@@ -58,7 +58,6 @@ compdef _git gstp='git stash'
 compdef _git gco='git switch'
 compdef _git gnb='git switch'
 compdef _git gclean='git switch'
-compdef _git gwt='git worktree'
 
 ## Kubeconfig Completion (Zsh) ##
 _kubeconfig_completion() {
@@ -79,5 +78,6 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 source <(fzf --zsh)
 source "$HOME/.cargo/env"
+eval "$(wt config shell init zsh)"
 # cv4pve-cli completion
 source "/home/loganmancuso/.cv4pve/cli/completion.zsh"

@@ -81,7 +81,6 @@ __git_complete gstp _git_stash
 __git_complete gco _git_switch
 __git_complete gnb _git_switch
 __git_complete gclean _git_switch
-__git_complete gwt _git_worktree
 
 ## Kubeconfig Completion (Bash) ##
 _kubeconfig_completion() {
@@ -99,6 +98,7 @@ eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 source <(fzf --bash)
 source "$HOME/.cargo/env"
+eval "$(wt config shell init bash)"
 
 # cv4pve-cli completion
 source "/home/loganmancuso/.cv4pve/cli/completion.bash"

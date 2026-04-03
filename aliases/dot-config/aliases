@@ -313,33 +313,6 @@ function gclean() {
   git fetch --prune
 }
 
-# Worktree helper: add <branch>, ls, rm <path>
-function gwt() {
-  case "$1" in
-    add)
-      if [[ -z "$2" ]]; then
-        echo "Usage: gwt add <branch-name>"
-        return 1
-      fi
-      local repo_name
-      repo_name=$(basename "$(git rev-parse --show-toplevel)")
-      git worktree add "../${repo_name}-$2" -b "$2"
-      ;;
-    ls)  git worktree list ;;
-    rm)
-      if [[ -z "$2" ]]; then
-        echo "Usage: gwt rm <worktree-path>"
-        return 1
-      fi
-      git worktree remove "$2"
-      ;;
-    *)
-      echo "Usage: gwt <add <branch> | ls | rm <path>>"
-      return 1
-      ;;
-  esac
-}
-
 # ─────────────────────────────────────────
 # KUBERNETES
 # ─────────────────────────────────────────
