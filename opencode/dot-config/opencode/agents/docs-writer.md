@@ -1,7 +1,7 @@
 ---
 description: Writes clear, comprehensive technical documentation for code and projects
 mode: subagent
-model: anthropic/claude-sonnet-4-5
+model: anthropic/claude-haiku-4-5
 temperature: 0.3
 permission:
   write: allow

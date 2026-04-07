@@ -1,7 +1,7 @@
 ---
 description: Specialized in Kubernetes, Docker, and Terraform deployments and infrastructure management
 mode: subagent
-model: anthropic/claude-sonnet-4-5
+model: anthropic/claude-sonnet-4-6
 temperature: 0.2
 permission:
   write: ask

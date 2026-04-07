@@ -1,7 +1,7 @@
 ---
 description: Read-only agent for understanding system architecture, exploring codebases, and analyzing service relationships
 mode: primary
-model: anthropic/claude-sonnet-4-5
+model: anthropic/claude-sonnet-4-6
 temperature: 0.2
 permission:
   write: deny
