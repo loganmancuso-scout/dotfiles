@@ -11,6 +11,7 @@ export EDITOR=nvim
 export _ZO_DOCTOR=0
 export GPG_TTY=$(tty)
 export PATH="/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH"
+export GITHUB_TOKEN=$(op read "op://Employee/Github/token")
 
 # ─────────────────────────────────────────
 # CORE
@@ -313,33 +314,6 @@ function gclean() {
   git fetch --prune
 }
 
-# Worktree helper: add <branch>, ls, rm <path>
-function gwt() {
-  case "$1" in
-    add)
-      if [[ -z "$2" ]]; then
-        echo "Usage: gwt add <branch-name>"
-        return 1
-      fi
-      local repo_name
-      repo_name=$(basename "$(git rev-parse --show-toplevel)")
-      git worktree add "../${repo_name}-$2" -b "$2"
-      ;;
-    ls)  git worktree list ;;
-    rm)
-      if [[ -z "$2" ]]; then
-        echo "Usage: gwt rm <worktree-path>"
-        return 1
-      fi
-      git worktree remove "$2"
-      ;;
-    *)
-      echo "Usage: gwt <add <branch> | ls | rm <path>>"
-      return 1
-      ;;
-  esac
-}
-
 # ─────────────────────────────────────────
 # KUBERNETES
 # ─────────────────────────────────────────
@@ -395,6 +369,4 @@ function tflogin() {
   export NUTANIX_USER=$(op read "op://Employee/Nutanix Prism Central/username")
   export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Prism Central/username")
   export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Prism Central/password")
-  # export OP_CLI_PATH="$(which op)"
-  # export OP_SERVICE_ACCOUNT_TOKEN=$(op service-account create terraform --expires-in 24h --vault PlantIT:read_items --vault Personal:read_items)
 }

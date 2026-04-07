@@ -16,7 +16,7 @@
   },
 
   // Default model for primary agents (change to your preference)
-  "model": "anthropic/claude-sonnet-4-5",
+  "model": "anthropic/claude-sonnet-4-6",
   
   // Smaller/faster model for lightweight tasks (title generation, etc.)
   "small_model": "anthropic/claude-haiku-4-5",
@@ -68,28 +68,31 @@
   // See: https://opencode.ai/docs/mcp-servers
   
   "mcp": {
-    // Example MCP server configurations (commented out)
+    // Filesystem MCP - Access to your SourceControl directory
+    // Allows reading/writing files across multiple repos for cross-repo workflows
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "{env:HOME}/SourceControl"
+      ],
+      "enabled": true
+    },
     
-    // "filesystem": {
-    //   "type": "stdio",
-    //   "command": "npx",
-    //   "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/files"]
-    // },
-    
-    // "github": {
-    //   "type": "stdio",
-    //   "command": "npx",
-    //   "args": ["-y", "@modelcontextprotocol/server-github"],
-    //   "environment": {
-    //     "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}"
-    //   }
-    // },
-    
-    // "postgres": {
-    //   "type": "stdio",
-    //   "command": "npx",
-    //   "args": ["-y", "@modelcontextprotocol/server-postgres", "{env:DATABASE_URL}"]
-    // }
+    // GitHub MCP - Query repos, issues, PRs, and code
+    // Requires GitHub Personal Access Token (PAT)
+    // Create PAT: https://github.com/settings/tokens/new
+    // Permissions needed: repo (Full control of private repositories)
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}"
+      },
+      "enabled": true
+    }
   },
 
   // ============================================================================
