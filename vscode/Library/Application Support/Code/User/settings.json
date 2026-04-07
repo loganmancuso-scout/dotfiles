@@ -37,5 +37,7 @@
     "window.autoDetectColorScheme": true,
     "chat.mcp.gallery.enabled": true,
     "chat.viewSessions.orientation": "stacked",
-    "workbench.editor.empty.hint": "hidden"
+    "workbench.editor.empty.hint": "hidden",
+    "workbench.browser.dataStorage": "ephemeral",
+    "diffEditor.renderSideBySide": false
 }

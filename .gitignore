@@ -64,6 +64,13 @@ tmux/dot-config/tmux/plugins/
 !vscode/Library/Application\ Support/Code/User/keybindings.json
 !vscode/Library/Application\ Support/Code/User/extensions.json
 
+# opencode
+!opencode/dot-config/opencode/opencode.json
+!opencode/dot-config/opencode/agents/
+!opencode/dot-config/opencode/agents/*.md
+!opencode/dot-config/opencode/commands/
+!opencode/dot-config/opencode/commands/*.md
+
 # zsh
 !zsh/dot-zshrc
 !zsh/dot-config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh

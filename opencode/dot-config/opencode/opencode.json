@@ -1,0 +1,133 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  
+  // ============================================================================
+  // PROVIDER & MODEL CONFIGURATION
+  // ============================================================================
+  // API keys are pulled from environment variables (set in ~/.zshrc or ~/.env)
+  // Alternatively, use the `/connect` command in OpenCode to set credentials
+  
+  "provider": {
+    "opencode": {
+      "options": {
+        "apiKey": "{env:OPENCODE_API_KEY}"
+      }
+    }
+  },
+
+  // Default model for primary agents (change to your preference)
+  "model": "anthropic/claude-sonnet-4-5",
+  
+  // Smaller/faster model for lightweight tasks (title generation, etc.)
+  "small_model": "anthropic/claude-haiku-4-5",
+
+  // ============================================================================
+  // PERMISSIONS CONFIGURATION
+  // ============================================================================
+  // Set default permission levels: "allow", "ask", or "deny"
+  // "ask" = prompt for confirmation before executing (recommended for safety)
+  
+  "permission": {
+    // File editing requires confirmation
+    "edit": "ask",
+    
+    // Bash commands require confirmation (especially for destructive operations)
+    "bash": {
+      "*": "ask",
+      "git status": "allow",
+      "git diff": "allow",
+      "git log*": "allow",
+      "ls*": "allow",
+      "cat*": "allow",
+      "grep*": "allow"
+    },
+    
+    // Web fetching requires confirmation
+    "webfetch": "ask"
+  },
+
+  // ============================================================================
+  // FORMATTER CONFIGURATION
+  // ============================================================================
+  
+  "formatter": {
+    "prettier": {
+      "disabled": false
+    }
+    // Add custom formatters here
+    // "eslint": {
+    //   "command": ["npx", "eslint", "--fix", "$FILE"],
+    //   "extensions": [".js", ".ts", ".jsx", ".tsx"]
+    // }
+  },
+
+  // ============================================================================
+  // MCP (MODEL CONTEXT PROTOCOL) SERVERS
+  // ============================================================================
+  // Configure external tools and integrations via MCP
+  // See: https://opencode.ai/docs/mcp-servers
+  
+  "mcp": {
+    // Example MCP server configurations (commented out)
+    
+    // "filesystem": {
+    //   "type": "stdio",
+    //   "command": "npx",
+    //   "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/files"]
+    // },
+    
+    // "github": {
+    //   "type": "stdio",
+    //   "command": "npx",
+    //   "args": ["-y", "@modelcontextprotocol/server-github"],
+    //   "environment": {
+    //     "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}"
+    //   }
+    // },
+    
+    // "postgres": {
+    //   "type": "stdio",
+    //   "command": "npx",
+    //   "args": ["-y", "@modelcontextprotocol/server-postgres", "{env:DATABASE_URL}"]
+    // }
+  },
+
+  // ============================================================================
+  // GENERAL SETTINGS
+  // ============================================================================
+  
+  // Automatically update OpenCode (set to false or "notify" if you prefer manual updates)
+  "autoupdate": true,
+  
+  // Enable snapshots for undo/redo functionality
+  "snapshot": true,
+  
+  // Sharing configuration: "manual", "auto", or "disabled"
+  "share": "manual",
+
+  // Server configuration (for `opencode serve` and `opencode web`)
+  "server": {
+    "port": 4096,
+    "hostname": "127.0.0.1"
+  },
+
+  // Context compaction settings
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  },
+
+  // File watcher ignore patterns
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".git/**",
+      "*.log",
+      ".next/**",
+      "target/**"
+    ]
+  }
+}
