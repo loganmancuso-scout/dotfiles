@@ -11,7 +11,6 @@ export EDITOR=nvim
 export _ZO_DOCTOR=0
 export GPG_TTY=$(tty)
 export PATH="/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH"
-export GITHUB_TOKEN=$(op read "op://Employee/Github/token")
 
 # ─────────────────────────────────────────
 # CORE
@@ -164,6 +163,10 @@ function newdate() {
   else
     echo "No files were updated."
   fi
+}
+
+function opencode-login() {
+  export GITHUB_TOKEN=$(op read "op://Employee/Github/token")
 }
 
 # ─────────────────────────────────────────

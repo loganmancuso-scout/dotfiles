@@ -70,6 +70,9 @@ tmux/dot-config/tmux/plugins/
 !opencode/dot-config/opencode/agents/*.md
 !opencode/dot-config/opencode/commands/
 !opencode/dot-config/opencode/commands/*.md
+!opencode/dot-config/opencode/skills/
+!opencode/dot-config/opencode/skills/*/
+!opencode/dot-config/opencode/skills/*/SKILL.md
 
 # zsh
 !zsh/dot-zshrc
