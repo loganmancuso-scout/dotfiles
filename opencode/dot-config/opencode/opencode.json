@@ -8,18 +8,14 @@
   // Alternatively, use the `/connect` command in OpenCode to set credentials
   
   "provider": {
-    "opencode": {
-      "options": {
-        "apiKey": "{env:OPENCODE_API_KEY}"
-      }
-    }
+    "github-copilot": {}
   },
 
   // Default model for primary agents (change to your preference)
-  "model": "anthropic/claude-sonnet-4-6",
+  "model": "github-copilot/claude-sonnet-4.6",
   
   // Smaller/faster model for lightweight tasks (title generation, etc.)
-  "small_model": "anthropic/claude-haiku-4-5",
+  "small_model": "github-copilot/claude-haiku-4.5",
 
   // ============================================================================
   // PERMISSIONS CONFIGURATION

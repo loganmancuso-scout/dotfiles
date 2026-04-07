@@ -1,7 +1,7 @@
 ---
 description: Reviews code for quality, best practices, security, and potential issues
 mode: subagent
-model: anthropic/claude-haiku-4-5
+model: github-copilot/claude-haiku-4.5
 temperature: 0.1
 permission:
   write: deny
