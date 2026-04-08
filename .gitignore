@@ -28,6 +28,9 @@
 
 # opencode
 !opencode/dot-config/opencode/opencode.json
+!opencode/dot-config/opencode/agents/*.md
+!opencode/dot-config/opencode/commands/*.md
+!opencode/dot-config/opencode/skills/k8s-ops/SKILL.md
 
 # ssh
 !ssh/dot-ssh/config

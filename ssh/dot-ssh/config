@@ -85,10 +85,10 @@ Host orangepizero3
   # HostName rm-orangepizero3-wlan.edge.home.arpa #wlan
   User labuser
 
-Host 192.168.3.*
-  User labuser
+## DEV-LAN ##
 
-  ## DEV-LAN ##
+Host 100.50.*.*
+  User dev-instance-user
 
 Host dev-core.cluster
   HostName 100.50.0.5
