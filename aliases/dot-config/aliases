@@ -15,7 +15,7 @@ export PATH="/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH"
 # ─────────────────────────────────────────
 # CORE
 # ─────────────────────────────────────────
-alias tablet-connect="scrcpy --max-size=1024 -d"
+alias tablet-connect="scrcpy --max-size=1024 -d --video-codec=h264 --video-encoder=OMX.qcom.video.encoder.avc  --audio-codec=aac --audio-encoder=c2.android.aac.encoder"
 alias assume=". assume" # required alias for assume role tool
 alias macsudo="/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sudo"
 alias cd='z'
@@ -184,6 +184,21 @@ function ping-time() {
     ts=$(date '+%m/%d-%H:%M:%S')
     out=$(ping "$@" -c 1 | grep 'time=')
     echo "$ts\t$out"
+    sleep 1
+  done
+}
+
+function nc-watch() {
+  # Usage: nc-watch <host> <port>
+  local host="$1"
+  local port="$2"
+  while true; do
+    local ts=$(date '+%m/%d-%H:%M:%S')
+    if nc -z -w 2 "$host" "$port" 2>/dev/null; then
+      echo "$ts\t$host:$port\tOPEN"
+    else
+      echo "$ts\t$host:$port\tCLOSED/REFUSED"
+    fi
     sleep 1
   done
 }

@@ -104,11 +104,6 @@
   // Sharing configuration: "manual", "auto", or "disabled"
   "share": "manual",
 
-  // Server configuration (for `opencode serve` and `opencode web`)
-  "server": {
-    "port": 4096,
-    "hostname": "127.0.0.1"
-  },
 
   // Context compaction settings
   "compaction": {
