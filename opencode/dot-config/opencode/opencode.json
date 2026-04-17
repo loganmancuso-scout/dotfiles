@@ -104,14 +104,15 @@
   // ============================================================================
 
   "mcp": {
-    // Filesystem MCP - Access to your SourceControl directory
+    // Filesystem MCP - Access to SourceControl and Notes knowledge base
     "filesystem": {
       "type": "local",
       "command": [
         "npx",
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "{env:HOME}/SourceControl"
+        "{env:HOME}/SourceControl",
+        "{env:HOME}/Documents/Notes"
       ],
       "enabled": true
     },
@@ -136,10 +137,6 @@
   "snapshot": true,
   "share": "manual",
 
-  "server": {
-    "port": 4096,
-    "hostname": "127.0.0.1"
-  },
 
   "compaction": {
     "auto": true,
