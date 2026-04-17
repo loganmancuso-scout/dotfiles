@@ -18,13 +18,65 @@ environment variables, aliases, and shell functions in a single place.
 | `ghostty`  | Ghostty terminal — Catppuccin Mocha, SauceCodePro NFM| `~/.config/ghostty/`                |
 | `git`      | Git config — SSH commit signing via 1Password        | `~/.gitconfig`                      |
 | `nvim`     | Neovim with LazyVim distribution                     | `~/.config/nvim/`                   |
-| `opencode` | OpenCode CLI AI tool config (Ollama)                 | `~/.config/opencode/`               |
+| `opencode` | OpenCode AI coding assistant config                  | `~/.config/opencode/`               |
 | `ssh`      | SSH hosts, 1Password agent, allowed signers          | `~/.ssh/`                           |
 | `starship` | Starship cross-shell prompt — Catppuccin Mocha       | `~/.config/starship.toml`           |
 | `systemd`  | User-level systemd services                          | `~/.config/systemd/user/`           |
 | `tmux`     | Tmux with TPM + Catppuccin theme                     | `~/.config/tmux/`                   |
 | `vscode`   | VSCodium settings and extensions                     | `~/.config/VSCodium/` `~/.vscode-oss/` |
+| `zed`      | Zed editor configuration                             | `~/.config/zed/`                    |
 | `zsh`      | Zsh shell config with autosuggestions                | `~/.zshrc` `~/.config/zsh/`         |
+
+## OpenCode
+
+The `opencode` package is a full AI coding assistant configuration built on
+[OpenCode](https://opencode.ai). It includes a global agent instruction file,
+custom subagents, slash commands, loadable skills, and a two-layer knowledge
+base protocol that persists context across sessions.
+
+### Agents
+
+Custom subagents defined in `agents/`:
+
+| Agent | Invoke | Role |
+|---|---|---|
+| `@scribe` | `@scribe` or task tool | Records decisions, session findings, ADRs, and README updates into the knowledge base. Cannot write source code. |
+
+### Commands
+
+Slash commands defined in `commands/`:
+
+| Command | Description |
+|---|---|
+| `/commit` | Reviews staged changes, generates a Conventional Commit message, and commits |
+| `/init-project` | Bootstraps the knowledge base for the current project |
+| `/summarize-issue` | Summarizes a GitHub issue |
+
+### Skills
+
+Loadable skills defined in `skills/`:
+
+| Skill | Load when |
+|---|---|
+| `ops` | Executing infrastructure — kubectl, Helm, Docker, OpenTofu command reference |
+| `debug` | Something is broken — systematic triage and diagnosis across any system type |
+| `docs` | Writing inline comments, JSDoc, READMEs, or changelogs |
+| `knowledge-base` | Reading or writing project knowledge files |
+| `caveman` | Compressed token-efficient responses (~75% reduction) |
+
+### Knowledge Base
+
+OpenCode maintains a two-layer knowledge system for each project it works on:
+
+- **`<project-root>/README.md`** — human-facing. Deployment steps, known issues, tasks.
+- **`~/Documents/Notes/projects/<project-name>/context.md`** — AI-facing institutional
+  memory. Architecture, patterns, gotchas, decisions, and a session log. Read silently
+  at session start and updated via `@scribe`.
+
+Run `/init-project` when starting work on a new project to bootstrap both files from
+the templates in `~/Documents/Notes/templates/`.
+
+---
 
 ## Prerequisites
 

@@ -76,7 +76,11 @@
   // ============================================================================
 
   "permission": {
-    "edit": "ask",
+    "edit": {
+      "*": "ask",
+      "~/Documents/Notes/projects/**": "allow",
+      "~/Documents/Notes/templates/**": "allow"
+    },
     "bash": {
       "*": "ask",
 
@@ -232,7 +236,8 @@
         "-y",
         "@modelcontextprotocol/server-filesystem",
         "{env:HOME}/SourceControl",
-        "{env:HOME}/Documents/Notes"
+        "{env:HOME}/Documents/Notes/projects",
+        "{env:HOME}/Documents/Notes/templates"
       ],
       "enabled": true
     },
