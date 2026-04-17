@@ -1,10 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
 
-  // ============================================================================
-  // PROVIDER & MODEL CONFIGURATION
-  // ============================================================================
-
   "provider": {
     "github-copilot": {},
     "ollama": {
@@ -53,11 +49,11 @@
         "qwen3.5:2b": {
           "name": "qwen3.5:2b"
         },
-        "mistral:latest" : {
+        "mistral:latest": {
           "name": "mistral:latest",
           "tools": true
         },
-        "mistral-small3.2:latest" : {
+        "mistral-small3.2:latest": {
           "name": "mistral-small3.2:latest",
           "tools": true
         }
@@ -65,32 +61,22 @@
     }
   },
 
-  // Default model for primary agents
   "model": "github-copilot/claude-sonnet-4.6",
-
-  // Smaller/faster model for lightweight tasks (title generation, etc.)
   "small_model": "github-copilot/claude-haiku-4.5",
-
-  // ============================================================================
-  // PERMISSIONS CONFIGURATION
-  // ============================================================================
 
   "permission": {
     "edit": {
       "*": "ask",
+      "~/SourceControl/**": "allow",
       "~/Documents/Notes/projects/**": "allow",
       "~/Documents/Notes/templates/**": "allow"
     },
     "bash": {
       "*": "ask",
-
-      // git
       "git status": "allow",
       "git diff": "allow",
       "git log*": "allow",
       "git show*": "allow",
-
-      // general file utilities
       "ls*": "allow",
       "cat*": "allow",
       "grep*": "allow",
@@ -102,8 +88,6 @@
       "whereis*": "allow",
       "jq*": "allow",
       "yq*": "allow",
-
-      // network read-only
       "curl*": "allow",
       "wget*": "allow",
       "ping*": "allow",
@@ -115,8 +99,8 @@
       "traceroute*": "allow",
       "netstat*": "allow",
       "ss*": "allow",
-
-      // kubectl read-only
+      "tflogin*": "allow",
+      "kubeconfig*": "allow",
       "kubectl get*": "allow",
       "kubectl describe*": "allow",
       "kubectl logs*": "allow",
@@ -128,15 +112,12 @@
       "kubectl api-versions": "allow",
       "kubectl explain*": "allow",
       "kubectl port-forward*": "allow",
-      // kubectl mutating
       "kubectl apply*": "ask",
       "kubectl delete*": "ask",
       "kubectl scale*": "ask",
       "kubectl rollout*": "ask",
       "kubectl exec*": "ask",
       "kubectl debug*": "ask",
-
-      // helm read-only
       "helm list*": "allow",
       "helm status*": "allow",
       "helm get*": "allow",
@@ -145,13 +126,10 @@
       "helm show*": "allow",
       "helm version": "allow",
       "helm diff*": "allow",
-      // helm mutating
       "helm upgrade*": "ask",
       "helm install*": "ask",
       "helm uninstall*": "ask",
       "helm rollback*": "ask",
-
-      // docker read-only
       "docker ps*": "allow",
       "docker images*": "allow",
       "docker inspect*": "allow",
@@ -161,7 +139,6 @@
       "docker stats*": "allow",
       "docker network ls*": "allow",
       "docker volume ls*": "allow",
-      // docker mutating
       "docker build*": "ask",
       "docker run*": "ask",
       "docker compose*": "ask",
@@ -173,8 +150,6 @@
       "docker restart*": "ask",
       "docker rm*": "ask",
       "docker rmi*": "ask",
-
-      // tofu read-only
       "tofu version": "allow",
       "tofu fmt*": "allow",
       "tofu validate*": "allow",
@@ -184,13 +159,10 @@
       "tofu state show*": "allow",
       "tofu workspace*": "allow",
       "tofu providers*": "allow",
-      // tofu mutating
       "tofu plan*": "ask",
       "tofu apply*": "ask",
       "tofu destroy*": "ask",
       "tofu init*": "ask",
-
-      // terraform read-only (alias coverage)
       "terraform version": "allow",
       "terraform fmt*": "allow",
       "terraform validate*": "allow",
@@ -200,7 +172,6 @@
       "terraform state show*": "allow",
       "terraform workspace*": "allow",
       "terraform providers*": "allow",
-      // terraform mutating
       "terraform plan*": "ask",
       "terraform apply*": "ask",
       "terraform destroy*": "ask",
@@ -208,14 +179,24 @@
     },
     "webfetch": "ask",
     "external_directory": {
+      "~/SourceControl/**": "allow",
       "~/Documents/Notes/projects/**": "allow",
       "~/Documents/Notes/templates/**": "allow"
     }
   },
 
-  // ============================================================================
-  // FORMATTER CONFIGURATION
-  // ============================================================================
+  "agent": {
+    "build": {
+      "permission": {
+        "edit": {
+          "*": "ask",
+          "~/SourceControl/**": "allow",
+          "~/Documents/Notes/projects/**": "allow",
+          "~/Documents/Notes/templates/**": "allow"
+        }
+      }
+    }
+  },
 
   "formatter": {
     "prettier": {
@@ -223,12 +204,7 @@
     }
   },
 
-  // ============================================================================
-  // MCP (MODEL CONTEXT PROTOCOL) SERVERS
-  // ============================================================================
-
   "mcp": {
-    // Filesystem MCP - Access to SourceControl and Notes knowledge base
     "filesystem": {
       "type": "local",
       "command": [
@@ -241,9 +217,6 @@
       ],
       "enabled": true
     },
-
-    // GitHub MCP - Query repos, issues, PRs, and code
-    // Requires GITHUB_TOKEN env var (set via aliases: op read "op://Personal/Github/token")
     "github": {
       "type": "local",
       "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
@@ -254,14 +227,9 @@
     }
   },
 
-  // ============================================================================
-  // GENERAL SETTINGS
-  // ============================================================================
-
   "autoupdate": true,
   "snapshot": true,
   "share": "manual",
-
 
   "compaction": {
     "auto": true,

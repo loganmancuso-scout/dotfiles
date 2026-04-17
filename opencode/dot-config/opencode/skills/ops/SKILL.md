@@ -8,6 +8,43 @@ description: >
 
 Command reference for infrastructure operations. No diagnosis — load `debug` for that.
 
+---
+
+## Authentication — Required Before Any Ops
+
+Before running any `kubectl`, `helm`, or `tofu` command, the environment must be authenticated.
+Two alias commands handle this — both must be run for a given environment:
+
+```bash
+tflogin <environment>     # sets up OpenTofu credentials
+kubeconfig <environment>.config  # sources the kubeconfig for kubectl/helm
+```
+
+**Examples:**
+```bash
+tflogin dev-core && kubeconfig dev-core.config
+tflogin core     && kubeconfig core.config
+```
+
+### Determining the environment
+
+Use context clues from the working directory, project name, or task description to infer
+the target environment. When ambiguous or not obvious, **ask the user** before proceeding:
+
+> "Which environment are we targeting? (e.g. dev-core, core)"
+
+Do not guess the environment and do not run any `kubectl`, `helm`, or `tofu` command until
+auth is confirmed. A wrong environment could mutate production infrastructure.
+
+### Auth checklist before any ops session
+
+- [ ] Environment identified (from context or user confirmation)
+- [ ] `tflogin <env>` run successfully
+- [ ] `kubeconfig <env>.config` run successfully
+- [ ] `kubectl config current-context` confirms correct cluster
+
+---
+
 ## Timeout Policy
 
 Keep command timeouts low. Default to **60s** for read-only commands, **120s** for mutating operations. Do not wait indefinitely for a command — a hang is itself a signal worth surfacing.

@@ -17,6 +17,7 @@ permission:
     "find*": allow
     "grep*": allow
     "rg*": allow
+    "mkdir -p ~/Documents/Notes/**": allow
     "git log*": allow
     "git status": allow
     "git diff*": allow

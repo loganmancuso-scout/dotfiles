@@ -78,6 +78,22 @@ the templates in `~/Documents/Notes/templates/`.
 
 ---
 
+## Known Issues
+
+### OpenCode — `edit` permission path rules not evaluated
+
+File edit permissions configured via `permission.edit` path patterns (e.g. `~/SourceControl/**": "allow"`)
+do not work — edits still prompt regardless of config. This is a confirmed upstream OpenCode bug.
+
+**Workaround:** When prompted, approve with "always" to whitelist the pattern for the rest of the session.
+
+**Upstream issues:**
+- [#13872](https://github.com/anomalyco/opencode/issues/13872) — Permission edit patterns not working
+- [#16331](https://github.com/anomalyco/opencode/issues/16331) — Permissions ignored
+- [#5395](https://github.com/anomalyco/opencode/issues/5395) — Split `external_directory` into read vs write (root cause feature gap)
+
+---
+
 ## Prerequisites
 
 ### Required
@@ -164,3 +180,4 @@ stow -v --dotfiles --adopt --target="$HOME" <package>
 - **`--adopt`** moves any existing files in `$HOME` into the repo, replacing
   them with symlinks. Run `git reset --hard` immediately after to restore the
   canonical versions from the repository.
+
