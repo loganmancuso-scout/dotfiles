@@ -79,14 +79,134 @@
     "edit": "ask",
     "bash": {
       "*": "ask",
+
+      // git
       "git status": "allow",
       "git diff": "allow",
       "git log*": "allow",
+      "git show*": "allow",
+
+      // general file utilities
       "ls*": "allow",
       "cat*": "allow",
-      "grep*": "allow"
+      "grep*": "allow",
+      "find*": "allow",
+      "rg*": "allow",
+      "tail*": "allow",
+      "head*": "allow",
+      "which*": "allow",
+      "whereis*": "allow",
+      "jq*": "allow",
+      "yq*": "allow",
+
+      // network read-only
+      "curl*": "allow",
+      "wget*": "allow",
+      "ping*": "allow",
+      "dig*": "allow",
+      "nslookup*": "allow",
+      "host*": "allow",
+      "nc*": "allow",
+      "netcat*": "allow",
+      "traceroute*": "allow",
+      "netstat*": "allow",
+      "ss*": "allow",
+
+      // kubectl read-only
+      "kubectl get*": "allow",
+      "kubectl describe*": "allow",
+      "kubectl logs*": "allow",
+      "kubectl top*": "allow",
+      "kubectl config*": "allow",
+      "kubectl cluster-info*": "allow",
+      "kubectl version": "allow",
+      "kubectl api-resources": "allow",
+      "kubectl api-versions": "allow",
+      "kubectl explain*": "allow",
+      "kubectl port-forward*": "allow",
+      // kubectl mutating
+      "kubectl apply*": "ask",
+      "kubectl delete*": "ask",
+      "kubectl scale*": "ask",
+      "kubectl rollout*": "ask",
+      "kubectl exec*": "ask",
+      "kubectl debug*": "ask",
+
+      // helm read-only
+      "helm list*": "allow",
+      "helm status*": "allow",
+      "helm get*": "allow",
+      "helm history*": "allow",
+      "helm search*": "allow",
+      "helm show*": "allow",
+      "helm version": "allow",
+      "helm diff*": "allow",
+      // helm mutating
+      "helm upgrade*": "ask",
+      "helm install*": "ask",
+      "helm uninstall*": "ask",
+      "helm rollback*": "ask",
+
+      // docker read-only
+      "docker ps*": "allow",
+      "docker images*": "allow",
+      "docker inspect*": "allow",
+      "docker logs*": "allow",
+      "docker version": "allow",
+      "docker info": "allow",
+      "docker stats*": "allow",
+      "docker network ls*": "allow",
+      "docker volume ls*": "allow",
+      // docker mutating
+      "docker build*": "ask",
+      "docker run*": "ask",
+      "docker compose*": "ask",
+      "docker push*": "ask",
+      "docker pull*": "ask",
+      "docker exec*": "ask",
+      "docker stop*": "ask",
+      "docker start*": "ask",
+      "docker restart*": "ask",
+      "docker rm*": "ask",
+      "docker rmi*": "ask",
+
+      // tofu read-only
+      "tofu version": "allow",
+      "tofu fmt*": "allow",
+      "tofu validate*": "allow",
+      "tofu show*": "allow",
+      "tofu output*": "allow",
+      "tofu state list*": "allow",
+      "tofu state show*": "allow",
+      "tofu workspace*": "allow",
+      "tofu providers*": "allow",
+      // tofu mutating
+      "tofu plan*": "ask",
+      "tofu apply*": "ask",
+      "tofu destroy*": "ask",
+      "tofu init*": "ask",
+
+      // terraform read-only (alias coverage)
+      "terraform version": "allow",
+      "terraform fmt*": "allow",
+      "terraform validate*": "allow",
+      "terraform show*": "allow",
+      "terraform output*": "allow",
+      "terraform state list*": "allow",
+      "terraform state show*": "allow",
+      "terraform workspace*": "allow",
+      "terraform providers*": "allow",
+      // terraform mutating
+      "terraform plan*": "ask",
+      "terraform apply*": "ask",
+      "terraform destroy*": "ask",
+      "terraform init*": "ask"
     },
-    "webfetch": "ask"
+    "webfetch": "ask",
+    "external_directory": {
+      "~/Documents/Notes/projects/**": "allow",
+      "~/Documents/Notes/templates/**": "allow"
+    }
   },
 
   // ============================================================================
