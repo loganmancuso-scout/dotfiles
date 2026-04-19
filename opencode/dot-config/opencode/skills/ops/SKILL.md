@@ -15,9 +15,19 @@ Command reference for infrastructure operations. No diagnosis — load `debug` f
 Before running any `kubectl`, `helm`, or `tofu` command, the environment must be authenticated.
 Two alias commands handle this — both must be run for a given environment:
 
+> **Important:** `tflogin` and `kubeconfig` are shell aliases defined in `~/.config/aliases`.
+> They are not available in a plain bash subshell. Always source the aliases file first:
+
 ```bash
-tflogin <environment>     # sets up OpenTofu credentials
-kubeconfig <environment>.config  # sources the kubeconfig for kubectl/helm
+source ~/.config/aliases
+tflogin <environment>
+kubeconfig <environment>.config
+```
+
+Or chain in a single command:
+
+```bash
+source ~/.config/aliases && tflogin <environment> && kubeconfig <environment>.config
 ```
 
 **Examples:**
@@ -36,9 +46,24 @@ the target environment. When ambiguous or not obvious, **ask the user** before p
 Do not guess the environment and do not run any `kubectl`, `helm`, or `tofu` command until
 auth is confirmed. A wrong environment could mutate production infrastructure.
 
+**When switching environments mid-session**, re-run the full auth sequence for the new
+environment before executing any further commands — credentials and kubeconfig from the
+previous environment are not automatically cleared:
+
+```bash
+source ~/.config/aliases && tflogin <new-env> && kubeconfig <new-env>.config
+```
+
+Verify the switch succeeded before continuing:
+
+```bash
+kubectl config current-context
+```
+
 ### Auth checklist before any ops session
 
 - [ ] Environment identified (from context or user confirmation)
+- [ ] `source ~/.config/aliases` run successfully
 - [ ] `tflogin <env>` run successfully
 - [ ] `kubeconfig <env>.config` run successfully
 - [ ] `kubectl config current-context` confirms correct cluster

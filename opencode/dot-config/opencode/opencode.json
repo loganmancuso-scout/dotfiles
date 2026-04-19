@@ -99,6 +99,7 @@
       "traceroute*": "allow",
       "netstat*": "allow",
       "ss*": "allow",
+      "source ~/.config/aliases": "allow",
       "tflogin*": "allow",
       "kubeconfig*": "allow",
       "kubectl get*": "allow",
