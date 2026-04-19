@@ -390,9 +390,9 @@ function tflogin() {
   echo "Setting $env-OpenBao Secrets"
   # set vault url and vault token and unseal key
   export BAO_ADDR="$(op item get "Tofu $env-OpenBao" --format json | jq -r '.urls[0].href')"
-  export VAULT_ADDR="$(op item get "Tofu $env-OpenBao" --format json | jq -r '.urls[0].href')"
+  export VAULT_ADDR="$BAO_ADDR"
   export BAO_TOKEN="$(op item get "Tofu $env-OpenBao" --fields label=password --reveal)"
-  export VAULT_TOKEN="$(op item get "Tofu $env-OpenBao" --fields label=password --reveal)"
+  export VAULT_TOKEN="$BAO_TOKEN"
   export UNSEAL_KEY_1="$(op item get "Tofu $env-OpenBao" --fields label="UNSEAL_KEY_1")"
   echo "Setting $env-RustFS Secrets"
   # set rustfs secret token and secret id
