@@ -12,8 +12,8 @@ Command reference for infrastructure operations. No diagnosis — load `debug` f
 
 ## Authentication — Required Before Any Ops
 
-Before running any `kubectl`, `helm`, or `tofu` command, the environment must be authenticated.
-Two alias commands handle this — both must be run for a given environment:
+Before running any `kubectl`, `helm`, or `tofu` command, the environment must be authenticated
+**once per session**. Two alias commands handle this:
 
 > **Important:** `tflogin` and `kubeconfig` are shell aliases defined in `~/.config/aliases`.
 > They are not available in a plain bash subshell. Always source the aliases file first:
@@ -29,6 +29,8 @@ Or chain in a single command:
 ```bash
 source ~/.config/aliases && tflogin <environment> && kubeconfig <environment>.config
 ```
+
+Once authenticated, you do not need to re-run these for subsequent commands in the same session.
 
 **Examples:**
 ```bash
