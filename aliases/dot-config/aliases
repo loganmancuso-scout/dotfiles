@@ -178,18 +178,18 @@ alias ports="netstat -tulanp"
 alias flushdns="sudo resolvectl flush-caches"
 alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
 
-function ping-time() {
-  # Usage: ping-time <ping-args>
+function watch-ping() {
+  # Usage: watch-ping <host> [ping-args]
   while true; do
     ts=$(date '+%m/%d-%H:%M:%S')
-    out=$(ping "$@" -c 1 | grep 'time=')
-    echo "$ts\t$out"
+    out=$(ping -c 1 -W 5000 "$@" 2>&1 | grep -E 'time=|timeout|unreachable|unknown')
+    echo "$ts\t${out:-No response}"
     sleep 1
   done
 }
 
-function nc-watch() {
-  # Usage: nc-watch <host> <port>
+function watch-nc() {
+  # Usage: watch-nc <host> <port>
   local host="$1"
   local port="$2"
   while true; do
