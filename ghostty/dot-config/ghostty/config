@@ -1,11 +1,11 @@
 # ~/.config/ghostty/config.toml
 
 font-family = "SauceCodePro NFM"
-font-size = 14
+font-size = 16
 
 theme = "Catppuccin Mocha"
 
-background-opacity = 0.97
+background-opacity = 0.95
 
 window-height = 40
 window-width = 90
