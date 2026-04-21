@@ -1,86 +1,167 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  
-  // ============================================================================
-  // PROVIDER & MODEL CONFIGURATION
-  // ============================================================================
-  // API keys are pulled from environment variables (set in ~/.zshrc or ~/.env)
-  // Alternatively, use the `/connect` command in OpenCode to set credentials
-  
+
   "provider": {
     "github-copilot": {}
   },
 
-  // Default model for primary agents (change to your preference)
   "model": "github-copilot/claude-sonnet-4.6",
-  
-  // Smaller/faster model for lightweight tasks (title generation, etc.)
   "small_model": "github-copilot/claude-haiku-4.5",
 
-  // ============================================================================
-  // PERMISSIONS CONFIGURATION
-  // ============================================================================
-  // Set default permission levels: "allow", "ask", or "deny"
-  // "ask" = prompt for confirmation before executing (recommended for safety)
-  
   "permission": {
-    // File editing requires confirmation
-    "edit": "ask",
-    
-    // Bash commands require confirmation (especially for destructive operations)
+    "edit": {
+      "*": "ask",
+      "~/SourceControl/**": "allow",
+      "~/Documents/Notes/projects/**": "allow",
+      "~/Documents/Notes/templates/**": "allow"
+    },
     "bash": {
       "*": "ask",
       "git status": "allow",
       "git diff": "allow",
       "git log*": "allow",
+      "git show*": "allow",
       "ls*": "allow",
       "cat*": "allow",
-      "grep*": "allow"
+      "grep*": "allow",
+      "find*": "allow",
+      "rg*": "allow",
+      "tail*": "allow",
+      "head*": "allow",
+      "which*": "allow",
+      "whereis*": "allow",
+      "jq*": "allow",
+      "yq*": "allow",
+      "curl*": "allow",
+      "wget*": "allow",
+      "ping*": "allow",
+      "dig*": "allow",
+      "nslookup*": "allow",
+      "host*": "allow",
+      "nc*": "allow",
+      "netcat*": "allow",
+      "traceroute*": "allow",
+      "netstat*": "allow",
+      "ss*": "allow",
+      "source ~/.config/aliases": "allow",
+      "tflogin*": "allow",
+      "kubeconfig*": "allow",
+      "kubectl get*": "allow",
+      "kubectl describe*": "allow",
+      "kubectl logs*": "allow",
+      "kubectl top*": "allow",
+      "kubectl config*": "allow",
+      "kubectl cluster-info*": "allow",
+      "kubectl version": "allow",
+      "kubectl api-resources": "allow",
+      "kubectl api-versions": "allow",
+      "kubectl explain*": "allow",
+      "kubectl port-forward*": "allow",
+      "kubectl apply*": "ask",
+      "kubectl delete*": "ask",
+      "kubectl scale*": "ask",
+      "kubectl rollout*": "ask",
+      "kubectl exec*": "ask",
+      "kubectl debug*": "ask",
+      "helm list*": "allow",
+      "helm status*": "allow",
+      "helm get*": "allow",
+      "helm history*": "allow",
+      "helm search*": "allow",
+      "helm show*": "allow",
+      "helm version": "allow",
+      "helm diff*": "allow",
+      "helm upgrade*": "ask",
+      "helm install*": "ask",
+      "helm uninstall*": "ask",
+      "helm rollback*": "ask",
+      "docker ps*": "allow",
+      "docker images*": "allow",
+      "docker inspect*": "allow",
+      "docker logs*": "allow",
+      "docker version": "allow",
+      "docker info": "allow",
+      "docker stats*": "allow",
+      "docker network ls*": "allow",
+      "docker volume ls*": "allow",
+      "docker build*": "ask",
+      "docker run*": "ask",
+      "docker compose*": "ask",
+      "docker push*": "ask",
+      "docker pull*": "ask",
+      "docker exec*": "ask",
+      "docker stop*": "ask",
+      "docker start*": "ask",
+      "docker restart*": "ask",
+      "docker rm*": "ask",
+      "docker rmi*": "ask",
+      "tofu version": "allow",
+      "tofu fmt*": "allow",
+      "tofu validate*": "allow",
+      "tofu show*": "allow",
+      "tofu output*": "allow",
+      "tofu state list*": "allow",
+      "tofu state show*": "allow",
+      "tofu workspace*": "allow",
+      "tofu providers*": "allow",
+      "tofu plan*": "ask",
+      "tofu apply*": "ask",
+      "tofu destroy*": "ask",
+      "tofu init*": "ask",
+      "terraform version": "allow",
+      "terraform fmt*": "allow",
+      "terraform validate*": "allow",
+      "terraform show*": "allow",
+      "terraform output*": "allow",
+      "terraform state list*": "allow",
+      "terraform state show*": "allow",
+      "terraform workspace*": "allow",
+      "terraform providers*": "allow",
+      "terraform plan*": "ask",
+      "terraform apply*": "ask",
+      "terraform destroy*": "ask",
+      "terraform init*": "ask"
     },
-    
-    // Web fetching requires confirmation
-    "webfetch": "ask"
+    "webfetch": "ask",
+    "external_directory": {
+      "~/SourceControl/**": "allow",
+      "~/Documents/Notes/projects/**": "allow",
+      "~/Documents/Notes/templates/**": "allow"
+    }
   },
 
-  // ============================================================================
-  // FORMATTER CONFIGURATION
-  // ============================================================================
-  
+  "agent": {
+    "build": {
+      "permission": {
+        "edit": {
+          "*": "ask",
+          "~/SourceControl/**": "allow",
+          "~/Documents/Notes/projects/**": "allow",
+          "~/Documents/Notes/templates/**": "allow"
+        }
+      }
+    }
+  },
+
   "formatter": {
     "prettier": {
       "disabled": false
     }
-    // Add custom formatters here
-    // "eslint": {
-    //   "command": ["npx", "eslint", "--fix", "$FILE"],
-    //   "extensions": [".js", ".ts", ".jsx", ".tsx"]
-    // }
   },
 
-  // ============================================================================
-  // MCP (MODEL CONTEXT PROTOCOL) SERVERS
-  // ============================================================================
-  // Configure external tools and integrations via MCP
-  // See: https://opencode.ai/docs/mcp-servers
-  
   "mcp": {
-    // Filesystem MCP - Access to your SourceControl directory
-    // Allows reading/writing files across multiple repos for cross-repo workflows
     "filesystem": {
       "type": "local",
       "command": [
         "npx",
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "{env:HOME}/SourceControl"
+        "{env:HOME}/SourceControl",
+        "{env:HOME}/Documents/Notes/projects",
+        "{env:HOME}/Documents/Notes/templates"
       ],
       "enabled": true
     },
-    
-    // GitHub MCP - Query repos, issues, PRs, and code
-    // Requires GitHub Personal Access Token (PAT)
-    // Create PAT: https://github.com/settings/tokens/new
-    // Permissions needed: repo (Full control of private repositories)
     "github": {
       "type": "local",
       "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
@@ -91,28 +172,16 @@
     }
   },
 
-  // ============================================================================
-  // GENERAL SETTINGS
-  // ============================================================================
-  
-  // Automatically update OpenCode (set to false or "notify" if you prefer manual updates)
   "autoupdate": true,
-  
-  // Enable snapshots for undo/redo functionality
   "snapshot": true,
-  
-  // Sharing configuration: "manual", "auto", or "disabled"
   "share": "manual",
 
-
-  // Context compaction settings
   "compaction": {
     "auto": true,
     "prune": true,
     "reserved": 10000
   },
 
-  // File watcher ignore patterns
   "watcher": {
     "ignore": [
       "node_modules/**",
