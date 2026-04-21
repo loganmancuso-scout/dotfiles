@@ -14,7 +14,7 @@ export FZF_DEFAULT_OPTS="
   --height 40%
   --layout reverse
   --border rounded
-  --preview 'bat --color=always --style=numbers --line-range=:500 {}'
+  --preview 'batcat --color=always --style=numbers --line-range=:500 {}'
   --preview-window right:50%:wrap
   --bind 'ctrl-/:toggle-preview'
   --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
