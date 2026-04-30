@@ -8,8 +8,7 @@ permission:
     "*": deny
     "**/README.md": allow
     "**/readme.md": allow
-    "~/Documents/Notes/projects/**": allow
-    "~/Documents/Notes/templates/**": allow
+    "~/Documents/Notes/**": allow
   bash:
     "*": deny
     "ls*": allow
