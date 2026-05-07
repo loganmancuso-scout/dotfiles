@@ -188,6 +188,95 @@ function watch-ping() {
   done
 }
 
+function ping-multi() {
+  # Usage: ping-multi <host1> <host2> ... <hostN>
+  # Compatible with both bash and zsh
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: ping-multi <host1> <host2> ... <hostN>"
+    return 1
+  fi
+
+  # suppress job control output (zsh and bash)
+  if [[ -n "$ZSH_VERSION" ]]; then
+    setopt LOCAL_OPTIONS NO_MONITOR
+  else
+    set +m
+  fi
+
+  # declare all locals up front to avoid zsh printing assignments in loops
+  local host ts statedir tmpdir result s r st lat pct
+  local hosts=("$@")
+
+  statedir=$(mktemp -d)
+
+  for host in "${hosts[@]}"; do
+    echo 0 > "$statedir/${host}.sent"
+    echo 0 > "$statedir/${host}.recv"
+  done
+
+  _ping_multi_cleanup() {
+    tput cnorm
+    rm -rf "$statedir"
+    echo
+  }
+  trap '_ping_multi_cleanup; return 0' INT
+
+  tput civis  # hide cursor
+
+  while true; do
+    ts=$(date '+%m/%d-%H:%M:%S')
+    tmpdir=$(mktemp -d)
+
+    # fire all pings in parallel
+    for host in "${hosts[@]}"; do
+      (
+        out=$(ping -c 1 -W 5000 "$host" 2>&1)
+        latency=$(echo "$out" | grep -oE 'time=[0-9.]+ ms' | head -1)
+        if [[ -n "$latency" ]]; then
+          echo "UP|${latency}" > "$tmpdir/${host}.result"
+        else
+          echo "DOWN|-" > "$tmpdir/${host}.result"
+        fi
+      ) &
+    done
+    wait
+
+    # read results and update counters
+    for host in "${hosts[@]}"; do
+      result=$(cat "$tmpdir/${host}.result" 2>/dev/null || echo "DOWN|-")
+      st=$(echo "$result" | cut -d'|' -f1)
+      lat=$(echo "$result" | cut -d'|' -f2)
+      s=$(cat "$statedir/${host}.sent")
+      r=$(cat "$statedir/${host}.recv")
+      s=$(( s + 1 ))
+      [[ "$st" == "UP" ]] && r=$(( r + 1 ))
+      echo "$s"  > "$statedir/${host}.sent"
+      echo "$r"  > "$statedir/${host}.recv"
+      echo "$st"  > "$statedir/${host}.status"
+      echo "$lat" > "$statedir/${host}.latency"
+    done
+
+    rm -rf "$tmpdir"
+
+    # redraw table
+    clear
+    printf "ping-multi | refreshed %s\n\n" "$ts"
+    printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "HOST" "STATUS" "LATENCY" "UPTIME%" "SENT" "RECV"
+    printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "--------------------" "--------" "--------------" "----------" "------" "------"
+
+    for host in "${hosts[@]}"; do
+      s=$(cat "$statedir/${host}.sent")
+      r=$(cat "$statedir/${host}.recv")
+      st=$(cat "$statedir/${host}.status")
+      lat=$(cat "$statedir/${host}.latency")
+      pct=$(awk "BEGIN { printf \"%.1f\", ($r / ($s > 0 ? $s : 1)) * 100 }")
+      printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "$host" "$st" "$lat" "${pct}%" "$s" "$r"
+    done
+
+    sleep 1
+  done
+}
+
 function watch-nc() {
   # Usage: watch-nc <host> <port>
   local host="$1"

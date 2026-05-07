@@ -66,6 +66,7 @@ tmux/dot-config/tmux/plugins/
 
 # opencode
 !opencode/dot-config/opencode/opencode.json
+!opencode/dot-config/opencode/*.sh
 !opencode/dot-config/opencode/agents/
 !opencode/dot-config/opencode/agents/*.md
 !opencode/dot-config/opencode/commands/
