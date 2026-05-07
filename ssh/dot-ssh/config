@@ -78,12 +78,12 @@ Host sandbox
 Host asus
   # HostName rm-asus-eth.edge.home.arpa #eth
   HostName rm-asus.edge.home.arpa #wlan
-  User labuser
+  User instance-user
 
 Host orangepizero3
   HostName rm-orangepizero3.edge.home.arpa #eth
   # HostName rm-orangepizero3-wlan.edge.home.arpa #wlan
-  User labuser
+  User instance-user
 
 ## DEV-LAN ##
 

@@ -54,7 +54,6 @@
       "config": "raw"
     },
     "continue.showInlineTip": false,
-    "chat.disableAIFeatures": false,
     "workbench.sideBar.location": "right",
     "chat.tools.urls.autoApprove": {
       "https://gethomepage.dev": true,

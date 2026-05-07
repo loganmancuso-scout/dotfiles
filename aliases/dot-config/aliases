@@ -396,8 +396,8 @@ function tflogin() {
   export UNSEAL_KEY_1="$(op item get "Tofu $env-OpenBao" --fields label="UNSEAL_KEY_1")"
   echo "Setting $env-RustFS Secrets"
   # set rustfs secret token and secret id
-  export AWS_ACCESS_KEY_ID="$(op item get "rustfs $env-accesskey" --vault "automation" --fields label=username)"
-  export AWS_SECRET_ACCESS_KEY="$(op item get "rustfs $env-accesskey" --vault "automation" --fields label=password --reveal)"
+  export AWS_ACCESS_KEY_ID="$(op item get "rustfs $env-automation-accesskey" --vault "automation" --fields label=username)"
+  export AWS_SECRET_ACCESS_KEY="$(op item get "rustfs $env-automation-accesskey" --vault "automation" --fields label=password --reveal)"
   # set op service account secret token
   echo "Setting $env-1Password Secrets"
   export OP_CONNECT_TOKEN="$(op item get "$env Access Token: OpenTofu" --fields label=credential --reveal)"

@@ -33,6 +33,7 @@
 # opencode
 !opencode/dot-config/opencode/AGENTS.md
 !opencode/dot-config/opencode/opencode.json
+!opencode/dot-config/opencode/*.sh
 !opencode/dot-config/opencode/agents/*.md
 !opencode/dot-config/opencode/commands/*.md
 !opencode/dot-config/opencode/skills/*/SKILL.md
