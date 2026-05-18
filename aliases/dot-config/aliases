@@ -18,10 +18,10 @@ export PATH="/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH"
 alias tablet-connect="scrcpy --max-size=1024 -d --video-codec=h264 --video-encoder=OMX.qcom.video.encoder.avc  --audio-codec=aac --audio-encoder=c2.android.aac.encoder"
 alias assume=". assume" # required alias for assume role tool
 alias macsudo="/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sudo"
-alias cd='z'
-alias ls='eza --icons'
-alias ll='eza --icons -a'
-alias x='eza --icons'
+# alias cd='z'
+# alias ls='eza --icons'
+# alias ll='eza --icons -a'
+alias x='eza --icons -a'
 alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
 
 function delete() {
