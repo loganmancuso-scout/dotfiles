@@ -36,8 +36,8 @@ Host bytevault
   HostName bytevault.cluster.vpc.home.arpa
   User root
 
-Host core.cluster
-  HostName core.cluster.vpc.home.arpa
+Host core
+  HostName core.vpc.home.arpa
   User cluster-user
 
 Host ragnarok
@@ -90,7 +90,7 @@ Host orangepizero3
 Host 100.50.*.*
   User dev-instance-user
 
-Host dev-core.cluster
+Host dev-core
   HostName 100.50.0.5
   User cluster-user
 
