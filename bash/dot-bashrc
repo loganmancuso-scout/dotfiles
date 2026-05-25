@@ -98,7 +98,3 @@ eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 source <(fzf --bash)
 source "$HOME/.cargo/env"
-eval "$(wt config shell init bash)"
-
-# cv4pve-cli completion
-source "/home/loganmancuso/.cv4pve/cli/completion.bash"
