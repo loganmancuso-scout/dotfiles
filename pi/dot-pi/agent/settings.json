@@ -1,0 +1,24 @@
+{
+  "defaultProvider": "github-copilot",
+  "defaultModel": "github-copilot/claude-sonnet-4-5",
+  "enabledModels": [
+    "github-copilot/claude-sonnet-4-5",
+    "github-copilot/claude-haiku-4-5",
+    "github-copilot/gpt-4o",
+    "github-copilot/o3-mini"
+  ],
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 10000,
+    "keepRecentTokens": 20000
+  },
+  "retry": {
+    "enabled": true,
+    "maxRetries": 3,
+    "baseDelayMs": 2000
+  },
+  "enableSkillCommands": true,
+  "extensions": [
+    "extensions/notification.ts"
+  ]
+}

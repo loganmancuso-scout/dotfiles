@@ -75,6 +75,16 @@ tmux/dot-config/tmux/plugins/
 !opencode/dot-config/opencode/skills/*/
 !opencode/dot-config/opencode/skills/*/SKILL.md
 
+# pi
+!pi/dot-pi/agent/settings.json
+!pi/dot-pi/agent/extensions/
+!pi/dot-pi/agent/extensions/*.ts
+!pi/dot-pi/agent/prompts/
+!pi/dot-pi/agent/prompts/*.md
+!pi/dot-pi/agent/skills/
+!pi/dot-pi/agent/skills/*/
+!pi/dot-pi/agent/skills/*/SKILL.md
+
 # zsh
 !zsh/dot-zshrc
 !zsh/dot-config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
