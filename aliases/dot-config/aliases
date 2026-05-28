@@ -23,6 +23,7 @@ alias macsudo="/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && s
 # alias ll='eza --icons -a'
 alias x='eza --icons -a'
 alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
+alias python='python3'
 
 function delete() {
   for item in "$@"; do
@@ -432,7 +433,7 @@ function kubeconfig() {
 
   if [ -z "$config_name" ]; then
     echo "Available kubeconfigs:"
-    [ -d "$kubeconfig_dir" ] && ls -1 "$kubeconfig_dir" | grep -E '(config|.*-kubeconfig\.yaml)' | sed 's/^/  /'
+    [ -d "$kubeconfig_dir" ] && ls -1 "$kubeconfig_dir" | grep -E '(config|.*\.yaml)' | sed 's/^/  /'
     return 0
   fi
 
@@ -445,7 +446,7 @@ function kubeconfig() {
   fi
 
   # Check for name-kubeconfig.yaml pattern
-  local config_file="$kubeconfig_dir/$config_name-kubeconfig.yaml"
+  local config_file="$kubeconfig_dir/$config_name.yaml"
   if [ -f "$config_file" ]; then
     export KUBECONFIG="$config_file"
     echo "✓ Switched to $config_name"

@@ -9,8 +9,38 @@ Host *
   StrictHostKeyChecking no
 
 Host trailer-city-srx
+  User loganmancuso
+  HostName 172.25.0.18
+
+Host trailer-city-zscaler-bc
+  User zsroot
+  HostName 172.27.255.112
+  KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
+  HostKeyAlgorithms +ssh-rsa
+
+Host body-mdf
   User logan.mancuso
-  HostName 172.19.3.1
+  HostName 172.17.3.254
+
+Host paint-mdf
+  User logan.mancuso
+  HostName 172.19.3.254
+
+Host antenna-paint-nearend
+  User ubnt
+  HostName 172.27.225.4
+
+Host antenna-paint-farend
+  User ubnt
+  HostName 172.27.225.5
+
+Host antenna-body-nearend
+  User ubnt
+  HostName 172.27.224.4
+
+Host antenna-body-farend
+  User ubnt
+  HostName 172.27.224.5
 
 Host cleopatra
   User loganmancuso

@@ -1,11 +1,14 @@
 {
   "defaultProvider": "github-copilot",
-  "defaultModel": "github-copilot/claude-sonnet-4-5",
+  "defaultModel": "claude-haiku-4.5",
   "enabledModels": [
-    "github-copilot/claude-sonnet-4-5",
-    "github-copilot/claude-haiku-4-5",
-    "github-copilot/gpt-4o",
-    "github-copilot/o3-mini"
+    "github-copilot/claude-opus-4.5",
+    "github-copilot/claude-opus-4.6",
+    "github-copilot/claude-haiku-4.5",
+    "github-copilot/claude-opus-4.7",
+    "github-copilot/claude-sonnet-4.5",
+    "github-copilot/claude-sonnet-4.6",
+    "github-copilot/grok-code-fast-1"
   ],
   "compaction": {
     "enabled": true,
@@ -20,5 +23,7 @@
   "enableSkillCommands": true,
   "extensions": [
     "extensions/notification.ts"
-  ]
+  ],
+  "lastChangelogVersion": "0.75.5",
+  "defaultThinkingLevel": "medium"
 }
