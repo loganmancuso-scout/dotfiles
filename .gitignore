@@ -30,6 +30,13 @@
 !nvim/dot-config/nvim/init.lua
 !nvim/dot-config/nvim/lua/**/*.lua
 
+# pi
+!pi/dot-pi/agent/AGENTS.md
+!pi/dot-pi/agent/settings.json
+!pi/dot-pi/agent/models.json
+!pi/dot-pi/agent/skills/*/SKILL.md
+!pi/dot-pi/agent/prompts/*.md
+
 # opencode
 !opencode/dot-config/opencode/AGENTS.md
 !opencode/dot-config/opencode/opencode.json
