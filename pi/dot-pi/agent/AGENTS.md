@@ -91,9 +91,9 @@ The following prompt templates are available in any session (type `/name` to inv
 Load skills with `/skill:name` or by typing the skill name in context.
 
 The following skills are available:
-- `knowledge-base` — project knowledge base protocol and file schemas
-- `docs` — documentation writing standards: inline comments, JSDoc, READMEs, changelogs, emoji policy
-- `ops` — command reference for kubectl, Helm, Docker, and OpenTofu operations
-- `debug` — triage and diagnosis for infra and application failures; load ops to execute the fix
-- `caveman` — ultra-compressed communication mode (~75% token reduction)
-- `scribe` — writes to the project knowledge base and README files; load when KB writes are needed
+- `scribe` — KB record-keeper and scratch workspace; load when you need to write to KB or use it as thinking workspace
+- `schema` — KB file structure reference; schema/template lookup for context.md, sessions, decisions, investigations
+- `debug` — systematic troubleshooting methodology; load when diagnosing problems
+- `ops` — infrastructure commands (kubectl, Helm, Docker, OpenTofu); load when executing fixes
+- `docs` — writing standards (code comments, markdown, changelogs); apply to all documentation work
+- `caveman` — ultra-compressed communication mode (~75% token reduction); optional output mode

@@ -50,21 +50,19 @@ Covers:
 
 ---
 
-## Recording Decisions — Use @scribe
+## Recording Decisions — Use the scribe skill
 
-Do not write to the knowledge base or README files yourself. Instead, invoke the `@scribe` subagent to handle all knowledge base writes. Scribe has the correct permissions and follows the proper schema.
+When knowledge base writes are needed, load `/skill:scribe` and follow its instructions to write files directly. Do not skip this — KB maintenance is part of every meaningful session.
 
-Invoke `@scribe` when:
-- A significant architectural decision was made — scribe creates an ADR and updates `context.md`
-- A meaningful unit of work is complete — scribe writes a session log entry
-- A non-obvious behavior or gotcha was discovered — scribe adds it to `context.md`
-- Deployment steps, known issues, or project summary have changed — scribe updates `README.md`
+Invoke the scribe skill when:
+- A significant architectural decision was made — write an ADR and update `context.md`
+- A meaningful unit of work is complete — write a session log entry
+- A non-obvious behavior or gotcha was discovered — add it to `context.md`
+- Deployment steps, known issues, or project summary have changed — update `README.md`
 - The user says "remember this", "save this", or "update the knowledge base"
 - The session is wrapping up and anything meaningful was learned
 
-Do not invoke `@scribe` for: typo fixes, trivial formatting changes, exploratory work with no findings, or things already documented.
-
-**How to invoke:** Pass scribe a clear, factual summary of what to record. Include: what was decided or discovered, why, and what changed. Scribe will determine the correct files and sections — you do not need to specify them.
+Do not invoke scribe for: typo fixes, trivial formatting changes, exploratory work with no findings, or things already documented.
 
 ---
 
@@ -78,17 +76,9 @@ Given `$PWD`, resolve the project name as follows:
 
 ---
 
-## Subagents
-
-The following subagents are available. Invoke them with `@<name>` or via the task tool.
-
-- `@scribe` — records decisions, session findings, and knowledge base updates. Invoke instead of writing to Notes or README yourself. See "Recording Decisions" above.
-
----
-
 ## Commands
 
-The following slash commands are available in any session:
+The following prompt templates are available in any session (type `/name` to invoke):
 
 - `/commit` — review staged changes, generate a conventional commit message, and commit to git
 - `/init-project` — bootstrap the knowledge base for the current project (creates `context.md` and `README.md`)
@@ -98,11 +88,12 @@ The following slash commands are available in any session:
 
 ## Skills
 
-Load the `knowledge-base` skill for detailed schema and update rules when working on project knowledge files.
+Load skills with `/skill:name` or by typing the skill name in context.
 
 The following skills are available:
-- `knowledge-base` — project knowledge base protocol and file schemas
-- `docs` — documentation writing standards: inline comments, JSDoc, READMEs, changelogs, emoji policy
-- `ops` — command reference for kubectl, Helm, Docker, and OpenTofu operations
-- `debug` — triage and diagnosis for infra and application failures; load ops to execute the fix
-- `caveman` — ultra-compressed communication mode (~75% token reduction)
+- `scribe` — KB record-keeper and scratch workspace; load when KB writes are needed
+- `schema` — KB file structure reference; schema/template lookup for context.md, sessions, decisions, investigations
+- `debug` — systematic troubleshooting methodology; load when diagnosing problems
+- `ops` — infrastructure commands (kubectl, Helm, Docker, OpenTofu); load when executing fixes
+- `docs` — writing standards (code comments, markdown, changelogs); apply to all documentation work
+- `caveman` — ultra-compressed communication mode (~75% token reduction); optional output mode
