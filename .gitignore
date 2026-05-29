@@ -53,8 +53,10 @@
 # tmux
 !tmux/dot-config/tmux/tmux.conf
 !tmux/dot-config/tmux/scripts/*.sh
+!tmux/dot-tmux/*.conf
 # plugins are managed at runtime (tpm self-installs, catppuccin loaded via run directive)
 tmux/dot-config/tmux/plugins/
+
 
 # vscode (VSCodium on Linux)
 !vscode/dot-config/VSCodium/User/settings.json
