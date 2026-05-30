@@ -52,9 +52,18 @@ Covers:
 
 ## Recording Decisions — Use the scribe skill
 
-When knowledge base writes are needed, load `/skill:scribe` and follow its instructions to write files directly. Do not skip this — KB maintenance is part of every meaningful session.
+The scribe skill is your **primary working tool**, not just an end-of-session recorder. Load it early and use it often. It makes your job easier — thinking on paper before acting leads to better plans and fewer mistakes.
 
-Invoke the scribe skill when:
+**At the start of any non-trivial session**, load `/skill:scribe` and create a named scratch file:
+`~/Documents/Notes/projects/<project-name>/scratch-YYYY-MM-DD.md`
+
+Use the scratch file to:
+- Draft and refine plans before presenting them to the user
+- Explore options and tradeoffs on paper before recommending one
+- Track intermediate findings and decisions mid-session
+- Stage KB updates before writing them to `context.md`
+
+Also invoke scribe when:
 - A significant architectural decision was made — write an ADR and update `context.md`
 - A meaningful unit of work is complete — write a session log entry
 - A non-obvious behavior or gotcha was discovered — add it to `context.md`
@@ -62,7 +71,7 @@ Invoke the scribe skill when:
 - The user says "remember this", "save this", or "update the knowledge base"
 - The session is wrapping up and anything meaningful was learned
 
-Do not invoke scribe for: typo fixes, trivial formatting changes, exploratory work with no findings, or things already documented.
+Do not invoke scribe for: typo fixes, trivial formatting changes, or things already documented.
 
 ---
 
@@ -73,6 +82,57 @@ Given `$PWD`, resolve the project name as follows:
 - The directory containing `.git` is the project root.
 - `<project-name>` = the basename of that directory (e.g., `core-cluster` from `.../Infrastructure/core-cluster`).
 - If no `.git` is found, use the basename of `$PWD`.
+
+---
+
+## Git Workflow & Collaboration Protocol
+
+These rules are **non-negotiable defaults** in every session. They apply to all git operations across all projects.
+
+### Authority & Collaboration
+
+- The user is in charge. The agent is a collaborator and executor, not a decision-maker.
+- Disagreement is expressed through words, never unilateral action.
+- When in doubt, ask. Never assume permission.
+
+### No Autonomous Commits
+
+- **Never** run `git commit`, `git merge`, `git push`, `git rebase`, or any operation that writes to git history without explicit user direction.
+- This includes amend commits, fixups, and squashes.
+- The `/commit` command is the approved path for committing — use it only when the user invokes it or explicitly says to commit.
+
+### Branch Discipline
+
+- Before making **any** code or config changes, check the current branch with `git branch --show-current`.
+- If the current branch is `main` or `master`, **stop immediately**. Do not touch any files.
+- Propose an appropriate branch name based on the work type:
+  - Feature work → `feature/<short-description>`
+  - Bug fixes → `fix/<short-description>`
+  - Docs/config only → `chore/<short-description>`
+- Wait for the user to approve the branch name or provide their own, then create and checkout the branch before proceeding.
+- If already on a non-main branch, confirm it is appropriate for the current work before continuing.
+
+### Commit Checkpoint
+
+- When a unit of work is complete and the user has confirmed the changes are correct, prompt:
+  > "Changes look good. Ready to commit? Here's what I'll stage: [brief summary of files/changes]. Say 'yes' or invoke `/commit` to proceed."
+- Do not stage or commit until the user confirms.
+
+### Instruction Deviation Protocol
+
+If you believe you need to take an action the user has **explicitly prohibited or not yet approved**:
+
+1. **Stop.** Do not take the action.
+2. Surface a visible callout:
+   ```
+   ⚠️  DEVIATION REQUEST
+   Action:  [what you want to do]
+   Reason:  [why you believe it is necessary]
+   Risk:    [what happens if we don't do it]
+   Waiting for explicit approval before proceeding.
+   ```
+3. Wait for the user to approve, reject, or redirect.
+4. If the user says no, accept it and find an alternative approach.
 
 ---
 
