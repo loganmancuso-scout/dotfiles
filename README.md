@@ -11,21 +11,21 @@ environment variables, aliases, and shell functions in a single place.
 
 ## Packages
 
-| Package    | Description                                          | Target                              |
-|------------|------------------------------------------------------|-------------------------------------|
-| `aliases`  | Shared aliases, functions, and environment variables | `~/.config/aliases`                 |
-| `bash`     | Bash shell configuration                             | `~/.bashrc`                         |
-| `ghostty`  | Ghostty terminal — Catppuccin Mocha, SauceCodePro NFM| `~/.config/ghostty/`                |
-| `git`      | Git config — SSH commit signing via 1Password        | `~/.gitconfig`                      |
-| `nvim`     | Neovim with LazyVim distribution                     | `~/.config/nvim/`                   |
-| `opencode` | OpenCode AI coding assistant config                  | `~/.config/opencode/`               |
-| `ssh`      | SSH hosts, 1Password agent, allowed signers          | `~/.ssh/`                           |
-| `starship` | Starship cross-shell prompt — Catppuccin Mocha       | `~/.config/starship.toml`           |
-| `systemd`  | User-level systemd services                          | `~/.config/systemd/user/`           |
-| `tmux`     | Tmux with TPM + Catppuccin theme                     | `~/.config/tmux/`                   |
-| `vscode`   | VSCodium settings and extensions                     | `~/.config/VSCodium/` `~/.vscode-oss/` |
-| `zed`      | Zed editor configuration                             | `~/.config/zed/`                    |
-| `zsh`      | Zsh shell config with autosuggestions                | `~/.zshrc` `~/.config/zsh/`         |
+| Package    | Description                                           | Target                                 |
+| ------------| -------------------------------------------------------| ----------------------------------------|
+| `aliases`  | Shared aliases, functions, and environment variables  | `~/.config/aliases`                    |
+| `bash`     | Bash shell configuration                              | `~/.bashrc`                            |
+| `ghostty`  | Ghostty terminal — Catppuccin Mocha, SauceCodePro NFM | `~/.config/ghostty/`                   |
+| `git`      | Git config — SSH commit signing via 1Password         | `~/.gitconfig`                         |
+| `nvim`     | Neovim with LazyVim distribution                      | `~/.config/nvim/`                      |
+| `opencode` | OpenCode AI coding assistant config                   | `~/.config/opencode/`                  |
+| `ssh`      | SSH hosts, 1Password agent, allowed signers           | `~/.ssh/`                              |
+| `starship` | Starship cross-shell prompt — Catppuccin Mocha        | `~/.config/starship.toml`              |
+| `systemd`  | User-level systemd services                           | `~/.config/systemd/user/`              |
+| `tmux`     | Tmux with TPM + Catppuccin theme                      | `~/.config/tmux/`                      |
+| `vscode`   | VSCodium settings and extensions                      | `~/.config/VSCodium/` `~/.vscode-oss/` |
+| `zed`      | Zed editor configuration                              | `~/.config/zed/`                       |
+| `zsh`      | Zsh shell config with autosuggestions                 | `~/.zshrc` `~/.config/zsh/`            |
 
 ## OpenCode
 
@@ -56,13 +56,13 @@ Slash commands defined in `commands/`:
 
 Loadable skills defined in `skills/`:
 
-| Skill | Load when |
-|---|---|
-| `ops` | Executing infrastructure — kubectl, Helm, Docker, OpenTofu command reference |
-| `debug` | Something is broken — systematic triage and diagnosis across any system type |
-| `docs` | Writing inline comments, JSDoc, READMEs, or changelogs |
-| `knowledge-base` | Reading or writing project knowledge files |
-| `caveman` | Compressed token-efficient responses (~75% reduction) |
+| Skill            | Load when                                                                    |
+| ------------------| ------------------------------------------------------------------------------|
+| `ops`            | Executing infrastructure — kubectl, Helm, Docker, OpenTofu command reference |
+| `debug`          | Something is broken — systematic triage and diagnosis across any system type |
+| `docs`           | Writing inline comments, JSDoc, READMEs, or changelogs                       |
+| `knowledge-base` | Reading or writing project knowledge files                                   |
+| `caveman`        | Compressed token-efficient responses (~75% reduction)                        |
 
 ### Knowledge Base
 

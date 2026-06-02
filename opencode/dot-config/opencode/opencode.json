@@ -68,8 +68,7 @@
     "edit": {
       "*": "ask",
       "~/SourceControl/**": "allow",
-      "~/Documents/Notes/projects/**": "allow",
-      "~/Documents/Notes/templates/**": "allow"
+      "~/Documents/Notes/**": "allow"
     },
     "bash": {
       "*": "ask",
@@ -181,22 +180,20 @@
     "webfetch": "ask",
     "external_directory": {
       "~/SourceControl/**": "allow",
-      "~/Documents/Notes/projects/**": "allow",
-      "~/Documents/Notes/templates/**": "allow"
+      "~/Documents/Notes/**": "allow"
     }
   },
 
   "agent": {
     "title": {
-      "prompt": "Generate a session title in the format: 'YYYY-MM-DD - short descrtiption'. Use today's date from the system context. The short description should be 3-6 words summarizing the main topic of the conversation. Return only the title string, nothing else"
+      "prompt": "Generate a session title in the format: 'YYYY-MM-DD - short description'. Use today's date from the system context. The short description should be 3-6 words summarizing the main topic of the conversation. Return only the title string, nothing else"
     },
     "build": {
       "permission": {
         "edit": {
           "*": "ask",
           "~/SourceControl/**": "allow",
-          "~/Documents/Notes/projects/**": "allow",
-          "~/Documents/Notes/templates/**": "allow"
+          "~/Documents/Notes/**": "allow"
         }
       }
     }

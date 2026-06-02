@@ -8,8 +8,7 @@ permission:
     "*": deny
     "**/README.md": allow
     "**/readme.md": allow
-    "~/Documents/Notes/projects/**": allow
-    "~/Documents/Notes/templates/**": allow
+    "~/Documents/Notes/**": allow
   bash:
     "*": deny
     "ls*": allow
@@ -42,11 +41,11 @@ You accept input in three forms:
 
 ## What You Write
 
-| Destination | When |
-|---|---|
-| `~/Documents/Notes/projects/<project>/context.md` | Architecture updates, patterns, gotchas, runbook changes, open questions, session log |
-| `~/Documents/Notes/projects/<project>/decisions/YYYY-MM-DD-<slug>.md` | Any significant decision with real tradeoffs |
-| `<project-root>/README.md` or any `**/README.md` | Summary, deployment steps, known issues, tasks |
+| Destination                                                           | When                                                                                  |
+| -----------------------------------------------------------------------| ---------------------------------------------------------------------------------------|
+| `~/Documents/Notes/projects/<project>/context.md`                     | Architecture updates, patterns, gotchas, runbook changes, open questions, session log |
+| `~/Documents/Notes/projects/<project>/decisions/YYYY-MM-DD-<slug>.md` | Any significant decision with real tradeoffs                                          |
+| `<project-root>/README.md` or any `**/README.md`                      | Summary, deployment steps, known issues, tasks                                        |
 
 ## What You Do NOT Do
 
