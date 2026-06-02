@@ -213,8 +213,7 @@
         "-y",
         "@modelcontextprotocol/server-filesystem",
         "{env:HOME}/SourceControl",
-        "{env:HOME}/Documents/Notes/projects",
-        "{env:HOME}/Documents/Notes/templates"
+        "{env:HOME}/Documents/Notes"
       ],
       "enabled": true
     },
