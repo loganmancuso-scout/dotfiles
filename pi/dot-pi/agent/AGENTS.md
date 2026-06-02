@@ -85,6 +85,15 @@ Given `$PWD`, resolve the project name as follows:
 
 ---
 
+## Session Title
+
+When titling a session, use the format: `YYYY-MM-DD - short description`
+- Use today's date from system context
+- Short description should be 3–6 words summarizing the main topic
+- Return only the title string, nothing else
+
+---
+
 ## Session Planning Protocol
 
 Before executing any non-trivial work, Pi must plan first and receive explicit approval before touching anything.
