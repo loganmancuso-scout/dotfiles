@@ -2,5 +2,5 @@
   "lastChangelogVersion": "0.77.0",
   "defaultProvider": "github-copilot",
   "defaultModel": "claude-sonnet-4.6",
-  "defaultThinkingLevel": "medium"
+  "defaultThinkingLevel": "high"
 }
