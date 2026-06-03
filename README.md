@@ -78,6 +78,50 @@ the templates in `~/Documents/Notes/templates/`.
 
 ---
 
+## Systemd Services
+
+The `systemd` package stows user-level units to `~/.config/systemd/user/`.
+
+| Unit | Description |
+|---|---|
+| `backup.service` | Runs `restic-backup.sh` — backs up configured vaults to the USB drive |
+| `backup.timer` | Fires `backup.service` every 4 hours; `Persistent=true` catches missed runs on wake |
+
+After stowing dotfiles, reload and enable the timer:
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now backup.timer
+```
+
+> The service has `ConditionPathIsMountPoint=/media/%u/1TB` — it exits cleanly
+> with no error if the USB drive is not plugged in. The timer will retry at the
+> next scheduled interval.
+
+### Verifying backup health
+
+```bash
+# Is the timer active and when does it fire next?
+systemctl --user status backup.timer
+
+# Show all upcoming timer fire times
+systemctl --user list-timers backup.timer
+
+# Did the last backup run succeed?
+systemctl --user status backup.service
+
+# Full journal output from the last run
+journalctl --user -u backup.service -n 100
+
+# Stream live output (useful while triggering a manual run)
+journalctl --user -u backup.service -f
+
+# Trigger a manual run immediately (does not reset the timer)
+systemctl --user start backup.service
+```
+
+---
+
 ## Known Issues
 
 ### OpenCode — `edit` permission path rules not evaluated
