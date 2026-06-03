@@ -1,8 +1,8 @@
 [Unit]
 Description=Restic Backup to USB
-# Only run if the backup drive is mounted
-ConditionPathIsMountPoint=/media/backup
-After=media-backup.mount
+# Only run if the backup drive is mounted (udisks2 auto-mounts to /media/%u/<label>)
+ConditionPathIsMountPoint=/media/%u/1TB
+After=media-%u-1TB.mount
 
 [Service]
 Type=oneshot
