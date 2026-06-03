@@ -1,13 +1,14 @@
 [Unit]
-Description=Backup Service
-After=network-online.target
-Wants=network-online.target
+Description=Restic Backup to USB
+# Only run if the backup drive is mounted
+ConditionPathIsMountPoint=/media/backup
+After=media-backup.mount
 
 [Service]
-Type=simple
-ExecStart=/bin/bash -c ''
-ExecStop=/bin/bash -c ''
-Restart=on-failure
+Type=oneshot
+ExecStart=/bin/bash %h/SourceControl/Personal/backup-restore/scripts/restic-backup.sh
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=default.target
