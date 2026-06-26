@@ -87,8 +87,10 @@ Host orangepizero3
 
 ## DEV-LAN ##
 
-Host 100.50.*.*
-  User dev-instance-user
+Host test-debian
+  HostName 100.50.0.146
+  User testuser
+  # PreferredAuthentications password
 
 Host dev-core
   HostName 100.50.0.5

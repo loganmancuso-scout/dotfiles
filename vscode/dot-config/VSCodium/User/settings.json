@@ -23,7 +23,7 @@
     "extensions.experimental.affinity": {
       "asvetliakov.vscode-neovim": 1
     },
-    "debug.console.fontSize": 13,
+    "debug.console.fontSize": 16,
     "workbench.colorTheme": "Catppuccin Mocha",
     "chat.commandCenter.enabled": false,
     "search.exclude": {
@@ -66,4 +66,6 @@
         "approveResponse": true
       }
     },
+    "editor.fontSize": 16,
+    "terminal.integrated.fontSize": 16,
 }
