@@ -9,6 +9,14 @@ Host opnsense
   HostName opnsense.mgmt.home.arpa
   User loganmancuso
 
+Host sw-mikrotik-01
+  HostName sw-mikrotik-01.mgmt.home.arpa
+  User admin
+
+Host sw-mikrotik-02
+  HostName sw-mikrotik-02.mgmt.home.arpa
+  User admin
+
 ## Mobile ##
 
 Host scout

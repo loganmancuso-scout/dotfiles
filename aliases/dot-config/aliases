@@ -16,15 +16,14 @@ export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.local/share/pi-node/cur
 # CORE
 # ─────────────────────────────────────────
 alias tablet-connect="scrcpy --max-size=1024 -d --video-codec=av1 --video-encoder=c2.android.av1.encoder"
-# alias cd='z'
-# alias ls='eza --icons'
-# alias ll='eza --icons -a -l'
-alias x='eza --icons'
+alias cd='z'
+alias ls='eza --icons'
+alias ll='eza --icons -a'
+alias x='eza --icons -a'
 alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
 alias code="codium"
 alias bat="batcat"
 alias obsidian="flatpak run md.obsidian.Obsidian"
-alias ff='nvim $(fzf -m --preview="batcat --color=always --style=numbers --line-range=:500 {}")'
 
 function mcp-login(){
   export GITHUB_TOKEN=$(op read "op://Private/Github/token")
@@ -117,12 +116,13 @@ function timer() {
 # ─────────────────────────────────────────
 # DEV TOOLS
 # ─────────────────────────────────────────
+alias ff='nvim $(fzf -m --preview="batcat --color=always --style=numbers --line-range=:500 {}")'
 
-function newfile() {
+function code-file() {
   local filename="$1"
   local today=$(date +%Y-%m-%d)
   if [ -z "$filename" ]; then
-    echo "Usage: newfile <filename>"
+    echo "Usage: code-file <filename>"
     return 1
   fi
   {
@@ -132,7 +132,7 @@ function newfile() {
   echo "Created $filename with header."
 }
 
-function newdate() {
+function code-date() {
   today_=$(date +%Y-%m-%d)
   tag_="LastEdit:"
   updated_files=()
@@ -171,6 +171,20 @@ function newdate() {
 }
 
 # ─────────────────────────────────────────
+# OPENCODE
+# ─────────────────────────────────────────
+export PATH="$HOME/.config/opencode/bin:$HOME/Documents/Notes/knowledge-base/bin:$PATH"
+
+alias opc='opencode'
+
+# opc-document — end-of-day KB article generator; delegates to vault script
+#   Usage: opc-document [--week]
+#          DRY_RUN=1 opc-document [--week]
+function opc-document() {
+  kb-eod.sh "$@"
+}
+
+# ─────────────────────────────────────────
 # SYSTEM
 # ─────────────────────────────────────────
 alias whatsmyip="ifconfig | grep --color=always 'inet'"
@@ -179,12 +193,116 @@ alias ports="netstat -tulanp"
 alias flushdns="sudo resolvectl flush-caches"
 alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
 
-function ping-time() {
-  # Usage: ping-time <ping-args>
+function watch-ping() {
+  # Usage: watch-ping <host> [ping-args]
   while true; do
     ts=$(date '+%m/%d-%H:%M:%S')
-    out=$(ping "$@" -c 1 | grep 'time=')
-    echo "$ts\t$out"
+    out=$(ping -c 1 -W 5000 "$@" 2>&1 | grep -E 'time=|timeout|unreachable|unknown')
+    echo "$ts\t${out:-No response}"
+    sleep 1
+  done
+}
+
+function ping-multi() {
+  # Usage: ping-multi <host1> <host2> ... <hostN>
+  # Compatible with both bash and zsh
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: ping-multi <host1> <host2> ... <hostN>"
+    return 1
+  fi
+
+  # suppress job control output (zsh and bash)
+  if [[ -n "$ZSH_VERSION" ]]; then
+    setopt LOCAL_OPTIONS NO_MONITOR
+  else
+    set +m
+  fi
+
+  # declare all locals up front to avoid zsh printing assignments in loops
+  local host ts statedir tmpdir result s r st lat pct
+  local hosts=("$@")
+
+  statedir=$(mktemp -d)
+
+  for host in "${hosts[@]}"; do
+    echo 0 > "$statedir/${host}.sent"
+    echo 0 > "$statedir/${host}.recv"
+  done
+
+  _ping_multi_cleanup() {
+    tput cnorm
+    rm -rf "$statedir"
+    echo
+  }
+  trap '_ping_multi_cleanup; return 0' INT
+
+  tput civis  # hide cursor
+
+  while true; do
+    ts=$(date '+%m/%d-%H:%M:%S')
+    tmpdir=$(mktemp -d)
+
+    # fire all pings in parallel
+    for host in "${hosts[@]}"; do
+      (
+        out=$(ping -c 1 -W 5000 "$host" 2>&1)
+        latency=$(echo "$out" | grep -oE 'time=[0-9.]+ ms' | head -1)
+        if [[ -n "$latency" ]]; then
+          echo "UP|${latency}" > "$tmpdir/${host}.result"
+        else
+          echo "DOWN|-" > "$tmpdir/${host}.result"
+        fi
+      ) &
+    done
+    wait
+
+    # read results and update counters
+    for host in "${hosts[@]}"; do
+      result=$(cat "$tmpdir/${host}.result" 2>/dev/null || echo "DOWN|-")
+      st=$(echo "$result" | cut -d'|' -f1)
+      lat=$(echo "$result" | cut -d'|' -f2)
+      s=$(cat "$statedir/${host}.sent")
+      r=$(cat "$statedir/${host}.recv")
+      s=$(( s + 1 ))
+      [[ "$st" == "UP" ]] && r=$(( r + 1 ))
+      echo "$s"  > "$statedir/${host}.sent"
+      echo "$r"  > "$statedir/${host}.recv"
+      echo "$st"  > "$statedir/${host}.status"
+      echo "$lat" > "$statedir/${host}.latency"
+    done
+
+    rm -rf "$tmpdir"
+
+    # redraw table
+    clear
+    printf "ping-multi | refreshed %s\n\n" "$ts"
+    printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "HOST" "STATUS" "LATENCY" "UPTIME%" "SENT" "RECV"
+    printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "--------------------" "--------" "--------------" "----------" "------" "------"
+
+    for host in "${hosts[@]}"; do
+      s=$(cat "$statedir/${host}.sent")
+      r=$(cat "$statedir/${host}.recv")
+      st=$(cat "$statedir/${host}.status")
+      lat=$(cat "$statedir/${host}.latency")
+      pct=$(awk "BEGIN { printf \"%.1f\", ($r / ($s > 0 ? $s : 1)) * 100 }")
+      printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "$host" "$st" "$lat" "${pct}%" "$s" "$r"
+    done
+
+    sleep 1
+  done
+}
+
+function watch-nc() {
+  # Usage: watch-nc <host> <port>
+  local host="$1"
+  local port="$2"
+  while true; do
+    local ts=$(date '+%m/%d-%H:%M:%S')
+    if nc -z -w 2 "$host" "$port" 2>/dev/null; then
+      echo "$ts\t$host:$port\tOPEN"
+    else
+      echo "$ts\t$host:$port\tCLOSED/REFUSED"
+    fi
     sleep 1
   done
 }
@@ -323,13 +441,13 @@ function gclean() {
 # ─────────────────────────────────────────
 alias k="kubectl"
 
-function kubeconfig() {
+function kconf() {
   local kubeconfig_dir="$HOME/.kube"
   local config_name="$1"
 
   if [ -z "$config_name" ]; then
     echo "Available kubeconfigs:"
-    [ -d "$kubeconfig_dir" ] && ls -1 "$kubeconfig_dir" | grep -E '(config|.*-kubeconfig\.yaml)' | sed 's/^/  /'
+    [ -d "$kubeconfig_dir" ] && ls -1 "$kubeconfig_dir" | grep -E '(config|.*\.yaml)' | sed 's/^/  /'
     return 0
   fi
 
@@ -342,7 +460,7 @@ function kubeconfig() {
   fi
 
   # Check for name-kubeconfig.yaml pattern
-  local config_file="$kubeconfig_dir/$config_name-kubeconfig.yaml"
+  local config_file="$kubeconfig_dir/$config_name.yaml"
   if [ -f "$config_file" ]; then
     export KUBECONFIG="$config_file"
     echo "✓ Switched to $config_name"

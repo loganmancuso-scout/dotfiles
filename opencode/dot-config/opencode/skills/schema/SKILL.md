@@ -1,155 +1,90 @@
 ---
 name: schema
 description: >
-  Knowledge base schema reference. Quick-lookup guide for KB file structures, templates,
-  and frontmatter. Shows HOW KB files should look. For WHEN to write and complete workflows,
-  load /skill:scribe. This skill is structure reference only — not a workflow executor.
+  Knowledge base schema reference. Quick-lookup guide for KB file paths, naming
+  conventions, and update triggers. Shows WHERE things live and WHEN to update them.
+  For full file schemas and detailed structure, load /skill:scribe or read the templates
+  in ~/Documents/Notes/templates/. This skill is a path reference, not a workflow executor.
 ---
 
-**Quick schema reference for KB file structures. For workflows and decision logic, load `/skill:scribe`.**
+**Quick path reference for the KB system. For file schemas and workflows, load `/skill:scribe`.**
 
 Two-layer system:
 - `<project-root>/README.md` — human-facing deployment guide
-- `~/Documents/Notes/projects/<project-name>/context.md` — AI-facing institutional memory
-- `~/Documents/Notes/projects/<project-name>/decisions/` — Architecture Decision Records
-- `~/Documents/Notes/projects/<project-name>/sessions/` — Work session logs
-- `~/Documents/Notes/projects/<project-name>/investigations/` — Multi-session debugging
+- `~/Documents/Notes/knowledge-base/projects/<project-slug>/context.md` — AI-facing institutional memory
+- `~/Documents/Notes/knowledge-base/projects/<project-slug>/decisions/` — Architecture Decision Records
+- `~/Documents/Notes/knowledge-base/projects/<project-slug>/sessions/` — Work session logs
+- `~/Documents/Notes/knowledge-base/projects/<project-slug>/investigations/` — Multi-session debugging
+
+---
+
+## Project Identity Resolution
+
+Determine `<project-slug>` in this priority order:
+
+1. `basename` of the nearest `.git` root (walk up from `$PWD`)
+2. `basename` of `$PWD` (fallback for no-git sessions launched inside `knowledge-base/projects/<slug>/`)
 
 ---
 
 ## File Paths
 
-| File | Path | Template |
-|---|---|---|
-| Context | `~/Documents/Notes/projects/<project-name>/context.md` | `context.template.md` |
-| README | `<project-root>/README.md` | `readme.template.md` |
-| Decision | `~/Documents/Notes/projects/<project-name>/decisions/YYYY-MM-DD-<slug>.md` | `adr.template.md` |
-| Session | `~/Documents/Notes/projects/<project-name>/sessions/YYYY-MM-DD[-topic].md` | `session.template.md` |
-| Investigation | `~/Documents/Notes/projects/<project-name>/investigations/<slug>/notes.md` | `investigation.template.md` |
-
----
-
-## context.md Schema
-
-| Section | Content |
+| File | Path |
 |---|---|
-| `## Architecture` | Components, dependencies, data flow |
-| `## Key Patterns & Conventions` | Non-obvious patterns, naming, config, structure |
-| `## Gotchas & Sharp Edges` | Failure modes, surprises, sharp edges |
-| `## Past Decisions` | Index: `- YYYY-MM-DD — [Title](decisions/file.md)` |
-| `## Maintenance Runbook` | Deploy, rollback, debug, update commands |
-| `## Open Questions` | Unresolved issues checklist |
-| `## Recent Sessions` | Links to last 5-10 session files |
-| `## Active Investigations` | Links to ongoing investigations |
+| Context | `~/Documents/Notes/knowledge-base/projects/<project-slug>/context.md` |
+| README | `<project-root>/README.md` |
+| Decision | `~/Documents/Notes/knowledge-base/projects/<project-slug>/decisions/YYYY-MM-DD-<slug>.md` |
+| Session | `~/Documents/Notes/knowledge-base/projects/<project-slug>/sessions/YYYY-MM-DD[-topic].md` |
+| Investigation | `~/Documents/Notes/knowledge-base/projects/<project-slug>/investigations/<slug>/notes.md` |
+| Scratch | `~/Documents/Notes/knowledge-base/projects/<project-slug>/sessions/SCRATCH-YYYY-MM-DD-topic.md` |
+| Inbox scratch | `~/Documents/Notes/knowledge-base/inbox/SCRATCH-YYYY-MM-DD-topic.md` |
+| Cross-project gotchas | `~/Documents/Notes/knowledge-base/index/gotchas.md` |
+| KB structure reference | `~/Documents/Notes/knowledge-base/docs/structure.md` |
 
-**Frontmatter:**
-```yaml
----
-project: <name>
-last-updated: YYYY-MM-DD
-tags: [tech, tags]
----
-```
-
-**Size target:** <200 lines
+Templates live in `~/Documents/Notes/templates/` — always read the template before creating a new file.
 
 ---
 
-## sessions/YYYY-MM-DD[-topic].md Schema
+## Scratch Workspace
 
-| Section | Content |
-|---|---|
-| `## Goal` | What you set out to accomplish |
-| `## Work Done` | Bullet list of actual work |
-| `## Findings` | Gotchas discovered (persist key ones to context.md) |
-| `## Next Steps` | Remaining work, blockers |
+Use the KB as a scratch workspace when you need to think, plan, or offload context. Scratch files are temporary — they are not polished documentation.
 
-**Frontmatter:**
-```yaml
----
-project: <name>
-date: YYYY-MM-DD
-tags: [tech, tags]
----
-```
+**When to create scratch files:**
+- Planning a complex multi-step task before presenting it to the user
+- Parking intermediate analysis when your context window grows
+- Exploring options or hypotheses before committing to an approach
 
-**Naming:** Single session: `2026-05-28.md` | Multiple per day: `2026-05-28-topic.md`
+**Where:** `sessions/SCRATCH-YYYY-MM-DD-topic.md` — prefix with `SCRATCH-` to signal temporary
 
----
-
-## decisions/YYYY-MM-DD-slug.md Schema (ADR)
-
-| Section | Content |
-|---|---|
-| `## Status` | `proposed`, `accepted`, or `superseded` |
-| `## Context` | What prompted the decision |
-| `## Decision` | What was decided |
-| `## Rationale` | Why this option chosen |
-| `## Alternatives Considered` | Other options, why rejected |
-| `## Consequences` | Expected impacts |
-
-**Create ADR when:** Non-obvious, meaningful tradeoffs, hard to reverse, expensive to change.
-
-**Don't create ADR for:** Trivial config tweaks, formatting, minor bumps.
-
-**Naming:** `2026-04-26-mongodb-prebackuppod.md` (date-short-slug)
-
----
-
-## investigations/<slug>/notes.md Schema
-
-| Section | Content |
-|---|---|
-| `## Problem` | Symptoms, error messages |
-| `## Hypotheses` | Checklist of theories |
-| `## What Was Tried` | Table: attempts → outcomes |
-| `## Root Cause` | When found |
-| `## Resolution` | When fixed |
-| `## Prevention` | How to avoid recurrence |
-
-**Also create:** `investigations/<slug>/handoff.md` for resuming investigation.
-
-**handoff.md sections:** Problem Summary, Current State, Plan to Fix, Key Files, Environment.
-
----
-
-## README.md Schema
-
-| Section | Content |
-|---|---|
-| Summary | One paragraph: what, who uses it, where |
-| Deployment Instructions | Pre / Deploy / Post with exact commands |
-| Notes | Freeform operator notes |
-| Tasks | Open checklist items |
-| Known Issues | Active bugs, limitations |
+**After scratch work is done:** extract key findings to proper session, decision, or context files, then delete the scratch file.
 
 ---
 
 ## Update Triggers
 
-### context.md updates
-- Gotcha discovered → `## Gotchas & Sharp Edges`
-- Significant decision → ADR + `## Past Decisions`
-- Work completed → `## Recent Sessions` link
-- Architecture change → `## Architecture`
-- Pattern identified → `## Key Patterns & Conventions`
-- Question unresolved → `## Open Questions`
-- Operation documented → `## Maintenance Runbook`
-
-### README.md updates
-- Deployment steps change → `## Deployment Instructions`
-- Issue resolved → remove from `### Known Issues`
-- Issue discovered → add to `### Known Issues`
-- Task completed → check off `### Tasks`
+| Trigger | Action |
+|---|---|
+| Gotcha discovered | Add to `context.md` → `## Gotchas & Sharp Edges` |
+| Significant decision | Create ADR in `decisions/`, index in `context.md` → `## Past Decisions` |
+| Work completed | Create session in `sessions/`, link in `context.md` → `## Recent Sessions` |
+| Architecture change | Update `context.md` → `## Architecture` |
+| Pattern identified | Update `context.md` → `## Key Patterns & Conventions` |
+| Question unresolved | Add to `context.md` → `## Open Questions` |
+| Operation documented | Update `context.md` → `## Maintenance Runbook` |
+| Deployment steps change | Update `README.md` → `## Deployment Instructions` |
+| Known issue found/resolved | Update `README.md` → `### Known Issues` |
+| Any KB artifact written | Call `kb-link.sh` to add wikilink to current `notepad/Week-NN.md` |
 
 ---
 
 ## Path Resolution
 
 ```
-project-name = basename of directory containing .git
-context-path = ~/Documents/Notes/projects/<project-name>/context.md
-decisions-dir = ~/Documents/Notes/projects/<project-name>/decisions/
-sessions-dir = ~/Documents/Notes/projects/<project-name>/sessions/
-invest-dir = ~/Documents/Notes/projects/<project-name>/investigations/
+project-slug  = basename(nearest .git)  OR  basename($PWD)
+kb-root       = ~/Documents/Notes/knowledge-base
+projects-dir  = ~/Documents/Notes/knowledge-base/projects
+context-path  = ~/Documents/Notes/knowledge-base/projects/<project-slug>/context.md
+decisions-dir = ~/Documents/Notes/knowledge-base/projects/<project-slug>/decisions/
+sessions-dir  = ~/Documents/Notes/knowledge-base/projects/<project-slug>/sessions/
+invest-dir    = ~/Documents/Notes/knowledge-base/projects/<project-slug>/investigations/
 ```

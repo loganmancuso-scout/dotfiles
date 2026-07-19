@@ -186,8 +186,7 @@
 
   "agent": {
     "title": {
-      "model": "github-copilot/claude-haiku-4.5",
-      "prompt": "Generate a short, descriptive title of 3-6 words for this conversation. Return only the title string, nothing else."
+      "prompt": "Generate a session title as a short description, it should be 3-6 words summarizing the main topic or task of the conversation. Return only the title string, nothing else."
     },
     "build": {
       "permission": {

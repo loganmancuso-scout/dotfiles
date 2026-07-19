@@ -53,18 +53,18 @@ compdef _git gco='git switch'
 compdef _git gnb='git switch'
 compdef _git gclean='git switch'
 
-## Kubeconfig Completion (Zsh) ##
-_kubeconfig_completion() {
+## Kconf Completion (Zsh) ##
+_kconf_completion() {
   local kubeconfig_dir="$HOME/.kube"
   local -a configs
 
   if [ -d "$kubeconfig_dir" ]; then
-    configs=( $(ls -1 "$kubeconfig_dir" | grep -E '(config|.*-kubeconfig\.yaml)' | sed 's/-kubeconfig\.yaml$//' | sed 's/^config$/config/') )
+    configs=( $(ls -1 "$kubeconfig_dir") )
   fi
 
-  _describe 'kubeconfig' configs
+  _describe 'kconf' configs
 }
-compdef _kubeconfig_completion kubeconfig
+compdef _kconf_completion kconf
 
 ## Set Prompt ##
 source $HOME/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh

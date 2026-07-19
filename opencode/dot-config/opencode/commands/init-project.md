@@ -1,5 +1,5 @@
 ---
-description: Bootstrap the knowledge base files for the current project. Creates ~/Documents/Notes/projects/<project-name>/context.md and ensures a README.md exists in the project root.
+description: Bootstrap the knowledge base files for the current project. Creates ~/Documents/Notes/knowledge-base/projects/<project-name>/context.md and ensures a README.md exists in the project root.
 ---
 
 You are bootstrapping the knowledge base for the current project. Follow these steps precisely.
@@ -7,9 +7,9 @@ You are bootstrapping the knowledge base for the current project. Follow these s
 ## Step 1 — Identify the Project
 
 1. Determine the project root by walking up from `$PWD` until you find a `.git` directory or reach `$HOME`. The directory containing `.git` is the project root.
-2. Set `<project-name>` = basename of the project root directory.
-3. Set `<project-root>` = absolute path to the project root.
-4. Set `<context-path>` = `~/Documents/Notes/projects/<project-name>/context.md`.
+2. Set `<project-name>` = basename of the project root directory (or `$PWD` basename if no `.git` found).
+3. Set `<project-root>` = absolute path to the project root (or `$PWD` if no `.git`).
+4. Set `<context-path>` = `~/Documents/Notes/knowledge-base/projects/<project-name>/context.md`.
 
 Report to the user:
 ```
@@ -34,7 +34,7 @@ Check if `<context-path>` exists.
 
 ### If it does NOT exist:
 
-Create the directory `~/Documents/Notes/projects/<project-name>/` if needed.
+Create the directory `~/Documents/Notes/knowledge-base/projects/<project-name>/` if needed.
 
 Create `<context-path>` using this schema, populated with what you learned in Step 2:
 
@@ -104,7 +104,7 @@ Tell the user what was created or updated:
 ```
 Done. Knowledge base initialized for <project-name>.
 
-  Created:  ~/Documents/Notes/projects/<project-name>/context.md
+  Created:  ~/Documents/Notes/knowledge-base/projects/<project-name>/context.md
   Updated:  <project-root>/README.md   (or "Already exists — reviewed only")
 
 Run /init-project again at any time to re-sync.
