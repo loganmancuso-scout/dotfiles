@@ -20,7 +20,8 @@ Host sw-mikrotik-02
 ## Mobile ##
 
 Host scout
-  HostName worklaptop-wlan.edge.home.arpa
+  HostName 192.168.12.40
+  # HostName worklaptop-wlan.iot.home.arpa
   User logan.mancuso
   
 Host cleopatra

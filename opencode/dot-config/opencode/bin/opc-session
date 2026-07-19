@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# opc-session — fuzzy-pick and resume any opencode session from anywhere
+#   Requires: fzf, sqlite3
+#   Usage: opc-session
+#   Override DB path: OPENCODE_DB=/path/to/other.db opc-session
+
+set -euo pipefail
+
+DB="${OPENCODE_DB:-$HOME/.local/share/opencode/opencode.db}"
+
+[[ -f "$DB" ]] || { echo "error: OpenCode database not found at: $DB" >&2; exit 1; }
+command -v fzf    >/dev/null 2>&1 || { echo "error: fzf not in PATH" >&2; exit 1; }
+command -v sqlite3 >/dev/null 2>&1 || { echo "error: sqlite3 not in PATH" >&2; exit 1; }
+
+session=$(sqlite3 -separator $'\t' "$DB" \
+  "SELECT id,
+          strftime('%Y-%m-%d %H:%M', time_updated/1000, 'unixepoch'),
+          title,
+          directory
+   FROM session
+   WHERE parent_id IS NULL
+   ORDER BY time_updated DESC" \
+  | fzf \
+      --prompt="Resume session > " \
+      --delimiter=$'\t' \
+      --tabstop=2 \
+      --with-nth="2,3" \
+      --preview='echo "ID:    {1}"; echo "Title: {3}"; echo "Date:  {2}"; echo "Dir:   {4}"' \
+      --preview-window="bottom:5:wrap" \
+      --height=50% \
+      --layout=reverse \
+      --border=rounded \
+  | cut -f1)
+
+[[ -z "$session" ]] && exit 0
+
+dir=$(sqlite3 "$DB" "SELECT directory FROM session WHERE id = '$session' LIMIT 1")
+
+if [[ -n "$dir" && -d "$dir" ]]; then
+  echo "Resuming in: $dir"
+  cd "$dir" && exec opencode --session "$session"
+else
+  echo "Resuming (directory not found, using current dir)"
+  exec opencode --session "$session"
+fi

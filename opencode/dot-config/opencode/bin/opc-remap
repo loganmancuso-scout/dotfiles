@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+# opc-remap — remap project/session/workspace paths in the OpenCode SQLite DB
+#   Requires: sqlite3
+#   Usage: opc-remap <OLD_PATH> <NEW_PATH>
+#          opc-remap --list-paths    (all project paths with session counts)
+#          opc-remap --list-stale    (projects whose directories no longer exist)
+#   Override DB path: OPENCODE_DB=/path/to/other.db opc-remap ...
+
+set -euo pipefail
+
+DB="${OPENCODE_DB:-$HOME/.local/share/opencode/opencode.db}"
+
+RED='\033[0;31m' YELLOW='\033[1;33m' GREEN='\033[0;32m'
+CYAN='\033[0;36m' BOLD='\033[1m' RESET='\033[0m'
+
+_die()  { echo -e "${RED}error:${RESET} $*" >&2; exit 1; }
+_info() { echo -e "${CYAN}info:${RESET} $*"; }
+_warn() { echo -e "${YELLOW}warn:${RESET} $*"; }
+_ok()   { echo -e "${GREEN}ok:${RESET} $*"; }
+
+command -v sqlite3 >/dev/null 2>&1 || _die "sqlite3 is not installed or not in PATH"
+[[ -f "$DB" ]] || _die "OpenCode database not found at: $DB\n       Set OPENCODE_DB env var to override."
+
+# ── list-paths mode ──────────────────────────────────────────────────────────
+if [[ "${1:-}" == "--list-paths" ]]; then
+  echo -e "\n${BOLD}All project paths with sessions:${RESET}\n"
+  count=0
+  while IFS='|' read -r worktree session_count; do
+    [[ "$worktree" == "/" ]] && continue
+    if [[ -d "$worktree" ]]; then path_status="${GREEN}✓${RESET}"; else path_status="${RED}✗${RESET}"; fi
+    printf "  %b  %-6s sessions   %s\n" "$path_status" "$session_count" "$worktree"
+    count=$((count + 1))
+  done < <(sqlite3 "$DB" "
+    SELECT p.worktree, COUNT(s.id)
+    FROM project p
+    LEFT JOIN session s ON s.project_id = p.id
+    WHERE p.id != 'global'
+    GROUP BY p.id
+    ORDER BY p.worktree;
+  ")
+  echo ""
+  _info "$count project(s) total. ${GREEN}✓${RESET} = exists  ${RED}✗${RESET} = missing"
+  echo ""
+  exit 0
+fi
+
+# ── list-stale mode ──────────────────────────────────────────────────────────
+if [[ "${1:-}" == "--list-stale" ]]; then
+  echo -e "\n${BOLD}Stale project paths (directory no longer exists):${RESET}\n"
+  stale=0
+  while IFS='|' read -r worktree session_count; do
+    [[ "$worktree" == "/" ]] && continue
+    if [[ ! -d "$worktree" ]]; then
+      printf "  %-6s sessions   %s\n" "$session_count" "$worktree"
+      stale=$((stale + 1))
+    fi
+  done < <(sqlite3 "$DB" "
+    SELECT p.worktree, COUNT(s.id)
+    FROM project p
+    LEFT JOIN session s ON s.project_id = p.id
+    WHERE p.id != 'global'
+    GROUP BY p.id
+    ORDER BY p.worktree;
+  ")
+  if [[ $stale -eq 0 ]]; then
+    _ok "No stale projects found — all directories exist."
+  else
+    echo ""
+    _warn "$stale stale project(s) found."
+    echo -e "  Run ${BOLD}opc-remap <OLD_PATH> <NEW_PATH>${RESET} to remap them."
+  fi
+  echo ""
+  exit 0
+fi
+
+# ── remap mode ───────────────────────────────────────────────────────────────
+if [[ $# -ne 2 ]]; then
+  echo "Usage: opc-remap <OLD_PATH> <NEW_PATH>"
+  echo "       opc-remap --list-paths"
+  echo "       opc-remap --list-stale"
+  exit 1
+fi
+
+OLD_PATH="${1%/}"
+NEW_PATH="${2%/}"
+OLD_PATH="$(eval echo "$OLD_PATH")"
+NEW_PATH="$(eval echo "$NEW_PATH")"
+
+[[ -n "$OLD_PATH" ]] || _die "OLD_PATH cannot be empty"
+[[ -n "$NEW_PATH" ]] || _die "NEW_PATH cannot be empty"
+[[ "$OLD_PATH" != "$NEW_PATH" ]] || _die "OLD_PATH and NEW_PATH are the same"
+
+if [[ ! -d "$NEW_PATH" ]]; then
+  _warn "NEW_PATH does not exist on disk: $NEW_PATH"
+  _warn "Remapping will still proceed, but OpenCode may not find the directory."
+  echo ""
+fi
+
+echo -e "\n${BOLD}Dry run — rows that will be updated:${RESET}\n"
+
+DRY=$(sqlite3 "$DB" "
+  SELECT 'project', worktree FROM project
+    WHERE worktree = '$OLD_PATH' OR worktree LIKE '$OLD_PATH/%'
+  UNION ALL
+  SELECT 'session', directory FROM session
+    WHERE directory = '$OLD_PATH' OR directory LIKE '$OLD_PATH/%'
+  UNION ALL
+  SELECT 'workspace', directory FROM workspace
+    WHERE directory = '$OLD_PATH' OR directory LIKE '$OLD_PATH/%';
+")
+
+if [[ -z "$DRY" ]]; then
+  _warn "No rows found matching path: $OLD_PATH"
+  echo "       Nothing to remap. Run ${BOLD}opc-remap --list-stale${RESET} to see all projects."
+  exit 0
+fi
+
+while IFS='|' read -r table path; do
+  printf "  [%-10s]  %s\n" "$table" "$path"
+done <<< "$DRY"
+
+echo ""
+echo -e "  ${BOLD}$OLD_PATH${RESET}"
+echo -e "    => ${GREEN}$NEW_PATH${RESET}"
+echo ""
+
+read -r -p "Apply changes? [y/N] " confirm
+[[ "$confirm" =~ ^[Yy]$ ]] || { _info "Aborted. No changes made."; exit 0; }
+
+BACKUP="${DB}.bak.$(date +%Y%m%d_%H%M%S)"
+cp "$DB" "$BACKUP"
+_info "Database backed up to: $BACKUP"
+
+sqlite3 "$DB" "
+BEGIN;
+UPDATE project
+SET worktree = '$NEW_PATH' || SUBSTR(worktree, LENGTH('$OLD_PATH') + 1)
+WHERE worktree = '$OLD_PATH' OR worktree LIKE '$OLD_PATH/%';
+UPDATE session
+SET directory = '$NEW_PATH' || SUBSTR(directory, LENGTH('$OLD_PATH') + 1)
+WHERE directory = '$OLD_PATH' OR directory LIKE '$OLD_PATH/%';
+UPDATE workspace
+SET directory = '$NEW_PATH' || SUBSTR(directory, LENGTH('$OLD_PATH') + 1)
+WHERE directory = '$OLD_PATH' OR directory LIKE '$OLD_PATH/%';
+COMMIT;
+"
+
+echo ""
+_ok "Remap complete."
+
+echo -e "\n${BOLD}Updated rows:${RESET}\n"
+sqlite3 "$DB" "
+  SELECT 'project', worktree FROM project
+    WHERE worktree = '$NEW_PATH' OR worktree LIKE '$NEW_PATH/%'
+  UNION ALL
+  SELECT 'session', directory FROM session
+    WHERE directory = '$NEW_PATH' OR directory LIKE '$NEW_PATH/%'
+  UNION ALL
+  SELECT 'workspace', directory FROM workspace
+    WHERE directory = '$NEW_PATH' OR directory LIKE '$NEW_PATH/%';
+" | while IFS='|' read -r table path; do
+  printf "  [%-10s]  %s\n" "$table" "$path"
+done
+echo ""
