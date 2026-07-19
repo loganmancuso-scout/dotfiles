@@ -16,7 +16,7 @@ export const NotificationPlugin = async ({ $, client }) => {
         const message = isError ? "Session errored!" : "Session completed!"
         const urgency = isError ? "critical" : "normal"
 
-        await $`notify-send --urgency=${urgency} --app-name=opencode --icon=utilities-terminal ${title} ${message}`.nothrow()
+        await $`notify-send --urgency=${urgency} ${title} ${message} 2>/dev/null`.nothrow()
       }
     },
   }
