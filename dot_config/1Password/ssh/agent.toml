@@ -1,0 +1,78 @@
+# Author: Logan Mancuso | LastEdit: 2026-07-27
+# 1Password SSH Agent key routing configuration
+# Docs: https://developer.1password.com/docs/ssh/agent/config/
+
+## MGMT ##
+[[ssh-keys]]
+item = "personal_ed"
+vault = "Private"
+account = "my.1password.com"
+
+[ssh-keys.match]
+hosts = [
+  "opnsense.mgmt.home.arpa",
+  "sw-mikrotik-01.mgmt.home.arpa",
+  "sw-mikrotik-02.mgmt.home.arpa",
+]
+
+## Mobile ##
+[[ssh-keys]]
+item = "personal_ed"
+vault = "Private"
+account = "my.1password.com"
+
+[ssh-keys.match]
+hosts = [
+  "192.168.12.40",
+  "192.168.4.40",
+  "cleopatra.edge.home.arpa",
+  "oneplus.edge.home.arpa",
+  "tablet.edge.home.arpa",
+]
+
+## VPC ##
+[[ssh-keys]]
+item = "personal_ed"
+vault = "Private"
+account = "my.1password.com"
+
+[ssh-keys.match]
+hosts = [
+  "bytevault.cluster.vpc.home.arpa",
+  "core.vpc.home.arpa",
+  "ragnarok.cluster.vpc.home.arpa",
+  "thoth.infra.vpc.home.arpa",
+  "ingress.lb.vpc.home.arpa",
+  "home.app.vpc.home.arpa",
+  "sentry.infra.vpc.home.arpa",
+  "glacial.infra.vpc.home.arpa",
+  "localai.app.vpc.home.arpa",
+  "192.168.17.240",
+]
+
+## Edge ##
+[[ssh-keys]]
+item = "personal_ed"
+vault = "Private"
+account = "my.1password.com"
+
+[ssh-keys.match]
+hosts = [
+  "rm-asus.edge.home.arpa",
+  "rm-asus-eth.edge.home.arpa",
+  "rm-orangepizero3.edge.home.arpa",
+  "rm-orangepizero3-wlan.edge.home.arpa",
+]
+
+## DEV-LAN ##
+[[ssh-keys]]
+item = "personal_ed"
+vault = "Private"
+account = "my.1password.com"
+
+[ssh-keys.match]
+hosts = [
+  "100.50.0.146",
+  "100.50.0.5",
+  "100.50.0.10",
+]

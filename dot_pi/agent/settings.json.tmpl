@@ -1,0 +1,20 @@
+{
+  "defaultProvider": "amazon-bedrock",
+  "defaultModel": "us.anthropic.claude-sonnet-5",
+  "defaultThinkingLevel": {{ if eq .profile "work" }}"medium"{{ else }}"high"{{ end }},
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 10000,
+    "keepRecentTokens": 20000
+  },
+  "retry": {
+    "enabled": true,
+    "maxRetries": 3,
+    "baseDelayMs": 2000
+  },
+  "enableSkillCommands": true,
+  "extensions": [
+    "extensions/notification.ts"
+  ],
+  "theme": "dark"
+}

@@ -1,93 +1,125 @@
 # Dotfiles
 
-Personal workstation dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
+Unified personal + work dotfiles managed with [chezmoi](https://www.chezmoi.io).
+One repo covers both a personal Linux machine and a work macOS machine.
 
 ## Overview
 
-Each top-level directory is a **stow package**. Files prefixed with `dot-` are
-symlinked into `$HOME` with a leading `.` (e.g. `git/dot-gitconfig` becomes
-`~/.gitconfig`). A shared `aliases` file is sourced by both Bash and Zsh to keep
-environment variables, aliases, and shell functions in a single place.
+Files are stored using chezmoi's naming convention — a leading `dot_` becomes a
+leading `.` when applied to `$HOME` (e.g. `dot_gitconfig` becomes `~/.gitconfig`,
+`dot_config/nvim/` becomes `~/.config/nvim/`). Files ending in `.tmpl` are Go
+templates rendered per-machine at `chezmoi apply` time.
 
-## Packages
+## Profiles vs OS — the two axes
 
-| Package    | Description                                           | Target                                 |
-| ------------| -------------------------------------------------------| ----------------------------------------|
-| `aliases`  | Shared aliases, functions, and environment variables  | `~/.config/aliases`                    |
-| `bash`     | Bash shell configuration                              | `~/.bashrc`                            |
-| `ghostty`  | Ghostty terminal — Catppuccin Mocha, SauceCodePro NFM | `~/.config/ghostty/`                   |
-| `git`      | Git config — SSH commit signing via 1Password         | `~/.gitconfig`                         |
-| `nvim`     | Neovim with LazyVim distribution                      | `~/.config/nvim/`                      |
-| `opencode` | OpenCode AI coding assistant config                   | `~/.config/opencode/`                  |
-| `ssh`      | SSH hosts, 1Password agent, allowed signers           | `~/.ssh/`                              |
-| `starship` | Starship cross-shell prompt — Catppuccin Mocha        | `~/.config/starship.toml`              |
-| `systemd`  | User-level systemd services                           | `~/.config/systemd/user/`              |
-| `tmux`     | Tmux with TPM + Catppuccin theme                      | `~/.config/tmux/`                      |
-| `vscode`   | VSCodium settings and extensions                      | `~/.config/VSCodium/` `~/.vscode-oss/` |
-| `zed`      | Zed editor configuration                              | `~/.config/zed/`                       |
-| `zsh`      | Zsh shell config with autosuggestions                 | `~/.zshrc` `~/.config/zsh/`            |
+Two independent variables drive what gets applied on any given machine:
 
-## OpenCode
-
-The `opencode` package is a full AI coding assistant configuration built on
-[OpenCode](https://opencode.ai). It includes a global agent instruction file,
-custom subagents, slash commands, loadable skills, and a two-layer knowledge
-base protocol that persists context across sessions.
-
-### Agents
-
-Custom subagents defined in `agents/`:
-
-| Agent | Invoke | Role |
+| Axis | Values | Governs |
 |---|---|---|
-| `@scribe` | `@scribe` or task tool | Records decisions, session findings, ADRs, and README updates into the knowledge base. Cannot write source code. |
+| `.profile` | `personal` / `work` | Identity & access: MCP servers, model provider defaults, git identity, SSH hosts, 1Password vaults, credentials |
+| `.chezmoi.os` | `darwin` / `linux` (built-in) | OS mechanics: package manager, notification tooling, path conventions |
 
-### Commands
+`.profile` is **not** inferred from OS — it's prompted once per machine on
+`chezmoi init` and cached in `~/.config/chezmoi/chezmoi.toml`. This matters because
+OS and profile happen to correlate today (work = macOS, personal = Linux) but
+aren't the same thing — a future personal Mac or a work Linux box should still
+resolve identity/access correctly.
 
-Slash commands defined in `commands/`:
+Templates check `.profile` first, then `.chezmoi.os` where OS mechanics differ
+within a profile. Package inclusion is gated in `.chezmoiignore`:
 
-| Command | Description |
-|---|---|
-| `/commit` | Reviews staged changes, generates a Conventional Commit message, and commits |
-| `/init-project` | Bootstraps the knowledge base for the current project |
-| `/summarize-issue` | Summarizes a GitHub issue |
+| Package | Gated by | Reason |
+|---|---|---|
+| `dot_aws`, `dot_config/powershell`, `dot_ssh/1Password` | `profile == work` | AWS SSO, PowerShell, corporate 1Password SSH config |
+| `dot_config/1Password` | `profile == personal` | Home-lab SSH key routing rules |
+| `dot_colima`, `Library/**` (macOS VS Code) | `chezmoi.os == darwin` | Mac-only tooling — applies to any Mac, personal or work |
+| `dot_config/VSCodium`, `dot_vscode-oss` | `chezmoi.os == linux` | Code-OSS/VSCodium, Linux-only |
+| `dot_docker` | *(none — common to both)* | Docker CLI config used on both profiles |
 
-### Skills
+Heavily-diverged files (`dot_config/aliases`, `dot_bashrc`, `dot_zshrc`,
+`dot_config/tmux/tmux.conf`) are templated as **whole-file profile branches**
+(`{{ if eq .profile "work" }}...{{ else }}...{{ end }}`) rather than
+line-by-line merges — these files differ in dozens of small ways throughout
+(clipboard tool, terraform vs opentofu, credential vaults), so a full-content
+branch is far more maintainable than scattering conditionals everywhere.
 
-Loadable skills defined in `skills/`:
+## Repo / remotes
 
-| Skill            | Load when                                                                    |
-| ------------------| ------------------------------------------------------------------------------|
-| `ops`            | Executing infrastructure — kubectl, Helm, Docker, OpenTofu command reference |
-| `debug`          | Something is broken — systematic triage and diagnosis across any system type |
-| `docs`           | Writing inline comments, JSDoc, READMEs, or changelogs                       |
-| `knowledge-base` | Reading or writing project knowledge files                                   |
-| `caveman`        | Compressed token-efficient responses (~75% reduction)                        |
+- `origin` — GitLab (`gitlab.com:loganmancuso_personal/dotfiles`), primary.
+- `github` — GitHub (`github.com:loganmancuso-scout/dotfiles`), secondary. Push
+  here too so the work machine can `chezmoi init` straight from GitHub without
+  needing GitLab credentials.
+
+```bash
+git push origin main
+git push github main
+```
+
+## Install (new machine)
+
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)"
+chezmoi init --apply git@gitlab.com:loganmancuso_personal/dotfiles.git
+# (or from GitHub on the work machine)
+chezmoi init --apply git@github.com:loganmancuso-scout/dotfiles.git
+```
+
+You'll be prompted once for `profile` (`personal` or `work`) — this is cached
+locally and not asked again.
+
+## Day-to-day
+
+```bash
+chezmoi diff      # preview what would change
+chezmoi apply     # apply source -> $HOME
+chezmoi re-add    # pull local $HOME changes back into the source repo
+chezmoi cd        # cd into the source dir (this repo)
+```
+
+> **Habit to build:** unlike the old Stow `--adopt` setup, `chezmoi apply` copies
+> files into `$HOME` rather than symlinking — so an app that mutates its own
+> config live (e.g. `pi`/`opencode` settings.json theme/changelog fields) won't
+> automatically flow back into the repo. Run `chezmoi re-add <path>` periodically
+> to pull that drift back in before it's lost.
+
+## OpenCode / Pi agent config
+
+Both `opencode` and `pi` share the same instruction set, skills, and knowledge
+base protocol:
+
+- `AGENTS.md` — global session instructions
+- `agents/scribe.md` — `@scribe` subagent, sole writer of KB files and READMEs
+- `commands/` / `prompts/` — `/commit`, `/init-project`, `/summarize-issue`
+- `skills/` — `caveman`, `debug`, `docs`, `ops`, `schema`, `scribe`
+- Both default to `amazon-bedrock/us.anthropic.claude-sonnet-5`, with
+  `github-copilot` registered as an available fallback provider on both profiles
+- `profile == personal` additionally registers a local Ollama provider
+- `profile == work` additionally enables the Atlassian MCP server
 
 ### Knowledge Base
 
-OpenCode maintains a two-layer knowledge system for each project it works on:
+Two-layer knowledge system, shared path across both profiles:
 
 - **`<project-root>/README.md`** — human-facing. Deployment steps, known issues, tasks.
-- **`~/Documents/Notes/projects/<project-name>/context.md`** — AI-facing institutional
-  memory. Architecture, patterns, gotchas, decisions, and a session log. Read silently
-  at session start and updated via `@scribe`.
+- **`~/Documents/Notes/knowledge-base/projects/<project-name>/context.md`** —
+  AI-facing institutional memory. Read silently at session start, updated via `@scribe`.
+- `~/Documents/Notes/knowledge-base/bin/kb-link.sh` — appends a wikilink to the
+  current week's notepad after any KB write (ported from the work machine).
 
-Run `/init-project` when starting work on a new project to bootstrap both files from
-the templates in `~/Documents/Notes/templates/`.
+Run `/init-project` when starting work on a new project.
 
 ---
 
-## Systemd Services
+## Systemd Services (Linux only)
 
-The `systemd` package stows user-level units to `~/.config/systemd/user/`.
+`dot_config/systemd/user/` — gated to `chezmoi.os == linux`.
 
 | Unit | Description |
 |---|---|
 | `backup.service` | Runs `restic-backup.sh` — backs up configured vaults to the USB drive |
 | `backup.timer` | Fires `backup.service` every 4 hours; `Persistent=true` catches missed runs on wake |
 
-After stowing dotfiles, reload and enable the timer:
+After `chezmoi apply`, reload and enable the timer:
 
 ```bash
 systemctl --user daemon-reload
@@ -101,23 +133,12 @@ systemctl --user enable --now backup.timer
 ### Verifying backup health
 
 ```bash
-# Is the timer active and when does it fire next?
-systemctl --user status backup.timer
-
-# Show all upcoming timer fire times
-systemctl --user list-timers backup.timer
-
-# Did the last backup run succeed?
-systemctl --user status backup.service
-
-# Full journal output from the last run
-journalctl --user -u backup.service -n 100
-
-# Stream live output (useful while triggering a manual run)
-journalctl --user -u backup.service -f
-
-# Trigger a manual run immediately (does not reset the timer)
-systemctl --user start backup.service
+systemctl --user status backup.timer          # active? next fire time?
+systemctl --user list-timers backup.timer      # all upcoming fire times
+systemctl --user status backup.service         # did the last run succeed?
+journalctl --user -u backup.service -n 100     # full log from last run
+journalctl --user -u backup.service -f         # stream live output
+systemctl --user start backup.service          # trigger a manual run
 ```
 
 ---
@@ -136,92 +157,38 @@ do not work — edits still prompt regardless of config. This is a confirmed ups
 - [#16331](https://github.com/anomalyco/opencode/issues/16331) — Permissions ignored
 - [#5395](https://github.com/anomalyco/opencode/issues/5395) — Split `external_directory` into read vs write (root cause feature gap)
 
+### `chezmoi apply` copies, doesn't symlink
+
+See "Day-to-day" above — app-driven config drift needs a manual `chezmoi re-add`.
+
 ---
 
 ## Prerequisites
 
-### Required
+### Required (both profiles)
 
 ```bash
-# GNU Stow (dotfile manager)
-sudo apt install stow
-
-# Zsh
-sudo apt install zsh
-
-# Neovim
-sudo apt install neovim
+# chezmoi
+sh -c "$(curl -fsLS get.chezmoi.io)"
 
 # Git LFS
-sudo apt install git-lfs && git lfs install
+git lfs install
+
+# Neovim, tmux, fzf, starship, 1Password + CLI, Ghostty — see each tool's install docs
 ```
 
-### CLI Tools
+### Linux (personal) extras
 
 ```bash
-# Starship prompt
-curl -sS https://starship.rs/install.sh | sh
-
-# zoxide (smart cd)
+sudo apt install zsh eza bat fzf tmux
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-
-# fzf (fuzzy finder)
-sudo apt install fzf
-
-# eza (modern ls)
-sudo apt install eza
-
-# bat (modern cat)
-sudo apt install bat
-```
-
-### Applications
-
-```bash
-# Ghostty — see https://ghostty.org/docs/install
-# 1Password + CLI — see https://developer.1password.com/docs/cli/get-started
-
-# Tmux
-sudo apt install tmux
-
-# TPM (Tmux Plugin Manager)
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-
-# Catppuccin theme (loaded manually, not via TPM)
 git clone https://github.com/catppuccin/tmux ~/.config/tmux/plugins/catppuccin
-
-# Then open tmux and press prefix + I to install remaining plugins
+# then open tmux and press prefix + I to install remaining plugins
 ```
 
-## Install
+### macOS (work) extras
 
 ```bash
-git clone git@gitlab.com:loganmancuso_personal/dotfiles.git $HOME/SourceControl/Personal/dotfiles
-pushd $HOME/SourceControl/Personal/dotfiles
-./stow-dotfiles.sh --stow
-git reset --hard
-popd
+brew install eza bat fzf tmux colima docker awscli
 ```
-
-## Uninstall
-
-```bash
-pushd $HOME/SourceControl/Personal/dotfiles
-./stow-dotfiles.sh --unstow
-popd
-```
-
-## How It Works
-
-The `stow-dotfiles.sh` script discovers every top-level directory (excluding
-`.git`) and runs:
-
-```bash
-stow -v --dotfiles --adopt --target="$HOME" <package>
-```
-
-- **`--dotfiles`** translates `dot-` prefixes to `.` in the symlink target
-- **`--adopt`** moves any existing files in `$HOME` into the repo, replacing
-  them with symlinks. Run `git reset --hard` immediately after to restore the
-  canonical versions from the repository.
-

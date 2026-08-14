@@ -1,90 +1,14 @@
-# Ignore everything by default
-*
-!.gitignore
-!/README.md
+# chezmoi source repo — no allowlist needed, chezmoi source paths ARE the
+# managed content. Just ignore the usual junk.
 
-# Allow directories to be traversed, but not their files
-!*/
+.DS_Store
+*.swp
+*.swo
 
-!stow-dotfiles.sh
+# vendored plugin trees — installed at runtime by the tools themselves
+dot_config/tmux/plugins/
 
-# aliases
-!aliases/dot-config/aliases
-
-# bash
-!bash/dot-bashrc
-
-# fzf
-!fzf/dot-config/fzf/fzf.zsh
-!fzf/dot-config/fzf/fzf.bash
-
-# ghostty
-!ghostty/dot-config/ghostty/config
-
-# git
-!git/dot-gitconfig
-
-# nvim
-!nvim/dot-config/nvim/*.json
-!nvim/dot-config/nvim/*.toml
-!nvim/dot-config/nvim/init.lua
-!nvim/dot-config/nvim/lua/**/*.lua
-
-# pi
-!pi/dot-pi/agent/AGENTS.md
-!pi/dot-pi/agent/settings.json
-!pi/dot-pi/agent/models.json
-!pi/dot-pi/agent/skills/*/SKILL.md
-!pi/dot-pi/agent/prompts/*.md
-
-# opencode
-!opencode/dot-config/opencode/AGENTS.md
-!opencode/dot-config/opencode/opencode.json
-!opencode/dot-config/opencode/*.sh
-!opencode/dot-config/opencode/agents/*.md
-!opencode/dot-config/opencode/bin/*
-!opencode/dot-config/opencode/commands/*.md
-!opencode/dot-config/opencode/plugins/*.js
-!opencode/dot-config/opencode/skills/*/SKILL.md
-
-# ssh
-!ssh/dot-ssh/config
-!ssh/dot-ssh/known_hosts
-!ssh/dot-ssh/allowed_signers
-!ssh/dot-ssh/1Password/config
-
-# starship
-!starship/dot-config/starship.toml
-
-# systemd
-!systemd/dot-config/systemd/user/*.service
-!systemd/dot-config/systemd/user/*.timer
-
-# tmux
-!tmux/dot-config/tmux/tmux.conf
-!tmux/dot-config/tmux/scripts/*.sh
-!tmux/dot-tmux/*.conf
-# plugins are managed at runtime (tpm self-installs, catppuccin loaded via run directive)
-tmux/dot-config/tmux/plugins/
-
-
-# vscode (VSCodium on Linux)
-!vscode/dot-config/VSCodium/User/settings.json
-!vscode/dot-config/VSCodium/User/keybindings.json
-!vscode/dot-vscode-oss/extensions/extensions.json
-# exclude VSCodium runtime directories
-vscode/dot-config/VSCodium/Cache/
-vscode/dot-config/VSCodium/Backups/
-vscode/dot-config/VSCodium/CachedData/
-vscode/dot-config/VSCodium/CachedExtensions/
-vscode/dot-config/VSCodium/CachedExtensionVSIXs/
-vscode/dot-config/VSCodium/GPUCache/
-vscode/dot-config/VSCodium/logs/
-vscode/dot-config/VSCodium/User/workspaceStorage/
-vscode/dot-config/VSCodium/User/globalStorage/
-vscode/dot-config/VSCodium/User/History/
-
-# zsh
-!zsh/dot-zshrc
-!zsh/dot-config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-zsh/dot-config/zsh/zsh-autosuggestions/.gitignore
+# vendored plugin trees — installed at runtime via manual git clone, only the
+# single release file is dotfiles-managed
+dot_config/zsh/zsh-autosuggestions/*
+!dot_config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh

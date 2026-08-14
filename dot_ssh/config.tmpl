@@ -1,0 +1,286 @@
+# Author: Logan Mancuso | LastEdit: 2026-07-13
+
+{{ if eq .profile "work" -}}
+Include {{ .chezmoi.homeDir }}/.colima/ssh_config
+Include {{ .chezmoi.homeDir }}/.ssh/1Password/config
+
+{{ end -}}
+Host *
+{{ if eq .chezmoi.os "darwin" -}}
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{ else -}}
+  IdentityAgent ~/.1password/agent.sock
+{{ end -}}
+  StrictHostKeyChecking no
+
+Host cleopatra
+  HostName cleopatra.edge.home.arpa
+  User loganmancuso
+
+{{ if eq .profile "work" -}}
+Host trailer-city-srx
+  User loganmancuso
+  # HostName 206.74.54.133
+  HostName 172.27.255.1
+
+Host trailer-city-zscaler-bc
+  User zsroot
+  HostName 172.27.255.112
+  KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
+  HostKeyAlgorithms +ssh-rsa
+
+Host body-mdf
+  User loganmancuso
+  HostName 172.17.3.254
+
+Host paint-mdf
+  User loganmancuso
+  HostName 172.19.3.254
+
+Host assembly-mdf
+  User loganmancuso
+  HostName 172.21.2.1
+
+Host antenna-paint-nearend
+  User ubnt
+  HostName 172.27.225.4
+
+Host antenna-paint-farend
+  User ubnt
+  HostName 172.27.225.5
+
+Host antenna-body-nearend
+  User ubnt
+  HostName 172.27.224.4
+
+Host antenna-body-farend
+  User ubnt
+  HostName 172.27.224.5
+
+# =============================================================
+# Nutanix Prism Central (scale-out 3-node) — VIP: 172.25.117.94
+# =============================================================
+Host prism-central
+  User nutanix
+  HostName 172.25.117.94
+
+Host prism-central-vm-0
+  User nutanix
+  HostName 172.25.116.58
+
+Host prism-central-vm-1
+  User nutanix
+  HostName 172.25.116.236
+
+Host prism-central-vm-2
+  User nutanix
+  HostName 172.25.117.63
+
+# =============================================================
+# Nutanix Prism Element — cluster: plant-app-prd
+# VIP: 172.25.113.46  DSIP: 172.25.113.163
+# =============================================================
+
+# CVM load balancer VIP
+Host prism-element
+  User nutanix
+  HostName 172.25.113.46
+
+# --- Bare-metal AHV hosts (root) ---
+# Node A7FB56CC3E9B — 172.25.112.22
+Host prism-element-host-0
+  User root
+  HostName 172.25.112.22
+
+# Node CFF90B506A30 — 172.25.112.82
+Host prism-element-host-1
+  User root
+  HostName 172.25.112.82
+
+# Node A4DED56F5231 — 172.25.112.252
+Host prism-element-host-2
+  User root
+  HostName 172.25.112.252
+
+# Node A3121EBDF2F0 — 172.25.113.161
+Host prism-element-host-3
+  User root
+  HostName 172.25.113.161
+
+# Node 80CA971AB7C5 — 172.25.113.162
+Host prism-element-host-4
+  User root
+  HostName 172.25.113.162
+
+# Node 17DA6453C44F — 172.25.113.69
+Host prism-element-host-5
+  User root
+  HostName 172.25.113.69
+
+# --- CVMs (nutanix user) ---
+# CVM for host-0 (172.25.112.22)
+Host prism-element-cvm-0
+  User nutanix
+  HostName 172.25.112.87
+
+# CVM for host-1 (172.25.112.82)
+Host prism-element-cvm-1
+  User nutanix
+  HostName 172.25.112.216
+
+# CVM for host-2 (172.25.112.252)
+Host prism-element-cvm-2
+  User nutanix
+  HostName 172.25.113.20
+
+# CVM for host-3 (172.25.113.161)
+Host prism-element-cvm-3
+  User nutanix
+  HostName 172.25.112.8
+
+# CVM for host-4 (172.25.113.162)
+Host prism-element-cvm-4
+  User nutanix
+  HostName 172.25.112.40
+
+# CVM for host-5 (172.25.113.69)
+Host prism-element-cvm-5
+  User nutanix
+  HostName 172.25.113.119
+
+Host nkp-kommander
+  User konvoy
+  HostName 172.25.116.15
+
+Host nkp-infrastructure
+  User konvoy
+  HostName 172.25.116.55
+
+Host nkp-application
+  User konvoy
+  HostName 172.25.116.15
+
+Host nkp-jumpbox
+  User ubuntu
+  HostName 172.25.116.230
+
+Host ndb-manager-01
+  User era
+  Hostname 172.25.66.20
+
+Host aws-dpp-nat-old
+  user ubuntu
+  HostName 172.25.123.89
+
+Host aws-dpp-nat
+  User ec2-user
+  HostName 172.25.112.223
+
+Host trailer-city-zscaler-vm
+  User zsroot
+  HostName 169.254.2.2
+  ProxyCommand ssh trailer-city-zscaler-bc nc %h %p
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  LogLevel ERROR
+{{ else -}}
+## MGMT ##
+Host opnsense
+  HostName opnsense.mgmt.home.arpa
+  User loganmancuso
+
+Host sw-mikrotik-01
+  HostName sw-mikrotik-01.mgmt.home.arpa
+  User admin
+
+Host sw-mikrotik-02
+  HostName sw-mikrotik-02.mgmt.home.arpa
+  User admin
+
+## Mobile ##
+
+Host scout
+  HostName 192.168.4.40
+  # HostName worklaptop-wlan.iot.home.arpa
+  User logan.mancuso
+
+Host phone
+  HostName oneplus.edge.home.arpa # mobile address
+  # HostName 100.54.0.2 # vpn address
+  User u0_a417
+  Port 8022
+
+Host tablet
+  HostName tablet.edge.home.arpa # mobile address
+  # HostName 100.54.0.4 # vpn address
+  User u0_a130
+  Port 8022
+
+Host bytevault
+  HostName bytevault.cluster.vpc.home.arpa
+  User root
+
+Host core
+  HostName core.vpc.home.arpa
+  User cluster-user
+
+Host ragnarok
+  HostName ragnarok.cluster.vpc.home.arpa
+  User root
+
+## VPC ##
+
+Host thoth
+  HostName thoth.infra.vpc.home.arpa
+  User instance-user
+
+Host ingress
+  HostName ingress.lb.vpc.home.arpa
+  User instance-user
+
+Host home
+  HostName home.app.vpc.home.arpa
+  User instance-user
+
+Host sentry
+  HostName sentry.infra.vpc.home.arpa
+  User instance-user
+
+Host glacial
+  HostName glacial.infra.vpc.home.arpa
+  User instance-user
+
+Host localai
+  HostName localai.app.vpc.home.arpa
+  User instance-user
+
+Host sandbox
+  HostName 192.168.17.240
+  User instance-user
+
+## Edge ##
+Host asus
+  # HostName rm-asus-eth.edge.home.arpa #eth
+  HostName rm-asus.edge.home.arpa #wlan
+  User instance-user
+
+Host orangepizero3
+  HostName rm-orangepizero3.edge.home.arpa #eth
+  # HostName rm-orangepizero3-wlan.edge.home.arpa #wlan
+  User instance-user
+
+## DEV-LAN ##
+
+Host test-debian
+  HostName 100.50.0.146
+  User testuser
+  # PreferredAuthentications password
+
+Host dev-core
+  HostName 100.50.0.5
+  User cluster-user
+
+Host pve.dev-cluster
+  HostName 100.50.0.10
+  User root
+{{ end -}}

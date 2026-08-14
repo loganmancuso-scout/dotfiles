@@ -1,0 +1,1090 @@
+{{ if eq .profile "work" -}}
+# Author: Logan Mancuso | LastEdit: 2025-09-15
+
+# ─────────────────────────────────────────
+# ENVIRONMENT
+# ─────────────────────────────────────────
+eval "$(/opt/homebrew/bin/brew shellenv)"
+set -o vi
+
+export TERM=xterm-256color
+export EDITOR=nvim
+export _ZO_DOCTOR=0
+export GPG_TTY=$(tty)
+export PATH="/opt/homebrew/opt/libpq/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH"
+
+# ─────────────────────────────────────────
+# CORE
+# ─────────────────────────────────────────
+alias tablet-connect="scrcpy --max-size=1024 -d --video-codec=h264 --video-encoder=OMX.qcom.video.encoder.avc  --audio-codec=aac --audio-encoder=c2.android.aac.encoder"
+alias assume=". assume" # required alias for assume role tool
+alias macsudo="/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a"
+alias cd='z'
+alias ls='eza --icons always'
+alias ll='eza --icons -a'
+alias x='eza --icons -a'
+alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
+alias python='python3'
+
+function delete() {
+  for item in "$@"; do
+    mv "$item" "$HOME/.Trash"
+  done
+}
+
+function extract() {
+  local file_name_="$1"
+  if [ -z "$file_name_" ]; then
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+  else
+    if [ -f "$file_name_" ]; then
+      case $file_name_ in
+        *.tar.bz2)   tar xvjf "$file_name_"    ;;
+        *.tar.gz)    tar xvzf "$file_name_"    ;;
+        *.tar.xz)    tar xvJf "$file_name_"    ;;
+        *.lzma)      unlzma "$file_name_"      ;;
+        *.bz2)       bunzip2 "$file_name_"     ;;
+        *.rar)       unrar x -ad "$file_name_" ;;
+        *.gz)        gunzip "$file_name_"      ;;
+        *.tar)       tar xvf "$file_name_"     ;;
+        *.tbz2)      tar xvjf "$file_name_"   ;;
+        *.tgz)       tar xvzf "$file_name_"   ;;
+        *.zip)       unzip "$file_name_"       ;;
+        *.Z)         uncompress "$file_name_"  ;;
+        *.7z)        7z x "$file_name_"        ;;
+        *.xz)        unxz "$file_name_"        ;;
+        *.exe)       cabextract "$file_name_"  ;;
+        *)           echo "extract: '$file_name_' - unknown archive method" ;;
+      esac
+    else
+      echo "$file_name_ - file does not exist"
+    fi
+  fi
+}
+
+function stopwatch() {
+  echo "Stopwatch started. [SPACE] to pause/resume, [q] to stop."
+
+  stty -echo -icanon time 0 min 0
+  start=$(date +%s)
+  paused=0
+  total_pause=0
+  pause_start=0
+  while true; do
+    key=$(dd bs=1 count=1 2>/dev/null)
+
+    if [[ $key == $'\x20' ]]; then  # Spacebar
+      if [[ $paused -eq 0 ]]; then
+        pause_start=$(date +%s)
+        paused=1
+        echo -e "\nPaused... "
+      else
+        pause_end=$(date +%s)
+        total_pause=$((total_pause + pause_end - pause_start))
+        paused=0
+        echo "Resumed."
+      fi
+    elif [[ $key == "q" ]]; then
+      break
+    fi
+
+    if [[ $paused -eq 0 ]]; then
+      now=$(date +%s)
+      elapsed=$((now - start - total_pause))
+      printf "\rElapsed time: %02d:%02d:%02d" $((elapsed/3600)) $(((elapsed%3600)/60)) $((elapsed%60))
+    fi
+
+    sleep 1
+  done
+
+  stty sane
+  echo
+}
+
+function ouch-counter() {
+  local rate_per_sec=83.3333  # $5000/min
+  echo "🔥 Line stopped, no pressure.... [SPACE] pause/resume, [q] quit."
+  echo ""
+
+  stty -echo -icanon time 0 min 0
+  start=$(date +%s)
+  paused=0
+  total_pause=0
+  pause_start=0
+
+  while true; do
+    key=$(dd bs=1 count=1 2>/dev/null)
+
+    if [[ $key == $'\x20' ]]; then
+      if [[ $paused -eq 0 ]]; then
+        pause_start=$(date +%s)
+        paused=1
+        echo -e "\nPaused... (clock stopped, wallet safe)"
+      else
+        pause_end=$(date +%s)
+        total_pause=$((total_pause + pause_end - pause_start))
+        paused=0
+        echo "Resumed. Ouch."
+      fi
+    elif [[ $key == "q" ]]; then
+      break
+    fi
+
+    if [[ $paused -eq 0 ]]; then
+      now=$(date +%s)
+      elapsed=$((now - start - total_pause))
+      cost=$(awk "BEGIN { printf \"%.2f\", $elapsed * $rate_per_sec }")
+      cost_fmt=$(awk "BEGIN { printf \"%\047.2f\", $elapsed * $rate_per_sec }" 2>/dev/null || echo "$cost")
+      printf "\rDown: %02d:%02d:%02d | Burned: \$%s 💸🔥" \
+        $((elapsed/3600)) $(((elapsed%3600)/60)) $((elapsed%60)) "$cost_fmt"
+    fi
+
+    sleep 1
+  done
+
+  stty sane
+  now=$(date +%s)
+  elapsed=$((now - start - total_pause))
+  cost=$(awk "BEGIN { printf \"%\047.2f\", $elapsed * $rate_per_sec }" 2>/dev/null || awk "BEGIN { printf \"%.2f\", $elapsed * $rate_per_sec }")
+  echo ""
+  echo ""
+  echo "Line was down ${elapsed}s. Total damage: \$$cost"
+  echo "Hope it was worth it."
+}
+
+function timer() {
+  while true; do
+    echo -ne "$(date +%H:%M:%S:%N)\r"
+  done
+}
+
+# ─────────────────────────────────────────
+# DEV TOOLS
+# ─────────────────────────────────────────
+alias ff='nvim $(fzf -m --preview="bat --color=always --style=numbers --line-range=:500 {}")'
+
+function code-file() {
+  local filename="$1"
+  local today=$(date +%Y-%m-%d)
+  if [ -z "$filename" ]; then
+    echo "Usage: newfile <filename>"
+    return 1
+  fi
+  {
+    echo "## Author: Logan Mancuso | LastEdit: $today"
+    echo
+  } > "$filename"
+  echo "Created $filename with header."
+}
+
+function code-date() {
+  today_=$(date +%Y-%m-%d)
+  tag_="LastEdit:"
+  updated_files=()
+
+  process_file() {
+    local file_="$1"
+    echo "file:$file_"
+    [[ -f "$file_" ]] || return
+
+    if grep -q "$tag_" "$file_"; then
+      echo "1"
+      sed -i '' "s/\($tag_ \)[0-9\-]*/\1$today_/g" "$file_"
+      updated_files+=("$file_")
+    elif grep -q "Author:" "$file_"; then
+      echo "2"
+      sed -i '' "s/\(Author:.*\)/\1 | $tag_ $today_/" "$file_"
+      updated_files+=("$file_")
+    fi
+  }
+
+  for arg in "$@"; do
+    if [[ -d "$arg" ]]; then
+      while IFS= read -r -d '' file_; do
+        process_file "$file_"
+      done < <(find "$arg" -type f -print0)
+    elif [[ -f "$arg" ]]; then
+      process_file "$arg"
+    else
+      echo "Warning: '$arg' is not a valid file or directory" >&2
+    fi
+  done
+
+  if (( ${#updated_files[@]} > 0 )); then
+    echo "Updated ${#updated_files[@]} file(s) with '$tag_ $today_':"
+    printf ' - %s\n' "${updated_files[@]}"
+  else
+    echo "No files were updated."
+  fi
+}
+
+# ─────────────────────────────────────────
+# PI
+# ─────────────────────────────────────────
+export PATH="$HOME/.pi/agent/bin:$PATH"
+
+alias p='pi'
+
+# ─────────────────────────────────────────
+# OPENCODE
+# ─────────────────────────────────────────
+export PATH="$HOME/.config/opencode/bin:$HOME/Documents/Notes/knowledge-base/bin:$PATH"
+
+alias opc='opencode'
+
+function opc-login() {
+  export GITHUB_TOKEN=$(op read "op://Employee/Github/token")
+}
+
+# opc-document — end-of-day KB article generator; delegates to vault script
+#   Usage: opc-document [--week]
+#          DRY_RUN=1 opc-document [--week]
+function opc-document() {
+  kb-eod.sh "$@"
+}
+
+# ─────────────────────────────────────────
+# SYSTEM
+# ─────────────────────────────────────────
+alias whatsmyip="ifconfig | grep --color=always 'inet'"
+alias fastping="ping -c 100 -s.2 $1"
+alias ports="netstat -tulanp"
+alias flushdns="sudo resolvectl flush-caches"
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
+
+function watch-ping() {
+  # Usage: watch-ping <host> [ping-args]
+  while true; do
+    ts=$(date '+%m/%d-%H:%M:%S')
+    out=$(ping -c 1 -W 5000 "$@" 2>&1 | grep -E 'time=|timeout|unreachable|unknown')
+    echo "$ts\t${out:-No response}"
+    sleep 1
+  done
+}
+
+function ping-multi() {
+  # Usage: ping-multi <host1> <host2> ... <hostN>
+  # Compatible with both bash and zsh
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: ping-multi <host1> <host2> ... <hostN>"
+    return 1
+  fi
+
+  # suppress job control output (zsh and bash)
+  if [[ -n "$ZSH_VERSION" ]]; then
+    setopt LOCAL_OPTIONS NO_MONITOR
+  else
+    set +m
+  fi
+
+  # declare all locals up front to avoid zsh printing assignments in loops
+  local host ts statedir tmpdir result s r st lat pct
+  local hosts=("$@")
+
+  statedir=$(mktemp -d)
+
+  for host in "${hosts[@]}"; do
+    echo 0 > "$statedir/${host}.sent"
+    echo 0 > "$statedir/${host}.recv"
+  done
+
+  _ping_multi_cleanup() {
+    tput cnorm
+    rm -rf "$statedir"
+    echo
+  }
+  trap '_ping_multi_cleanup; return 0' INT
+
+  tput civis  # hide cursor
+
+  while true; do
+    ts=$(date '+%m/%d-%H:%M:%S')
+    tmpdir=$(mktemp -d)
+
+    # fire all pings in parallel
+    for host in "${hosts[@]}"; do
+      (
+        out=$(ping -c 1 -W 5000 "$host" 2>&1)
+        latency=$(echo "$out" | grep -oE 'time=[0-9.]+ ms' | head -1)
+        if [[ -n "$latency" ]]; then
+          echo "UP|${latency}" > "$tmpdir/${host}.result"
+        else
+          echo "DOWN|-" > "$tmpdir/${host}.result"
+        fi
+      ) &
+    done
+    wait
+
+    # read results and update counters
+    for host in "${hosts[@]}"; do
+      result=$(cat "$tmpdir/${host}.result" 2>/dev/null || echo "DOWN|-")
+      st=$(echo "$result" | cut -d'|' -f1)
+      lat=$(echo "$result" | cut -d'|' -f2)
+      s=$(cat "$statedir/${host}.sent")
+      r=$(cat "$statedir/${host}.recv")
+      s=$(( s + 1 ))
+      [[ "$st" == "UP" ]] && r=$(( r + 1 ))
+      echo "$s"  > "$statedir/${host}.sent"
+      echo "$r"  > "$statedir/${host}.recv"
+      echo "$st"  > "$statedir/${host}.status"
+      echo "$lat" > "$statedir/${host}.latency"
+    done
+
+    rm -rf "$tmpdir"
+
+    # redraw table
+    clear
+    printf "ping-multi | refreshed %s\n\n" "$ts"
+    printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "HOST" "STATUS" "LATENCY" "UPTIME%" "SENT" "RECV"
+    printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "--------------------" "--------" "--------------" "----------" "------" "------"
+
+    for host in "${hosts[@]}"; do
+      s=$(cat "$statedir/${host}.sent")
+      r=$(cat "$statedir/${host}.recv")
+      st=$(cat "$statedir/${host}.status")
+      lat=$(cat "$statedir/${host}.latency")
+      pct=$(awk "BEGIN { printf \"%.1f\", ($r / ($s > 0 ? $s : 1)) * 100 }")
+      printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "$host" "$st" "$lat" "${pct}%" "$s" "$r"
+    done
+
+    sleep 1
+  done
+}
+
+function watch-nc() {
+  # Usage: watch-nc <host> <port>
+  local host="$1"
+  local port="$2"
+  while true; do
+    local ts=$(date '+%m/%d-%H:%M:%S')
+    if nc -z -w 2 "$host" "$port" 2>/dev/null; then
+      echo "$ts\t$host:$port\tOPEN"
+    else
+      echo "$ts\t$host:$port\tCLOSED/REFUSED"
+    fi
+    sleep 1
+  done
+}
+
+function monitor-spinner() {
+  local start_time="$1"
+  local spinner='|/-\\'
+  local spin_idx=0
+  while true; do
+    local elapsed=$(( $(date +%s) - start_time ))
+    local spin_char=$(printf "%s" "$spinner" | cut -c$((spin_idx+1)))
+    printf "\r[%s] Monitoring... Elapsed: %ds" "$spin_char" "$elapsed"
+    spin_idx=$(( (spin_idx + 1) % 4 ))
+    sleep 0.1
+  done
+}
+
+function monitor-hosts() {
+  local interval="30s"
+  local silent=false
+  local port=22
+  local hosts=()
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --interval) interval="$2"; shift 2 ;;
+      --silent)   silent=true; shift ;;
+      --port)     port="$2"; shift 2 ;;
+      *)          hosts+=("$1"); shift ;;
+    esac
+  done
+
+  if [[ ${#hosts[@]} -eq 0 ]]; then
+    echo "Usage: monitor-hosts [--interval <time>] [--silent] [--port <port>] <host1> [host2 ...]"
+    return 1
+  fi
+
+  local start_time=$(date +%s)
+  local spinner_pid=""
+
+  if [[ "$silent" == true ]]; then
+    monitor-spinner "$start_time" &
+    spinner_pid=$!
+  fi
+
+  local running=true
+  trap 'running=false; [[ -n "$spinner_pid" ]] && kill "$spinner_pid" 2>/dev/null; printf "\n"' SIGINT EXIT
+
+  while $running; do
+    for host in "${hosts[@]}"; do
+      local ts=$(date '+%m/%d %H:%M:%S')
+      local logfile="monitor_${host}.log"
+
+      local ping_out=$(ping -c 1 "$host" | grep 'time=')
+      local ping_status=$([[ -n "$ping_out" ]] && echo "UP" || echo "DOWN")
+
+      nc -z -G 2 -w 2 "$host" "$port" >/dev/null 2>&1
+      local tcp_status=$([[ $? -eq 0 ]] && echo "PORT $port OPEN" || echo "PORT $port CLOSED")
+
+      printf "%s | %-12s | %-4s | %-16s\n" "$ts" "$host" "$ping_status" "$tcp_status" >> "$logfile"
+
+      if [[ "$silent" == false ]]; then
+        printf "%s | %-12s | %-4s | %-16s\n" "$ts" "$host" "$ping_status" "$tcp_status"
+      fi
+    done
+    sleep "$interval"
+  done
+}
+
+# ─────────────────────────────────────────
+# GIT
+# ─────────────────────────────────────────
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gpl='git pull'
+alias gl='git log --oneline --graph --decorate --all'
+alias gb='git branch'
+alias gbd='git branch -d'
+alias gf='git fetch --prune'
+alias gd='git diff'
+alias gst='git stash'
+alias gstp='git stash pop'
+
+# Smart switch: auto-pulls when landing on main
+function gco() {
+  git switch "$@"
+  [[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" == "main" ]] && git pull
+}
+
+# Create and switch to a new branch
+function gnb() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: gnb <branch-name>"
+    return 1
+  fi
+  git switch -c "$1"
+}
+
+# Finish a feature branch: switch to main, pull, delete locally + remotely
+# Usage: gclean [branch] [--force]
+function gclean() {
+  local branch=""
+  local force=false
+
+  for arg in "$@"; do
+    case "$arg" in
+      --force) force=true ;;
+      *)       branch="$arg" ;;
+    esac
+  done
+
+  branch="${branch:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null)}"
+
+  if [[ "$branch" == "main" ]]; then
+    echo "Already on main, nothing to clean."
+    return 1
+  fi
+
+  git switch main && git pull || return 1
+
+  if $force; then
+    git branch -D "$branch" && echo "Force deleted local branch: $branch"
+  else
+    git branch -d "$branch" && echo "Deleted local branch: $branch"
+  fi
+
+  git push origin --delete "$branch" 2>/dev/null && echo "Deleted remote branch: $branch"
+  git fetch --prune
+}
+
+# ─────────────────────────────────────────
+# KUBERNETES
+# ─────────────────────────────────────────
+alias k="kubectl"
+
+function kconf() {
+  local kubeconfig_dir="$HOME/.kube"
+  local config_name="$1"
+
+  if [ -z "$config_name" ]; then
+    echo "Available kubeconfigs:"
+    [ -d "$kubeconfig_dir" ] && ls -1 "$kubeconfig_dir" | grep -E '(config|.*\.yaml)' | sed 's/^/  /'
+    return 0
+  fi
+
+  # Check if it's the local config
+  if [ "$config_name" = "config" ]; then
+    export KUBECONFIG="$kubeconfig_dir/config"
+    echo "✓ Switched to $config_name"
+    kubectl cluster-info 2>/dev/null | head -1 || echo "  (kubeconfig set)"
+    return 0
+  fi
+
+  # Check for name-kubeconfig.yaml pattern
+  local config_file="$kubeconfig_dir/$config_name.yaml"
+  if [ -f "$config_file" ]; then
+    export KUBECONFIG="$config_file"
+    echo "✓ Switched to $config_name"
+    kubectl cluster-info 2>/dev/null | head -1 || echo "  (kubeconfig set)"
+    return 0
+  fi
+
+  # Try exact filename
+  config_file="$kubeconfig_dir/$config_name"
+  if [ -f "$config_file" ]; then
+    export KUBECONFIG="$config_file"
+    echo "✓ Switched to $config_name"
+    kubectl cluster-info 2>/dev/null | head -1 || echo "  (kubeconfig set)"
+    return 0
+  fi
+
+  echo "Error: Kubeconfig '$config_name' not found in $kubeconfig_dir"
+  return 1
+}
+
+# ─────────────────────────────────────────
+# TERRAFORM
+# ─────────────────────────────────────────
+alias tffmt="terraform fmt -recursive"
+alias tfsclear='terraform state rm $(terraform state list)'
+
+function tflogin() {
+  export NUTANIX_USER=$(op read "op://Employee/Nutanix Prism Central/username")
+  export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Prism Central/username")
+  export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Prism Central/password")
+  export OP_SERVICE_ACCOUNT_TOKEN=$(op item get 'plantit-terraform-readonly' --fields password --reveal)
+}
+{{ else -}}
+# Author: Logan Mancuso | LastEdit: 2026-03-24
+
+# ─────────────────────────────────────────
+# ENVIRONMENT
+# ─────────────────────────────────────────
+set -o vi
+
+export TERM=xterm-256color
+export EDITOR=nvim
+export _ZO_DOCTOR=0
+export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.local/share/pi-node/current/bin:$PATH"
+
+# export QT_QPA_PLATFORM="xcb" # xpentablet needs this for wayland
+
+# ─────────────────────────────────────────
+# CORE
+# ─────────────────────────────────────────
+alias tablet-connect="scrcpy --max-size=1024 -d --video-codec=av1 --video-encoder=c2.android.av1.encoder"
+alias cd='z'
+alias ls='eza --icons'
+alias ll='eza --icons -a'
+alias x='eza --icons -a'
+alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
+alias code="codium"
+alias bat="batcat"
+alias obsidian="flatpak run md.obsidian.Obsidian"
+
+function mcp-login(){
+  export GITHUB_TOKEN=$(op read "op://Private/Github/token")
+} 
+
+# remove all symlinks in current directory
+alias lnrm="find . -maxdepth 1 -type l -delete"
+
+function delete() {
+  for item in "$@"; do
+    mv "$item" "$HOME/.local/share/Trash/files"
+  done
+}
+
+function extract() {
+  local file_name_="$1"
+  if [ -z "$file_name_" ]; then
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+  else
+    if [ -f "$file_name_" ]; then
+      case $file_name_ in
+        *.tar.bz2)   tar xvjf "$file_name_"    ;;
+        *.tar.gz)    tar xvzf "$file_name_"    ;;
+        *.tar.xz)    tar xvJf "$file_name_"    ;;
+        *.lzma)      unlzma "$file_name_"      ;;
+        *.bz2)       bunzip2 "$file_name_"     ;;
+        *.rar)       unrar x -ad "$file_name_" ;;
+        *.gz)        gunzip "$file_name_"      ;;
+        *.tar)       tar xvf "$file_name_"     ;;
+        *.tbz2)      tar xvjf "$file_name_"    ;;
+        *.tgz)       tar xvzf "$file_name_"    ;;
+        *.zip)       unzip "$file_name_"       ;;
+        *.Z)         uncompress "$file_name_"  ;;
+        *.7z)        7z x "$file_name_"        ;;
+        *.xz)        unxz "$file_name_"        ;;
+        *.exe)       cabextract "$file_name_"  ;;
+        *)           echo "extract: '$file_name_' - unknown archive method" ;;
+      esac
+    else
+      echo "$file_name_ - file does not exist"
+    fi
+  fi
+}
+
+function stopwatch() {
+  echo "Stopwatch started. [SPACE] to pause/resume, [q] to stop."
+
+  stty -echo -icanon time 0 min 0
+  start=$(date +%s)
+  paused=0
+  total_pause=0
+  pause_start=0
+  while true; do
+    key=$(dd bs=1 count=1 2>/dev/null)
+
+    if [[ $key == $'\x20' ]]; then  # Spacebar
+      if [[ $paused -eq 0 ]]; then
+        pause_start=$(date +%s)
+        paused=1
+        echo -e "\nPaused... "
+      else
+        pause_end=$(date +%s)
+        total_pause=$((total_pause + pause_end - pause_start))
+        paused=0
+        echo "Resumed."
+      fi
+    elif [[ $key == "q" ]]; then
+      break
+    fi
+
+    if [[ $paused -eq 0 ]]; then
+      now=$(date +%s)
+      elapsed=$((now - start - total_pause))
+      printf "\rElapsed time: %02d:%02d:%02d" $((elapsed/3600)) $(((elapsed%3600)/60)) $((elapsed%60))
+    fi
+
+    sleep 1
+  done
+
+  stty sane
+  echo
+}
+
+function timer() {
+  while true; do
+    echo -ne "$(date +%H:%M:%S:%N)\r"
+  done
+}
+
+# ─────────────────────────────────────────
+# DEV TOOLS
+# ─────────────────────────────────────────
+alias ff='nvim $(fzf -m --preview="batcat --color=always --style=numbers --line-range=:500 {}")'
+
+function code-file() {
+  local filename="$1"
+  local today=$(date +%Y-%m-%d)
+  if [ -z "$filename" ]; then
+    echo "Usage: code-file <filename>"
+    return 1
+  fi
+  {
+    echo "## Author: Logan Mancuso | LastEdit: $today"
+    echo
+  } > "$filename"
+  echo "Created $filename with header."
+}
+
+function code-date() {
+  today_=$(date +%Y-%m-%d)
+  tag_="LastEdit:"
+  updated_files=()
+
+  process_file() {
+    local file_="$1"
+    [[ -f "$file_" ]] || return
+
+    if grep -q "$tag_" "$file_"; then
+      sed -i "s/\($tag_ \)[0-9\-]*/\1$today_/g" "$file_"
+      updated_files+=("$file_")
+    elif grep -q "Author:" "$file_"; then
+      sed -i "s/\(Author:.*\)/\1 | $tag_ $today_/" "$file_"
+      updated_files+=("$file_")
+    fi
+  }
+
+  for arg in "$@"; do
+    if [[ -d "$arg" ]]; then
+      while IFS= read -r -d '' file_; do
+        process_file "$file_"
+      done < <(find "$arg" -type f -print0)
+    elif [[ -f "$arg" ]]; then
+      process_file "$arg"
+    else
+      echo "Warning: '$arg' is not a valid file or directory" >&2
+    fi
+  done
+
+  if (( ${#updated_files[@]} > 0 )); then
+    echo "Updated ${#updated_files[@]} file(s) with '$tag_ $today_':"
+    printf ' - %s\n' "${updated_files[@]}"
+  else
+    echo "No files were updated."
+  fi
+}
+
+# ─────────────────────────────────────────
+# OPENCODE
+# ─────────────────────────────────────────
+export PATH="$HOME/.config/opencode/bin:$HOME/Documents/Notes/knowledge-base/bin:$PATH"
+
+alias opc='opencode'
+
+# opc-document — end-of-day KB article generator; delegates to vault script
+#   Usage: opc-document [--week]
+#          DRY_RUN=1 opc-document [--week]
+function opc-document() {
+  kb-eod.sh "$@"
+}
+
+# ─────────────────────────────────────────
+# SYSTEM
+# ─────────────────────────────────────────
+alias whatsmyip="ifconfig | grep --color=always 'inet'"
+alias fastping="ping -c 100 -s.2 $1"
+alias ports="netstat -tulanp"
+alias flushdns="sudo resolvectl flush-caches"
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
+
+function watch-ping() {
+  # Usage: watch-ping <host> [ping-args]
+  while true; do
+    ts=$(date '+%m/%d-%H:%M:%S')
+    out=$(ping -c 1 -W 5000 "$@" 2>&1 | grep -E 'time=|timeout|unreachable|unknown')
+    echo "$ts\t${out:-No response}"
+    sleep 1
+  done
+}
+
+function ping-multi() {
+  # Usage: ping-multi <host1> <host2> ... <hostN>
+  # Compatible with both bash and zsh
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: ping-multi <host1> <host2> ... <hostN>"
+    return 1
+  fi
+
+  # suppress job control output (zsh and bash)
+  if [[ -n "$ZSH_VERSION" ]]; then
+    setopt LOCAL_OPTIONS NO_MONITOR
+  else
+    set +m
+  fi
+
+  # declare all locals up front to avoid zsh printing assignments in loops
+  local host ts statedir tmpdir result s r st lat pct
+  local hosts=("$@")
+
+  statedir=$(mktemp -d)
+
+  for host in "${hosts[@]}"; do
+    echo 0 > "$statedir/${host}.sent"
+    echo 0 > "$statedir/${host}.recv"
+  done
+
+  _ping_multi_cleanup() {
+    tput cnorm
+    rm -rf "$statedir"
+    echo
+  }
+  trap '_ping_multi_cleanup; return 0' INT
+
+  tput civis  # hide cursor
+
+  while true; do
+    ts=$(date '+%m/%d-%H:%M:%S')
+    tmpdir=$(mktemp -d)
+
+    # fire all pings in parallel
+    for host in "${hosts[@]}"; do
+      (
+        out=$(ping -c 1 -W 5000 "$host" 2>&1)
+        latency=$(echo "$out" | grep -oE 'time=[0-9.]+ ms' | head -1)
+        if [[ -n "$latency" ]]; then
+          echo "UP|${latency}" > "$tmpdir/${host}.result"
+        else
+          echo "DOWN|-" > "$tmpdir/${host}.result"
+        fi
+      ) &
+    done
+    wait
+
+    # read results and update counters
+    for host in "${hosts[@]}"; do
+      result=$(cat "$tmpdir/${host}.result" 2>/dev/null || echo "DOWN|-")
+      st=$(echo "$result" | cut -d'|' -f1)
+      lat=$(echo "$result" | cut -d'|' -f2)
+      s=$(cat "$statedir/${host}.sent")
+      r=$(cat "$statedir/${host}.recv")
+      s=$(( s + 1 ))
+      [[ "$st" == "UP" ]] && r=$(( r + 1 ))
+      echo "$s"  > "$statedir/${host}.sent"
+      echo "$r"  > "$statedir/${host}.recv"
+      echo "$st"  > "$statedir/${host}.status"
+      echo "$lat" > "$statedir/${host}.latency"
+    done
+
+    rm -rf "$tmpdir"
+
+    # redraw table
+    clear
+    printf "ping-multi | refreshed %s\n\n" "$ts"
+    printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "HOST" "STATUS" "LATENCY" "UPTIME%" "SENT" "RECV"
+    printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "--------------------" "--------" "--------------" "----------" "------" "------"
+
+    for host in "${hosts[@]}"; do
+      s=$(cat "$statedir/${host}.sent")
+      r=$(cat "$statedir/${host}.recv")
+      st=$(cat "$statedir/${host}.status")
+      lat=$(cat "$statedir/${host}.latency")
+      pct=$(awk "BEGIN { printf \"%.1f\", ($r / ($s > 0 ? $s : 1)) * 100 }")
+      printf "%-20s %-8s %-14s %-10s %-6s %-6s\n" "$host" "$st" "$lat" "${pct}%" "$s" "$r"
+    done
+
+    sleep 1
+  done
+}
+
+function watch-nc() {
+  # Usage: watch-nc <host> <port>
+  local host="$1"
+  local port="$2"
+  while true; do
+    local ts=$(date '+%m/%d-%H:%M:%S')
+    if nc -z -w 2 "$host" "$port" 2>/dev/null; then
+      echo "$ts\t$host:$port\tOPEN"
+    else
+      echo "$ts\t$host:$port\tCLOSED/REFUSED"
+    fi
+    sleep 1
+  done
+}
+
+function monitor-spinner() {
+  local start_time="$1"
+  local spinner='|/-\\'
+  local spin_idx=0
+  while true; do
+    local elapsed=$(( $(date +%s) - start_time ))
+    local spin_char=$(printf "%s" "$spinner" | cut -c$((spin_idx+1)))
+    printf "\r[%s] Monitoring... Elapsed: %ds" "$spin_char" "$elapsed"
+    spin_idx=$(( (spin_idx + 1) % 4 ))
+    sleep 0.1
+  done
+}
+
+function monitor-hosts() {
+  local interval="30s"
+  local silent=false
+  local port=22
+  local hosts=()
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --interval) interval="$2"; shift 2 ;;
+      --silent)   silent=true; shift ;;
+      --port)     port="$2"; shift 2 ;;
+      *)          hosts+=("$1"); shift ;;
+    esac
+  done
+
+  if [[ ${#hosts[@]} -eq 0 ]]; then
+    echo "Usage: monitor-hosts [--interval <time>] [--silent] [--port <port>] <host1> [host2 ...]"
+    return 1
+  fi
+
+  local start_time=$(date +%s)
+  local spinner_pid=""
+
+  if [[ "$silent" == true ]]; then
+    monitor-spinner "$start_time" &
+    spinner_pid=$!
+  fi
+
+  local running=true
+  trap 'running=false; [[ -n "$spinner_pid" ]] && kill "$spinner_pid" 2>/dev/null; printf "\n"' SIGINT EXIT
+
+  while $running; do
+    for host in "${hosts[@]}"; do
+      local ts=$(date '+%m/%d %H:%M:%S')
+      local logfile="monitor_${host}.log"
+
+      local ping_out=$(ping -c 1 "$host" | grep 'time=')
+      local ping_status=$([[ -n "$ping_out" ]] && echo "UP" || echo "DOWN")
+
+      nc -z -w 2 "$host" "$port" >/dev/null 2>&1
+      local tcp_status=$([[ $? -eq 0 ]] && echo "PORT $port OPEN" || echo "PORT $port CLOSED")
+
+      printf "%s | %-12s | %-4s | %-16s\n" "$ts" "$host" "$ping_status" "$tcp_status" >> "$logfile"
+
+      if [[ "$silent" == false ]]; then
+        printf "%s | %-12s | %-4s | %-16s\n" "$ts" "$host" "$ping_status" "$tcp_status"
+      fi
+    done
+    sleep "$interval"
+  done
+}
+
+# ─────────────────────────────────────────
+# GIT
+# ─────────────────────────────────────────
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gpl='git pull'
+alias gl='git log --oneline --graph --decorate --all'
+alias gb='git branch'
+alias gbd='git branch -d'
+alias gf='git fetch --prune'
+alias gd='git diff'
+alias gst='git stash'
+alias gstp='git stash pop'
+
+# Smart switch: auto-pulls when landing on main
+function gco() {
+  git switch "$@"
+  [[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" == "main" ]] && git pull
+}
+
+# Create and switch to a new branch
+function gnb() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: gnb <branch-name>"
+    return 1
+  fi
+  git switch -c "$1"
+}
+
+# Finish a feature branch: switch to main, pull, delete locally + remotely
+# Usage: gclean [branch] [--force]
+function gclean() {
+  local branch=""
+  local force=false
+
+  for arg in "$@"; do
+    case "$arg" in
+      --force) force=true ;;
+      *)       branch="$arg" ;;
+    esac
+  done
+
+  branch="${branch:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null)}"
+
+  if [[ "$branch" == "main" ]]; then
+    echo "Already on main, nothing to clean."
+    return 1
+  fi
+
+  git switch main && git pull || return 1
+
+  if $force; then
+    git branch -D "$branch" && echo "Force deleted local branch: $branch"
+  else
+    git branch -d "$branch" && echo "Deleted local branch: $branch"
+  fi
+
+  git push origin --delete "$branch" 2>/dev/null && echo "Deleted remote branch: $branch"
+  git fetch --prune
+}
+
+# ─────────────────────────────────────────
+# KUBERNETES
+# ─────────────────────────────────────────
+alias k="kubectl"
+
+function kconf() {
+  local kubeconfig_dir="$HOME/.kube"
+  local config_name="$1"
+
+  if [ -z "$config_name" ]; then
+    echo "Available kubeconfigs:"
+    [ -d "$kubeconfig_dir" ] && ls -1 "$kubeconfig_dir" | grep -E '(config|.*\.yaml)' | sed 's/^/  /'
+    return 0
+  fi
+
+  # Check if it's the local config
+  if [ "$config_name" = "config" ]; then
+    export KUBECONFIG="$kubeconfig_dir/config"
+    echo "✓ Switched to $config_name"
+    kubectl cluster-info 2>/dev/null | head -1 || echo "  (kubeconfig set)"
+    return 0
+  fi
+
+  # Check for name-kubeconfig.yaml pattern
+  local config_file="$kubeconfig_dir/$config_name.yaml"
+  if [ -f "$config_file" ]; then
+    export KUBECONFIG="$config_file"
+    echo "✓ Switched to $config_name"
+    kubectl cluster-info 2>/dev/null | head -1 || echo "  (kubeconfig set)"
+    return 0
+  fi
+
+  # Try exact filename
+  config_file="$kubeconfig_dir/$config_name"
+  if [ -f "$config_file" ]; then
+    export KUBECONFIG="$config_file"
+    echo "✓ Switched to $config_name"
+    kubectl cluster-info 2>/dev/null | head -1 || echo "  (kubeconfig set)"
+    return 0
+  fi
+
+  echo "Error: Kubeconfig '$config_name' not found in $kubeconfig_dir"
+  return 1
+}
+
+# ─────────────────────────────────────────
+# OPENTOFU
+# ─────────────────────────────────────────
+export TF_PLUGIN_CACHE_DIR="$HOME/.cache/opentofu/plugin-cache"
+# optional: suppress lock file warnings when cache is used
+export TF_PLUGIN_CACHE_MAY_BREAK_DEPENDENCY_LOCK_FILE=1
+alias tfc="rm -rf .terraform/ .terraform.lock.hcl"
+alias tffmt="tofu fmt -recursive"
+alias tfsclear='tofu state rm $(tofu state list)'
+
+function tflogin() {
+  local env=$1
+  
+  # Validate environment parameter
+  if [ -z "$env" ]; then
+    echo "Error: Environment parameter required"
+    echo "Usage: tflogin <environment>"
+    echo "Example: tflogin dev-core"
+    return 1
+  fi
+  
+  # Validate environment is one of the supported values
+  if [[ "$env" != "dev-core" && "$env" != "core" ]]; then
+    echo "Error: Invalid environment '$env'"
+    echo "Supported environments: dev-core, core"
+    return 1
+  fi
+  eval $(op signin)
+  echo "Setting $env OpenBao Secrets"
+  # set vault url and vault token and unseal key
+  export BAO_ADDR="$(op item get "Tofu $env-OpenBao" --format json | jq -r '.urls[0].href')"
+  export VAULT_ADDR="$BAO_ADDR"
+  export BAO_TOKEN="$(op item get "Tofu $env-OpenBao" --fields label=password --reveal)"
+  export VAULT_TOKEN="$BAO_TOKEN"
+  export UNSEAL_KEY_1="$(op item get "Tofu $env-OpenBao" --fields label="UNSEAL_KEY_1")"
+  echo "Setting $env RustFS Secrets"
+  # set rustfs secret token and secret id
+  export AWS_ACCESS_KEY_ID="$(op item get "rustfs $env-automation-accesskey" --vault "automation" --fields label=username)"
+  export AWS_SECRET_ACCESS_KEY="$(op item get "rustfs $env-automation-accesskey" --vault "automation" --fields label=password --reveal)"
+  # set op service account secret token
+  echo "Setting $env 1Password Secrets"
+  export OP_CONNECT_TOKEN="$(op item get "$env Access Token: OpenTofu" --fields label=credential --reveal)"
+}
+
+function tfunseal() {
+  [[ -z "$UNSEAL_KEY_1" || -z "$BAO_TOKEN" ]] && tflogin
+  bao status -tls-skip-verify
+  bao operator unseal -tls-skip-verify $UNSEAL_KEY_1
+  bao status -tls-skip-verify
+  bao login -tls-skip-verify token=$BAO_TOKEN
+}
+{{ end -}}

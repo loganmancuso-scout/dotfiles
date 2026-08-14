@@ -1,0 +1,35 @@
+# Package gating — profile is the primary axis (identity/access), OS is
+# secondary (mechanical). See README.md "Profiles vs OS" for the rationale.
+#
+# NOTE: patterns here match TARGET paths (as applied to $HOME), not chezmoi's
+# source-state naming — so ".aws" not "dot_aws".
+
+{{ if ne .profile "work" }}
+# work-only: AWS SSO profiles, PowerShell (Windows/pwsh), work 1Password SSH agent config
+.aws/**
+.config/powershell/**
+.ssh/1Password/**
+{{ end }}
+
+{{ if ne .profile "personal" }}
+# personal-only: 1Password SSH agent key routing (home-lab host routing rules)
+.config/1Password/**
+{{ end }}
+
+{{ if ne .chezmoi.os "darwin" }}
+# macOS-only: Colima (mac-only container runtime VM), macOS VS Code path
+.colima/**
+Library/**
+{{ end }}
+
+{{ if ne .chezmoi.os "linux" }}
+# Linux-only: VSCodium (Code-OSS) paths, systemd user services (no systemd on macOS)
+.config/VSCodium/**
+.vscode-oss/**
+.config/systemd/**
+{{ end }}
+
+# Vendored/runtime-managed plugin trees — installed by the tools themselves
+# on first run (tpm self-installs, catppuccin loaded via run directive,
+# zsh-autosuggestions only tracks the single script file)
+.config/tmux/plugins/**

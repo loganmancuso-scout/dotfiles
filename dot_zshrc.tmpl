@@ -1,0 +1,139 @@
+{{ if eq .profile "work" -}}
+setopt histignorealldups sharehistory
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+# Enable auto-completion
+autoload -U compinit && compinit
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  autoload -Uz compinit
+  compinit
+fi
+
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+# eval "$(dircolors -b)"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# Custom Aliases #
+[ -f $HOME/.config/aliases ] && source $HOME/.config/aliases
+
+# FZF Configuration #
+[ -f $HOME/.config/fzf/fzf.zsh ] && source $HOME/.config/fzf/fzf.zsh
+
+## Kconf Completion (Zsh) ##
+_kconf_completion() {
+  local kubeconfig_dir="$HOME/.kube"
+  local -a configs
+
+  if [ -d "$kubeconfig_dir" ]; then
+    configs=( $(ls -1 "$kubeconfig_dir") )
+  fi
+
+  _describe 'kconf' configs
+}
+compdef _kconf_completion kconf
+
+## Set Prompt ##
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+source <(fzf --zsh)
+source $HOME/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+{{ else -}}
+setopt histignorealldups sharehistory
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+# Enable auto-completion
+autoload -U compinit && compinit
+
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+eval "$(dircolors -b)"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# Custom Aliases #
+[ -f $HOME/.config/aliases ] && source $HOME/.config/aliases
+
+# FZF Configuration #
+[ -f $HOME/.config/fzf/fzf.zsh ] && source $HOME/.config/fzf/fzf.zsh
+
+## Git Completions (Zsh) ##
+compdef _git g=git
+compdef _git gs='git status'
+compdef _git ga='git add'
+compdef _git gc='git commit'
+compdef _git gp='git push'
+compdef _git gpl='git pull'
+compdef _git gl='git log'
+compdef _git gb='git branch'
+compdef _git gbd='git branch'
+compdef _git gf='git fetch'
+compdef _git gd='git diff'
+compdef _git gst='git stash'
+compdef _git gstp='git stash'
+compdef _git gco='git switch'
+compdef _git gnb='git switch'
+compdef _git gclean='git switch'
+
+## Kconf Completion (Zsh) ##
+_kconf_completion() {
+  local kubeconfig_dir="$HOME/.kube"
+  local -a configs
+
+  if [ -d "$kubeconfig_dir" ]; then
+    configs=( $(ls -1 "$kubeconfig_dir") )
+  fi
+
+  _describe 'kconf' configs
+}
+compdef _kconf_completion kconf
+
+## Set Prompt ##
+source $HOME/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+source <(fzf --zsh)
+source "$HOME/.cargo/env"
+{{ end -}}
