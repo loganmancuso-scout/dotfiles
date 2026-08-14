@@ -24,7 +24,7 @@ Linux = '󰌽'
 Pop = '󰌽'
 Ubuntu = '󰌽'
 Windows = '󰍹'
-Macos = ''
+Macos = ''
 
 [shell]
 zsh_indicator = "󰬡"
