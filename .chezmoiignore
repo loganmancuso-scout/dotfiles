@@ -10,18 +10,16 @@
 
 {{ if eq .profile "work" }}
 # excluded on work: personal-only stuff
-.config/1Password/**
 {{ else }}
 # excluded on personal: work-only stuff
 .aws/**
 .config/powershell/**
-.ssh/1Password/**
+.vscode-oss/**
 {{ end }}
 
 {{ if eq .chezmoi.os "darwin" }}
 # excluded on macOS: linux-only stuff
 .config/VSCodium/**
-.vscode-oss/**
 .config/systemd/**
 {{ else }}
 # excluded elsewhere: macOS-only stuff
@@ -32,4 +30,6 @@ Library/**
 # Vendored/runtime-managed plugin trees — installed by the tools themselves
 # on first run (tpm self-installs, catppuccin loaded via run directive,
 # zsh-autosuggestions only tracks the single script file)
+.config/1Password/**
+.ssh/1Password/**
 .config/tmux/plugins/**
