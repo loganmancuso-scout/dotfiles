@@ -1,0 +1,7 @@
+{
+	"auths": {
+		"artifactory.sctmtrs.xyz": {}
+	},
+	"credsStore": "osxkeychain",
+	"currentContext": "colima"
+}

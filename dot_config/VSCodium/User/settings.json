@@ -1,0 +1,72 @@
+{
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.detectIndentation": false,
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "'SauceCodePro NFM'",
+    "editor.minimap.enabled": false,
+    "editor.tabSize": 2,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "extensions.ignoreRecommendations": true,
+    "git.confirmSync": false,
+    "git.repositoryScanMaxDepth": -1,
+    "scm.alwaysShowRepositories": true,
+    "scm.repositories.sortOrder": "path",
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "window.confirmSaveUntitledWorkspace": false,
+    "workbench.editor.enablePreview": false,
+    "workbench.startupEditor": "none",
+    "security.workspace.trust.untrustedFiles": "open",
+    "update.showReleaseNotes": false,
+    "git.openRepositoryInParentFolders": "never",
+    "vscode-neovim.neovimExecutablePaths.linux": "/snap/nvim/current/usr/bin/nvim",
+    "extensions.experimental.affinity": {
+      "asvetliakov.vscode-neovim": 1
+    },
+    "debug.console.fontSize": 16,
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "chat.commandCenter.enabled": false,
+    "search.exclude": {
+      "**/.git": true,
+      "**/.terraform": true
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.activityBar.location": "top",
+    "window.newWindowProfile": "Default",
+    "python.createEnvironment.trigger": "off",
+    "workbench.editor.editorActionsLocation": "hidden",
+    "python.terminal.activateEnvironment": false,
+    "window.title": "${rootName}${separator}${profileName}",
+    "continue.remoteConfigServerUrl": "",
+    "continue.telemetryEnabled": false,
+    "CodeGPT.apiKey": "Ollama",
+    "terminal.integrated.fontFamily": "'SauceCodePro NFM'",
+    "workbench.productIconTheme": "material-product-icons",
+    "workbench.iconTheme": "material-icon-theme",
+    "yaml.schemas": {
+      "/home/loganmancuso/.vscode-oss/extensions/continue.continue-1.0.21-linux-x64/config-yaml-schema.json": [
+        ".continue/**/*.yaml"
+      ]
+    },
+    "redhat.telemetry.enabled": false,
+    "hediet.vscode-drawio.resizeImages": null,
+    "files.associations": {
+      "config": "raw"
+    },
+    "continue.showInlineTip": false,
+    "workbench.sideBar.location": "right",
+    "chat.tools.urls.autoApprove": {
+      "https://gethomepage.dev": true,
+      "https://grafana.github.io": {
+        "approveRequest": true,
+        "approveResponse": false
+      },
+      "https://raw.githubusercontent.com": {
+        "approveRequest": false,
+        "approveResponse": true
+      }
+    },
+    "editor.fontSize": 16,
+    "terminal.integrated.fontSize": 16,
+    "scm.repositories.selectionMode": "single",
+}
