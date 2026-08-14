@@ -3,30 +3,30 @@
 #
 # NOTE: patterns here match TARGET paths (as applied to $HOME), not chezmoi's
 # source-state naming — so ".aws" not "dot_aws".
+#
+# profile and chezmoi.os are both effectively binary today, so if/else reads
+# as a direct positive statement ("if you're X, here's what doesn't apply to
+# you") instead of the double-negative ne-based form ("exclude unless X").
 
-{{ if ne .profile "work" }}
-# work-only: AWS SSO profiles, PowerShell (Windows/pwsh), work 1Password SSH agent config
+{{ if eq .profile "work" }}
+# excluded on work: personal-only stuff
+.config/1Password/**
+{{ else }}
+# excluded on personal: work-only stuff
 .aws/**
 .config/powershell/**
 .ssh/1Password/**
 {{ end }}
 
-{{ if ne .profile "personal" }}
-# personal-only: 1Password SSH agent key routing (home-lab host routing rules)
-.config/1Password/**
-{{ end }}
-
-{{ if ne .chezmoi.os "darwin" }}
-# macOS-only: Colima (mac-only container runtime VM), macOS VS Code path
-.colima/**
-Library/**
-{{ end }}
-
-{{ if ne .chezmoi.os "linux" }}
-# Linux-only: VSCodium (Code-OSS) paths, systemd user services (no systemd on macOS)
+{{ if eq .chezmoi.os "darwin" }}
+# excluded on macOS: linux-only stuff
 .config/VSCodium/**
 .vscode-oss/**
 .config/systemd/**
+{{ else }}
+# excluded elsewhere: macOS-only stuff
+.colima/**
+Library/**
 {{ end }}
 
 # Vendored/runtime-managed plugin trees — installed by the tools themselves
