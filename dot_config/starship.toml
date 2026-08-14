@@ -24,10 +24,12 @@ Linux = '󰌽'
 Pop = '󰌽'
 Ubuntu = '󰌽'
 Windows = '󰍹'
+Macos = ''
 
 [shell]
 zsh_indicator = "󰬡"
 bash_indicator = "󱆃"
+powershell_indicator = "\ue683"
 style = 'fg:#FFFFFF'
 disabled = false
 
