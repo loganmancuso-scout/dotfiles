@@ -1,0 +1,13 @@
+{
+	"auths": {
+{{- if eq .profile "work" }}
+		"artifactory.sctmtrs.xyz": {}
+{{- end }}
+	},
+{{- if eq .chezmoi.os "darwin" }}
+	"credsStore": "osxkeychain",
+	"currentContext": "colima"
+{{- else }}
+	"currentContext": "default"
+{{- end }}
+}
