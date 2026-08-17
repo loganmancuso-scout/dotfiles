@@ -7,55 +7,27 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama (local)",
       "options": {
-        "baseURL": "http://localai.app.vpc.home.arpa:11434/v1"
+        "baseURL": "https://ollama.apps.vpc.home.arpa/v1"
       },
       "models": {
-        "qwen3-coder-next:latest": {
-          "name": "qwen3-coder-next:latest",
-          "tools": true
-        },
         "qwen3-coder:30b": {
           "name": "qwen3-coder:30b",
           "tools": true
         },
-        "deepseek-r1:1.5b": {
-          "name": "deepseek-r1:1.5b",
-          "reasoning": true
+        "qwen2.5-coder:7b": {
+          "name": "qwen2.5-coder:7b",
+          "tools": true
         },
-        "deepseek-r1:7b": {
-          "name": "deepseek-r1:7b",
-          "reasoning": true
+        "deepseek-coder-v2:latest": {
+          "name": "deepseek-coder-v2:latest"
+        },
+        "devstral:24b": {
+          "name": "devstral:24b",
+          "tools": true
         },
         "deepseek-r1:8b": {
           "name": "deepseek-r1:8b",
           "reasoning": true
-        },
-        "deepseek-r1:14b": {
-          "name": "deepseek-r1:14b",
-          "reasoning": true
-        },
-        "gemma3:12b": {
-          "name": "gemma3:12b"
-        },
-        "llama3.2:latest": {
-          "name": "llama3.2:latest"
-        },
-        "qwen3.5:9b": {
-          "name": "qwen3.5:9b"
-        },
-        "qwen3.5:4b": {
-          "name": "qwen3.5:4b"
-        },
-        "qwen3.5:2b": {
-          "name": "qwen3.5:2b"
-        },
-        "mistral:latest": {
-          "name": "mistral:latest",
-          "tools": true
-        },
-        "mistral-small3.2:latest": {
-          "name": "mistral-small3.2:latest",
-          "tools": true
         }
       }
     }{{ end }}
