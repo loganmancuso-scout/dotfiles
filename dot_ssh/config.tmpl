@@ -13,10 +13,6 @@ Host *
 {{ end -}}
   StrictHostKeyChecking no
 
-Host cleopatra
-  HostName cleopatra.edge.home.arpa
-  User loganmancuso
-
 {{ if eq .profile "work" -}}
 Host trailer-city-srx
   User loganmancuso
@@ -184,6 +180,12 @@ Host trailer-city-zscaler-vm
   UserKnownHostsFile /dev/null
   LogLevel ERROR
 {{ else -}}
+## Personal ##
+
+Host cleopatra
+  HostName cleopatra.edge.home.arpa
+  User loganmancuso
+
 ## MGMT ##
 Host opnsense
   HostName opnsense.mgmt.home.arpa
