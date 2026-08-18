@@ -28,8 +28,9 @@ Library/**
 {{ end }}
 
 # Vendored/runtime-managed plugin trees — installed by the tools themselves
-# on first run (tpm self-installs, catppuccin loaded via run directive,
-# zsh-autosuggestions only tracks the single script file)
+# on first run (zsh-autosuggestions only tracks the single script file).
+# NOTE: .config/tmux/plugins/** is intentionally NOT listed here — those
+# paths are fetched via .chezmoiexternal.toml (git-repo externals for tpm
+# and catppuccin) and must remain chezmoi-managed for that to apply.
 .config/1Password/**
 .ssh/1Password/**
-.config/tmux/plugins/**

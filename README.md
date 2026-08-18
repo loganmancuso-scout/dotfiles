@@ -182,10 +182,12 @@ git lfs install
 ```bash
 sudo apt install zsh eza bat fzf tmux
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-git clone https://github.com/catppuccin/tmux ~/.config/tmux/plugins/catppuccin
-# then open tmux and press prefix + I to install remaining plugins
 ```
+
+`tpm` and the `catppuccin` theme are fetched automatically by chezmoi externals
+(see `.chezmoiexternal.toml`) on `chezmoi apply` — no manual clone needed. After
+applying, open tmux and press `prefix + I` once to let TPM install the
+remaining declared plugins (tmux-sensible, resurrect, continuum, battery, cpu).
 
 ### macOS (work) extras
 

@@ -5,7 +5,8 @@
 *.swp
 *.swo
 
-# vendored plugin trees — installed at runtime by the tools themselves
+# vendored plugin trees — fetched automatically by chezmoi externals
+# (see .chezmoiexternal.toml), not tracked in this repo
 dot_config/tmux/plugins/
 
 # vendored plugin trees — installed at runtime via manual git clone, only the
