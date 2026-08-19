@@ -166,10 +166,12 @@ setw -g window-status-format "#[fg=#11111b,bg=#{@thm_overlay_2}]#[fg=#181825,rev
 setw -g window-status-current-format "#[fg=#11111b,bg=#{@thm_mauve}]#[fg=#181825,reverse]#[none]#I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W#[fg=#181825,reverse]#[none]"
 setw -g window-status-separator ""
 
-# Customize status bar - show hostname instead of username
+# Customize status bar - show active pane's directory instead of hostname
+# (hostname never changes when SSHing into other machines inside a pane,
+# so it's a static, low-value display; cwd is dynamic and actually useful)
 set -g status-right-length 100
 set -g status-left-length 100
-set -g status-left "#{E:@catppuccin_status_host}"
+set -g status-left "#{E:@catppuccin_status_directory}"
 set -g status-right "#{E:@catppuccin_status_session}"
 set -agF status-right "#{E:@catppuccin_status_battery}"
 
@@ -362,10 +364,12 @@ setw -g window-status-format "#[fg=#11111b,bg=#{@thm_overlay_2}]#[fg=#181825,rev
 setw -g window-status-current-format "#[fg=#11111b,bg=#{@thm_mauve}]#[fg=#181825,reverse]#[none]#I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W#[fg=#181825,reverse]#[none]"
 setw -g window-status-separator ""
 
-# Customize status bar - show hostname instead of username
+# Customize status bar - show active pane's directory instead of hostname
+# (hostname never changes when SSHing into other machines inside a pane,
+# so it's a static, low-value display; cwd is dynamic and actually useful)
 set -g status-right-length 100
 set -g status-left-length 100
-set -g status-left "#{E:@catppuccin_status_host}"
+set -g status-left "#{E:@catppuccin_status_directory}"
 set -g status-right "#{E:@catppuccin_status_session}"
 set -agF status-right "#{E:@catppuccin_status_battery}"
 
