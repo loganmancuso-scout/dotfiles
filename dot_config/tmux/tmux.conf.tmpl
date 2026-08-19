@@ -41,7 +41,6 @@ set -g renumber-windows on
 
 # Automatically set window title
 setw -g automatic-rename on
-setw -g automatic-rename-format "#{b:pane_current_path}"
 set -g set-titles on
 
 # Display settings
@@ -159,37 +158,39 @@ set -g @catppuccin_status_default_window_behavior "no"
 # Load Catppuccin (manually cloned, not via TPM due to naming conflicts)
 run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 
-# Session/battery/git-branch live in a pane-border-status line pinned to the
-# top of each pane (see below), separate from the window-tabs status bar at
-# the bottom of the terminal.
+# Git branch and current directory live in a pane-border-status line pinned
+# to the top of each pane (see below); session id/battery live in the
+# window-tabs status bar at the bottom instead.
 
 # Override window status format to show window name instead of pane title
-setw -g window-status-format "#[fg=#11111b,bg=#{@thm_overlay_2}]#[fg=#181825,reverse]#[none]#I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #W#[fg=#181825,reverse]#[none]"
-setw -g window-status-current-format "#[fg=#11111b,bg=#{@thm_mauve}]#[fg=#181825,reverse]#[none]#I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W#[fg=#181825,reverse]#[none]"
+setw -g window-status-format "#{?#{==:#{window_index},1},#[fg=#{@thm_overlay_2}]#{@catppuccin_status_left_separator},}#[fg=#11111b,bg=#{@thm_overlay_2}]#[fg=#181825,reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #W#[fg=#181825,reverse]#[none]"
+setw -g window-status-current-format "#{?#{==:#{window_index},1},#[fg=#{@thm_mauve}]#{@catppuccin_status_left_separator},}#[fg=#11111b,bg=#{@thm_mauve}]#[fg=#181825,reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W#[fg=#181825,reverse]#[none]"
 setw -g window-status-separator ""
 
-# Bottom status bar: window tabs only, plain single row.
+# Bottom status bar: window tabs (default, running-process names) on the
+# left, session id + battery on the right.
 set -g status on
 set -g status-left ""
-set -g status-right ""
+set -g status-right "#{E:@catppuccin_status_session}#[fg=#{@thm_lavender}]#[fg=#{@thm_crust},bg=#{@thm_lavender}] #(~/.config/tmux/plugins/tmux-battery/scripts/battery_icon.sh) #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(~/.config/tmux/plugins/tmux-battery/scripts/battery_percentage.sh)#[fg=#{@thm_surface_0}] "
 
-# Top-of-pane info line (native tmux feature, not the status bar): session id
-# + battery on the left, git branch on the right. This uses pane-border-status
-# rather than the status-format array, since pane-border-format is a genuine
-# top-level option (its #() jobs execute directly, same as status-left/right),
-# and it renders pinned to the top of the pane -- independent of the tabs bar
-# at the bottom. See https://github.com/tmux/tmux/issues/3105 for background
-# (there is no way to split a single status bar across top and bottom; this
-# pane-border line is the documented alternative).
+# Top-of-pane info line (native tmux feature, not the status bar): git branch
+# on the left, current directory (folder icon) on the right. This uses
+# pane-border-status rather than the status-format array, since
+# pane-border-format is a genuine top-level option (its #() jobs execute
+# directly, same as status-left/right), and it renders pinned to the top of
+# the pane -- independent of the tabs bar at the bottom. See
+# https://github.com/tmux/tmux/issues/3105 for background (there is no way to
+# split a single status bar across top and bottom; this pane-border line is
+# the documented alternative).
 #
-# Battery is invoked directly via the tmux-battery plugin's own scripts (#()
-# calls) rather than through @catppuccin_status_battery, because the plugin
-# only patches the literal status-left/status-right options with its #() jobs
-# at load time -- it never touches custom @options, so referencing it
-# indirectly here would just render the literal, unexpanded "#{battery_icon}"
-# text.
+# Battery (used in status-right below) is invoked directly via the
+# tmux-battery plugin's own scripts (#() calls) rather than through
+# @catppuccin_status_battery, because the plugin only patches the literal
+# status-left/status-right options with its #() jobs at load time -- it never
+# touches custom @options, so referencing it indirectly anywhere else would
+# just render the literal, unexpanded "#{battery_icon}" text.
 set -g pane-border-status top
-set -g pane-border-format "#[align=left]#{E:@catppuccin_status_session}#[fg=#{@thm_lavender}]#[fg=#{@thm_crust},bg=#{@thm_lavender}]#(~/.config/tmux/plugins/tmux-battery/scripts/battery_icon.sh) #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(~/.config/tmux/plugins/tmux-battery/scripts/battery_percentage.sh)#[fg=#{@thm_surface_0}] #[align=right]#[fg=#{@thm_teal}]#[fg=#{@thm_crust},bg=#{@thm_teal}] #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(cd \"#{pane_current_path}\" 2>/dev/null && git branch --show-current 2>/dev/null)#[fg=#{@thm_surface_0}] "
+set -g pane-border-format "#[align=left]#[fg=#{@thm_teal}]#{@catppuccin_status_left_separator}#[fg=#{@thm_crust},bg=#{@thm_teal}] #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(cd \"#{pane_current_path}\" 2>/dev/null && git branch --show-current 2>/dev/null)#[fg=#{@thm_surface_0}] #[align=right]#[fg=#{@thm_rosewater}]#{@catppuccin_status_left_separator}#[fg=#{@thm_crust},bg=#{@thm_rosewater}] #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#{b:pane_current_path}#[fg=#{@thm_surface_0}] "
 
 # ==========================
 # Initialize TMUX plugin manager
@@ -243,7 +244,6 @@ set -g renumber-windows on
 
 # Automatically set window title
 setw -g automatic-rename on
-setw -g automatic-rename-format "#{b:pane_current_path}"
 set -g set-titles on
 
 # Display settings
@@ -373,37 +373,39 @@ set -g @catppuccin_status_default_window_behavior "no"
 # Load Catppuccin (manually cloned, not via TPM due to naming conflicts)
 run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 
-# Session/battery/git-branch live in a pane-border-status line pinned to the
-# top of each pane (see below), separate from the window-tabs status bar at
-# the bottom of the terminal.
+# Git branch and current directory live in a pane-border-status line pinned
+# to the top of each pane (see below); session id/battery live in the
+# window-tabs status bar at the bottom instead.
 
 # Override window status format to show window name instead of pane title
-setw -g window-status-format "#[fg=#11111b,bg=#{@thm_overlay_2}]#[fg=#181825,reverse]#[none]#I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #W#[fg=#181825,reverse]#[none]"
-setw -g window-status-current-format "#[fg=#11111b,bg=#{@thm_mauve}]#[fg=#181825,reverse]#[none]#I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W#[fg=#181825,reverse]#[none]"
+setw -g window-status-format "#{?#{==:#{window_index},1},#[fg=#{@thm_overlay_2}]#{@catppuccin_status_left_separator},}#[fg=#11111b,bg=#{@thm_overlay_2}]#[fg=#181825,reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #W#[fg=#181825,reverse]#[none]"
+setw -g window-status-current-format "#{?#{==:#{window_index},1},#[fg=#{@thm_mauve}]#{@catppuccin_status_left_separator},}#[fg=#11111b,bg=#{@thm_mauve}]#[fg=#181825,reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W#[fg=#181825,reverse]#[none]"
 setw -g window-status-separator ""
 
-# Bottom status bar: window tabs only, plain single row.
+# Bottom status bar: window tabs (default, running-process names) on the
+# left, session id + battery on the right.
 set -g status on
 set -g status-left ""
-set -g status-right ""
+set -g status-right "#{E:@catppuccin_status_session}#[fg=#{@thm_lavender}]#[fg=#{@thm_crust},bg=#{@thm_lavender}] #(~/.config/tmux/plugins/tmux-battery/scripts/battery_icon.sh) #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(~/.config/tmux/plugins/tmux-battery/scripts/battery_percentage.sh)#[fg=#{@thm_surface_0}] "
 
-# Top-of-pane info line (native tmux feature, not the status bar): session id
-# + battery on the left, git branch on the right. This uses pane-border-status
-# rather than the status-format array, since pane-border-format is a genuine
-# top-level option (its #() jobs execute directly, same as status-left/right),
-# and it renders pinned to the top of the pane -- independent of the tabs bar
-# at the bottom. See https://github.com/tmux/tmux/issues/3105 for background
-# (there is no way to split a single status bar across top and bottom; this
-# pane-border line is the documented alternative).
+# Top-of-pane info line (native tmux feature, not the status bar): git branch
+# on the left, current directory (folder icon) on the right. This uses
+# pane-border-status rather than the status-format array, since
+# pane-border-format is a genuine top-level option (its #() jobs execute
+# directly, same as status-left/right), and it renders pinned to the top of
+# the pane -- independent of the tabs bar at the bottom. See
+# https://github.com/tmux/tmux/issues/3105 for background (there is no way to
+# split a single status bar across top and bottom; this pane-border line is
+# the documented alternative).
 #
-# Battery is invoked directly via the tmux-battery plugin's own scripts (#()
-# calls) rather than through @catppuccin_status_battery, because the plugin
-# only patches the literal status-left/status-right options with its #() jobs
-# at load time -- it never touches custom @options, so referencing it
-# indirectly here would just render the literal, unexpanded "#{battery_icon}"
-# text.
+# Battery (used in status-right below) is invoked directly via the
+# tmux-battery plugin's own scripts (#() calls) rather than through
+# @catppuccin_status_battery, because the plugin only patches the literal
+# status-left/status-right options with its #() jobs at load time -- it never
+# touches custom @options, so referencing it indirectly anywhere else would
+# just render the literal, unexpanded "#{battery_icon}" text.
 set -g pane-border-status top
-set -g pane-border-format "#[align=left]#{E:@catppuccin_status_session}#[fg=#{@thm_lavender}]#[fg=#{@thm_crust},bg=#{@thm_lavender}]#(~/.config/tmux/plugins/tmux-battery/scripts/battery_icon.sh) #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(~/.config/tmux/plugins/tmux-battery/scripts/battery_percentage.sh)#[fg=#{@thm_surface_0}] #[align=right]#[fg=#{@thm_teal}]#[fg=#{@thm_crust},bg=#{@thm_teal}] #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(cd \"#{pane_current_path}\" 2>/dev/null && git branch --show-current 2>/dev/null)#[fg=#{@thm_surface_0}] "
+set -g pane-border-format "#[align=left]#[fg=#{@thm_teal}]#{@catppuccin_status_left_separator}#[fg=#{@thm_crust},bg=#{@thm_teal}] #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(cd \"#{pane_current_path}\" 2>/dev/null && git branch --show-current 2>/dev/null)#[fg=#{@thm_surface_0}] #[align=right]#[fg=#{@thm_rosewater}]#{@catppuccin_status_left_separator}#[fg=#{@thm_crust},bg=#{@thm_rosewater}] #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#{b:pane_current_path}#[fg=#{@thm_surface_0}] "
 
 # ==========================
 # Initialize TMUX plugin manager
