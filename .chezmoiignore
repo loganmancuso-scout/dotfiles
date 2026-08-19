@@ -34,6 +34,7 @@ Library/**
 # and catppuccin) and must remain chezmoi-managed for that to apply.
 .config/1Password/**
 .ssh/1Password/**
+.config/tmux/plugins/**
 
 # Repo-only docs — not meant to be applied to $HOME
 README.md
