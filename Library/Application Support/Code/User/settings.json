@@ -40,5 +40,11 @@
     "workbench.editor.empty.hint": "hidden",
     "workbench.browser.dataStorage": "ephemeral",
     "diffEditor.renderSideBySide": false,
-    "scm.repositories.selectionMode": "single"
+    "scm.repositories.selectionMode": "single",
+    "files.associations": {
+      "*.tmpl": "yaml"
+    },
+    "[yaml]": {
+      "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter"
+    }
 }

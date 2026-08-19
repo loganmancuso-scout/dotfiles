@@ -50,7 +50,11 @@
     "redhat.telemetry.enabled": false,
     "hediet.vscode-drawio.resizeImages": null,
     "files.associations": {
-      "config": "raw"
+      "config": "raw",
+      "*.tmpl": "yaml"
+    },
+    "[yaml]": {
+      "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter"
     },
     "continue.showInlineTip": false,
     "workbench.sideBar.location": "right",
