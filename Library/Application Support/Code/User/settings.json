@@ -41,10 +41,21 @@
     "workbench.browser.dataStorage": "ephemeral",
     "diffEditor.renderSideBySide": false,
     "scm.repositories.selectionMode": "single",
-    "files.associations": {
-      "*.tmpl": "yaml"
+    "extensions.experimental.affinity": {
+      "asvetliakov.vscode-neovim": 1
     },
-    "[yaml]": {
-      "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter"
-    }
+    "chat.mcp.serverSampling": {
+      "Global in Code: com.atlassian/atlassian-mcp-server": {
+        "allowedModels": [
+          "copilot/auto",
+          "copilotcli/auto",
+          "agent-host-copilotcli:auto"
+        ]
+      }
+    },
+    "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "catppuccin-mocha",
+    "workbench.settings.applyToAllProfiles": [
+      "chat.sessionSync.enabled"
+    ]
 }
