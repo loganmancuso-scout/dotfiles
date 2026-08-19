@@ -89,7 +89,7 @@ base protocol:
 
 - `AGENTS.md` — global session instructions
 - `agents/scribe.md` — `@scribe` subagent, sole writer of KB files and READMEs
-- `commands/` / `prompts/` — `/commit`, `/init-project`, `/summarize-issue`
+- `commands/` / `prompts/` — `/commit`, `/init-project`, `/summarize-issue`, `/closeout`
 - `skills/` — `caveman`, `debug`, `docs`, `ops`, `schema`, `scribe`
 - Both default to `amazon-bedrock/us.anthropic.claude-sonnet-5`, with
   `github-copilot` registered as an available fallback provider on both profiles
