@@ -45,14 +45,14 @@ branch is far more maintainable than scattering conditionals everywhere.
 
 ## Repo / remotes
 
-- `origin` — GitLab (`gitlab.com:loganmancuso_personal/dotfiles`), primary.
-- `github` — GitHub (`github.com:loganmancuso-scout/dotfiles`), secondary. Push
+- `personal` — GitLab (`gitlab.com:loganmancuso_personal/dotfiles`), primary.
+- `work` — GitHub (`github.com:loganmancuso-scout/dotfiles`), secondary. Push
   here too so the work machine can `chezmoi init` straight from GitHub without
   needing GitLab credentials.
 
 ```bash
-git push origin main
-git push github main
+git push personal main
+git push work main
 ```
 
 ## Install (new machine)
