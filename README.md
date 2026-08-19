@@ -45,14 +45,28 @@ branch is far more maintainable than scattering conditionals everywhere.
 
 ## Repo / remotes
 
+Three remotes, one repo, kept in sync on every push:
+
 - `personal` — GitLab (`gitlab.com:loganmancuso_personal/dotfiles`), primary.
-- `work` — GitHub (`github.com:loganmancuso-scout/dotfiles`), secondary. Push
-  here too so the work machine can `chezmoi init` straight from GitHub without
-  needing GitLab credentials.
+- `work` — GitHub (`github.com:loganmancuso-scout/dotfiles`), work machine.
+  Lets the work machine `chezmoi init` straight from GitHub without needing
+  GitLab credentials.
+- `personal-github` — GitHub (`github.com:loganmancuso/dotfiles`), personal
+  mirror on the personal GitHub account.
+
+A local-only git alias (`pushall`, defined in `.git/config`, not tracked in
+the repo) pushes the current branch to every configured remote in one shot:
 
 ```bash
-git push personal main
-git push work main
+git pushall
+```
+
+It's just a loop over `git remote` — add or remove a remote and `pushall`
+picks it up automatically. Because it lives in local config, it must be
+re-added on each new clone/machine:
+
+```bash
+git config --local alias.pushall '!f() { branch=$(git symbolic-ref --short HEAD); for r in $(git remote); do echo "--> pushing $branch to $r"; git push "$r" "$branch" || exit 1; done; }; f'
 ```
 
 ## Install (new machine)
