@@ -173,22 +173,43 @@ fi
 [ -f $HOME/.config/fzf/fzf.bash ] && source $HOME/.config/fzf/fzf.bash
 
 ## Git Completions (Bash) ##
-__git_complete g git
-__git_complete gs _git_status
-__git_complete ga _git_add
-__git_complete gc _git_commit
-__git_complete gp _git_push
-__git_complete gpl _git_pull
-__git_complete gl _git_log
-__git_complete gb _git_branch
-__git_complete gbd _git_branch
-__git_complete gf _git_fetch
-__git_complete gd _git_diff
-__git_complete gst _git_stash
-__git_complete gstp _git_stash
-__git_complete gco _git_switch
-__git_complete gnb _git_switch
-__git_complete gclean _git_switch
+# bash-completion normally defines __git_complete lazily, only once you've
+# actually triggered completion for the literal "git" command — so calling
+# it here unconditionally at shell startup fails with "command not found"
+# unless the completion script has been sourced first. Search the common
+# install locations (Debian/Ubuntu, Homebrew, Termux via $PREFIX) and skip
+# the aliases entirely if none are found, instead of erroring on every shell.
+for _git_completion in \
+  /usr/share/bash-completion/completions/git \
+  /opt/homebrew/share/bash-completion/completions/git \
+  /usr/local/share/bash-completion/completions/git \
+  "${PREFIX:-}/share/bash-completion/completions/git"
+do
+  if [ -f "$_git_completion" ]; then
+    source "$_git_completion"
+    break
+  fi
+done
+unset _git_completion
+
+if declare -f __git_complete >/dev/null 2>&1; then
+  __git_complete g git
+  __git_complete gs _git_status
+  __git_complete ga _git_add
+  __git_complete gc _git_commit
+  __git_complete gp _git_push
+  __git_complete gpl _git_pull
+  __git_complete gl _git_log
+  __git_complete gb _git_branch
+  __git_complete gbd _git_branch
+  __git_complete gf _git_fetch
+  __git_complete gd _git_diff
+  __git_complete gst _git_stash
+  __git_complete gstp _git_stash
+  __git_complete gco _git_switch
+  __git_complete gnb _git_switch
+  __git_complete gclean _git_switch
+fi
 
 ## Kubeconfig Completion (Bash) ##
 _kubeconfig_completion() {
@@ -205,5 +226,5 @@ complete -o bashdefault -o default -o nospace -F _kubeconfig_completion kubeconf
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 source <(fzf --bash)
-source "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 {{ end -}}
