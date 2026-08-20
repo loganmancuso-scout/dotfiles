@@ -25,19 +25,11 @@ Pop = '󰌽'
 Ubuntu = '󰌽'
 Windows = '󰍹'
 Macos = ''
-Android = '🤖'
+Android = ''
 
 [shell]
-{{ if eq .chezmoi.os "android" -}}
-# Termux's terminal app has no Nerd Font glyphs available, so the usual
-# private-use-area icons below render as tofu boxes — fall back to plain
-# emoji, which Android renders natively via its own emoji font.
-zsh_indicator = "🐚"
-bash_indicator = "🅱️"
-{{ else -}}
 zsh_indicator = "󰬡"
 bash_indicator = "󱆃"
-{{ end -}}
 powershell_indicator = "\ue683"
 style = 'fg:#FFFFFF'
 disabled = false
@@ -52,11 +44,7 @@ format = '[$path ]($style)'
 truncation_length = 2
 
 [git_branch]
-{{ if eq .chezmoi.os "android" -}}
-symbol = '🌿'
-{{ else -}}
 symbol = ''
-{{ end -}}
 style = 'fg:#A6E3A1'
 format = '[$symbol$branch]($style)'
 
@@ -67,8 +55,4 @@ format = '([$all_status$ahead_behind]($style))'
 [cmd_duration]
 min_time = 2000
 style = 'fg:#FAB387'
-{{ if eq .chezmoi.os "android" -}}
-format = '[⏱ $duration ]($style)'
-{{ else -}}
 format = '[󰔛 $duration ]($style)'
-{{ end -}}
