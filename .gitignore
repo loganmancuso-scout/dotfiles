@@ -13,3 +13,15 @@ dot_config/tmux/plugins/
 # single release file is dotfiles-managed
 dot_config/zsh/zsh-autosuggestions/*
 !dot_config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Never track raw SSH key material, even if it's accidentally pulled into
+# the source tree via `chezmoi add`/`chezmoi re-add` from ~/.ssh. This repo
+# only ever manages plain pubkey *listings* (authorized_keys,
+# allowed_signers) — never a standalone private or public key file.
+dot_ssh/**/*.priv
+dot_ssh/**/*.pem
+dot_ssh/**/*.pub
+dot_ssh/**/id_rsa*
+dot_ssh/**/id_ed25519*
+dot_ssh/**/id_ecdsa*
+dot_ssh/**/id_dsa*

@@ -53,5 +53,18 @@ Library/**
 .ssh/1Password/**
 .config/tmux/plugins/**
 
+# Defense in depth: never let chezmoi apply raw SSH private/public key
+# material into ~/.ssh on any device, even if one somehow lands in the
+# source tree despite the .gitignore guard. authorized_keys and
+# allowed_signers are plain pubkey listings, not standalone key files, and
+# are intentionally excluded from this rule.
+.ssh/*.priv
+.ssh/*.pem
+.ssh/*.pub
+.ssh/id_rsa*
+.ssh/id_ed25519*
+.ssh/id_ecdsa*
+.ssh/id_dsa*
+
 # Repo-only docs — not meant to be applied to $HOME
 README.md

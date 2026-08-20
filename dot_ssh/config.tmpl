@@ -9,8 +9,10 @@ Host *
 {{ if eq .chezmoi.os "darwin" -}}
   IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 {{ else if eq .chezmoi.os "android" -}}
-  # No 1Password app on Termux/Android — fall back to a normal ssh-agent
-  # (or plain key files) instead of the 1Password SSH agent socket.
+  # No 1Password app/agent on Termux/Android — sign in directly with the
+  # local private key files under ~/.ssh instead of the 1Password socket.
+  IdentityFile ~/.ssh/personal_ed.priv
+  IdentityFile ~/.ssh/shared_ed.priv
 {{ else -}}
   IdentityAgent ~/.1password/agent.sock
 {{ end -}}
