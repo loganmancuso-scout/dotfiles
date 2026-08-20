@@ -24,7 +24,7 @@ Linux = '󰌽'
 Pop = '󰌽'
 Ubuntu = '󰌽'
 Windows = '󰍹'
-Macos = ''
+Macos = ''
 Android = ''
 
 [shell]
@@ -44,7 +44,7 @@ format = '[$path ]($style)'
 truncation_length = 2
 
 [git_branch]
-symbol = ''
+symbol = ''
 style = 'fg:#A6E3A1'
 format = '[$symbol$branch]($style)'
 
