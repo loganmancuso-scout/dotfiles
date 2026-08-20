@@ -83,6 +83,31 @@ chezmoi init --apply git@github.com:loganmancuso-scout/dotfiles.git
 You'll be prompted once for `profile` (`personal` or `work`) — this is cached
 locally and not asked again.
 
+## SSH key material
+
+`dot_ssh/authorized_keys` is the only file in `dot_ssh/` that's an actual
+public key listing, and it's intentionally **unconditional** — no profile or
+OS gating — so the same two keys (`personal_ed`, scout work key) authorize
+login on every device: work, personal, mac, linux, android.
+
+Everything else key-related (`personal_ed.priv`, `shared_ed.priv`, and any
+future `id_ed25519`/`id_rsa`/`*.pem`/`*.pub` file) is a **local secret that
+chezmoi never manages** — it's placed directly in `~/.ssh` per-machine, never
+added to this repo. Both `.gitignore` and `.chezmoiignore` block those
+patterns under `dot_ssh/**` / `.ssh/*` as a guardrail, so an accidental
+`chezmoi add`/`chezmoi re-add` from `~/.ssh` can't leak private (or even
+just bare public) key material into source control or get applied to a
+different machine.
+
+On `darwin`/`linux`, SSH auth and git commit signing go through the
+1Password SSH agent (`IdentityAgent` / `gpg.ssh.program`). On `android`,
+where there's no 1Password app, both fall back to the local key files
+directly — `IdentityFile` entries in `dot_ssh/config.tmpl` for auth, and
+`gpg.ssh.program = "ssh-keygen"` with `user.signingkey` pointed at
+`~/.ssh/shared_ed.priv` in `dot_gitconfig.tmpl` for commit signing. Neither
+needs an `ssh-agent` running — `ssh-keygen` and `ssh` both read the private
+key file directly.
+
 ## Day-to-day
 
 ```bash
@@ -220,6 +245,33 @@ pkg install chezmoi git zsh tmux neovim fzf starship openssh
 
 `chezmoi.os` resolves to `android` automatically under Termux — no extra
 prompt needed. `pi`, `opencode`, 1Password, VSCodium, ghostty, systemd, and
-Docker are all excluded on this OS value (see "Profiles vs OS" above). SSH
-auth falls back to a plain `ssh-agent`/key files instead of the 1Password
-agent socket, since 1Password isn't installed on the phone.
+Docker are all excluded on this OS value (see "Profiles vs OS" above).
+
+SSH auth and git commit signing use local key files under `~/.ssh` directly
+(`personal_ed.priv` / `shared_ed.priv`, via `IdentityFile` and
+`gpg.ssh.program = "ssh-keygen"`) instead of the 1Password agent socket,
+since 1Password isn't installed on the phone. These are pre-existing local
+secrets, never managed by chezmoi — see "SSH key material" above.
+
+#### Nerd Font glyphs (tofu boxes otherwise)
+
+`starship.toml`, tmux's status bar, and the git-branch/duration icons all
+rely on Nerd Font private-use-area glyphs. Termux's terminal app doesn't
+ship one by default, so without this step those icons render as tofu boxes
+(`□`). Install the same font ghostty uses on desktop (`SauceCodePro NFM`,
+i.e. Sauce Code Pro Nerd Font Mono) as Termux's terminal font:
+
+```bash
+cd /tmp
+curl -sSfL -o SourceCodePro.zip \
+  https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip
+unzip -o -j SourceCodePro.zip "SauceCodeProNerdFontMono-Regular.ttf" -d /tmp
+mkdir -p ~/.termux
+cp /tmp/SauceCodeProNerdFontMono-Regular.ttf ~/.termux/font.ttf
+termux-reload-settings
+```
+
+> If glyphs still show as boxes after `termux-reload-settings`, fully close
+> and reopen the Termux app — font changes sometimes need a fresh terminal
+> view, not just a settings reload. `termux-reload-settings` requires the
+> `termux-api` package (`pkg install termux-api`) if it's not already present.
