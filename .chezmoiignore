@@ -4,9 +4,11 @@
 # NOTE: patterns here match TARGET paths (as applied to $HOME), not chezmoi's
 # source-state naming — so ".aws" not "dot_aws".
 #
-# profile and chezmoi.os are both effectively binary today, so if/else reads
-# as a direct positive statement ("if you're X, here's what doesn't apply to
-# you") instead of the double-negative ne-based form ("exclude unless X").
+# profile is effectively binary today, so its if/else reads as a direct
+# positive statement ("if you're X, here's what doesn't apply to you")
+# instead of the double-negative ne-based form ("exclude unless X").
+# chezmoi.os now has three values (darwin/linux/android) since Android
+# support was added — its block is if/else-if/else for the same reason.
 
 {{ if eq .profile "work" }}
 # excluded on work: personal-only stuff
@@ -21,6 +23,21 @@
 # excluded on macOS: linux-only stuff
 .config/VSCodium/**
 .config/systemd/**
+{{ else if eq .chezmoi.os "android" }}
+# excluded on Android/Termux: macOS-only stuff, plus anything requiring
+# systemd, Docker, VSCodium, ghostty, 1Password, or the pi/opencode agent
+# tooling that isn't present on the phone.
+.colima/**
+Library/**
+.config/systemd/**
+.docker/**
+.config/VSCodium/**
+.vscode-oss/**
+.config/ghostty/**
+.config/1Password/**
+.ssh/1Password/**
+.pi/**
+.config/opencode/**
 {{ else }}
 # excluded elsewhere: macOS-only stuff
 .colima/**

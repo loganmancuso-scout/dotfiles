@@ -17,16 +17,17 @@ Two independent variables drive what gets applied on any given machine:
 | Axis | Values | Governs |
 |---|---|---|
 | `.profile` | `personal` / `work` | Identity & access: MCP servers, model provider defaults, git identity, SSH hosts, 1Password vaults, credentials |
-| `.chezmoi.os` | `darwin` / `linux` (built-in) | OS mechanics: package manager, notification tooling, path conventions |
+| `.chezmoi.os` | `darwin` / `linux` / `android` (built-in) | OS mechanics: package manager, notification tooling, path conventions |
 
 `.profile` is **not** inferred from OS — it's prompted once per machine on
 `chezmoi init` and cached in `~/.config/chezmoi/chezmoi.toml`. This matters because
-OS and profile happen to correlate today (work = macOS, personal = Linux) but
-aren't the same thing — a future personal Mac or a work Linux box should still
+OS and profile happen to correlate today (work = macOS, personal = Linux/Android)
+but aren't the same thing — a future personal Mac or a work Linux box should still
 resolve identity/access correctly.
 
 Templates check `.profile` first, then `.chezmoi.os` where OS mechanics differ
-within a profile. Package inclusion is gated in `.chezmoiignore`:
+within a profile. `android` is chezmoi's built-in value for Termux — no extra
+prompted variable needed. Package inclusion is gated in `.chezmoiignore`:
 
 | Package | Gated by | Reason |
 |---|---|---|
@@ -34,7 +35,8 @@ within a profile. Package inclusion is gated in `.chezmoiignore`:
 | `dot_config/1Password` | `profile == personal` | Home-lab SSH key routing rules |
 | `dot_colima`, `Library/**` (macOS VS Code) | `chezmoi.os == darwin` | Mac-only tooling — applies to any Mac, personal or work |
 | `dot_config/VSCodium`, `dot_vscode-oss` | `chezmoi.os == linux` | Code-OSS/VSCodium, Linux-only |
-| `dot_docker` | *(none — common to both)* | Docker CLI config used on both profiles |
+| `dot_pi`, `dot_config/opencode`, `dot_config/1Password`, `dot_config/VSCodium`, `dot_vscode-oss`, `dot_config/ghostty`, `dot_config/systemd`, `dot_docker` | `chezmoi.os == android` | Termux/phone has no AI agent apps, 1Password app, VSCodium, ghostty (client-side terminal, irrelevant over SSH), systemd, or Docker |
+| `dot_docker` | *(none — common to both, except android)* | Docker CLI config used on both profiles' desktop machines |
 
 Heavily-diverged files (`dot_config/aliases`, `dot_bashrc`, `dot_zshrc`,
 `dot_config/tmux/tmux.conf`) are templated as **whole-file profile branches**
@@ -208,3 +210,16 @@ remaining declared plugins (tmux-sensible, resurrect, continuum, battery, cpu).
 ```bash
 brew install eza bat fzf tmux colima docker awscli
 ```
+
+### Android/Termux (personal) extras
+
+```bash
+pkg update && pkg upgrade
+pkg install chezmoi git zsh tmux neovim fzf starship openssh
+```
+
+`chezmoi.os` resolves to `android` automatically under Termux — no extra
+prompt needed. `pi`, `opencode`, 1Password, VSCodium, ghostty, systemd, and
+Docker are all excluded on this OS value (see "Profiles vs OS" above). SSH
+auth falls back to a plain `ssh-agent`/key files instead of the 1Password
+agent socket, since 1Password isn't installed on the phone.

@@ -8,6 +8,9 @@ Include {{ .chezmoi.homeDir }}/.ssh/1Password/config
 Host *
 {{ if eq .chezmoi.os "darwin" -}}
   IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{ else if eq .chezmoi.os "android" -}}
+  # No 1Password app on Termux/Android — fall back to a normal ssh-agent
+  # (or plain key files) instead of the 1Password SSH agent socket.
 {{ else -}}
   IdentityAgent ~/.1password/agent.sock
 {{ end -}}

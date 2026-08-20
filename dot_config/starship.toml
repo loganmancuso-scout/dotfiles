@@ -25,6 +25,7 @@ Pop = '󰌽'
 Ubuntu = '󰌽'
 Windows = '󰍹'
 Macos = ''
+Android = '🤖'
 
 [shell]
 zsh_indicator = "󰬡"
