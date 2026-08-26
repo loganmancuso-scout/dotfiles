@@ -135,7 +135,12 @@ base protocol:
 - Both default to `amazon-bedrock/us.anthropic.claude-sonnet-5`, with
   `github-copilot` registered as an available fallback provider on both profiles
 - `profile == personal` additionally registers a local Ollama provider
-- `profile == work` additionally enables the Atlassian MCP server
+- `profile == work` additionally installs `pi-mcp-adapter` and configures work
+  MCP servers (`dot_pi/agent/mcp.json.tmpl`): GitHub, Jira/Confluence, AWS
+  (multi-account via `mcp-proxy-for-aws`), Microsoft 365 (Teams/Outlook/OneDrive
+  via `@softeria/ms-365-mcp-server`), and Juniper Mist Cloud. No secrets are
+  stored in the template — auth resolves live via `gh auth token`, 1Password CLI
+  (`op read`), or OAuth cached in the OS keychain.
 
 ### Knowledge Base
 
@@ -197,6 +202,15 @@ do not work — edits still prompt regardless of config. This is a confirmed ups
 - [#13872](https://github.com/anomalyco/opencode/issues/13872) — Permission edit patterns not working
 - [#16331](https://github.com/anomalyco/opencode/issues/16331) — Permissions ignored
 - [#5395](https://github.com/anomalyco/opencode/issues/5395) — Split `external_directory` into read vs write (root cause feature gap)
+
+### Microsoft WorkIQ MCP server — pending tenant admin consent
+
+`@microsoft/workiq` (Microsoft's official MCP server that hands questions off
+to M365 Copilot's own grounding pipeline, rather than raw Graph API calls) is
+staged in `dot_pi/agent/mcp.json.tmpl` as `"disabled": true` on the
+`feature/workiq-mcp` branch. It requires Entra tenant admin consent before it
+can authenticate. Waiting on Scout IT to approve before flipping `disabled` to
+`false` and merging to `main`.
 
 ### `chezmoi apply` copies, doesn't symlink
 
