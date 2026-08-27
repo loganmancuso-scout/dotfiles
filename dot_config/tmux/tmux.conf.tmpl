@@ -87,6 +87,9 @@ bind f run-shell "tmux neww ~/.config/tmux/scripts/tmux-sessionizer.sh"
 # Session switching popup with fzf
 bind s display-popup -E "~/.config/tmux/scripts/session-fzf.sh"
 
+# Toggle pane layout orientation (horizontal <-> vertical) for the current window
+bind o run-shell "~/.config/tmux/scripts/toggle-layout.sh"
+
 # ==========================
 # Copy Mode (Vi-style)
 # ==========================
@@ -290,6 +293,9 @@ bind f run-shell "tmux neww ~/.config/tmux/scripts/tmux-sessionizer.sh"
 
 # Session switching popup with fzf
 bind C-j display-popup -E "~/.config/tmux/scripts/session-fzf.sh"
+
+# Toggle pane layout orientation (horizontal <-> vertical) for the current window
+bind o run-shell "~/.config/tmux/scripts/toggle-layout.sh"
 
 # ==========================
 # Copy Mode (Vi-style)
