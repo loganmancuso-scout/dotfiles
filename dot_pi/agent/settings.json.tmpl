@@ -15,8 +15,22 @@
   "enableSkillCommands": true,
   "extensions": [
     "extensions/notification.ts",
-    "extensions/session-title.ts"
+    "extensions/session-title.ts",
+    "extensions/bash-guard/index.ts",
+    "extensions/ask-user-question.ts",
+    "extensions/web-fetch/index.ts",
+    "extensions/prompt-snippets/index.ts",
+    "extensions/custom-header.ts",
+    "extensions/browser/index.ts",
+    "extensions/subagents/pi-extension/subagents/index.ts",
+    "extensions/observational-memory/src/index.ts"
   ],
+  "observational-memory": {
+    "models": {
+      "observer": { "provider": "amazon-bedrock", "id": "us.anthropic.claude-sonnet-5", "thinking": "low" },
+      "consolidator": { "provider": "amazon-bedrock", "id": "us.anthropic.claude-sonnet-5", "thinking": "medium" }
+    }
+  },
   "packages": [
     "npm:pi-mcp-adapter"
   ],

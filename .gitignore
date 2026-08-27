@@ -14,6 +14,15 @@ dot_config/tmux/plugins/
 dot_config/zsh/zsh-autosuggestions/*
 !dot_config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# Python bytecode caches from running pi skill scripts (analyze-sessions,
+# pdf-reader, etc.) directly out of the materialized/source skills tree
+__pycache__/
+*.pyc
+
+# Extension-local npm deps — installed manually into the materialized
+# ~/.pi/agent/extensions/<name>/ dir per README, never into this source tree
+dot_pi/agent/extensions/**/node_modules/
+
 # Never track raw SSH key material, even if it's accidentally pulled into
 # the source tree via `chezmoi add`/`chezmoi re-add` from ~/.ssh. This repo
 # only ever manages plain pubkey *listings* (authorized_keys,
