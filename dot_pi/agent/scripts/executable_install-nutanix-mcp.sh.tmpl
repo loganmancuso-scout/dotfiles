@@ -1,0 +1,40 @@
+{{- if eq .profile "work" -}}
+#!/usr/bin/env bash
+# Installs the pinned jkmills/nutanix-mcp-server build used for the "nutanix"
+# server in dot_pi/agent/mcp.json.tmpl. Not run automatically by chezmoi —
+# run this manually once after `chezmoi apply`, and again if the pinned
+# commit below is ever bumped.
+#
+# Idempotent: safe to re-run. Re-clones only if missing; always re-checks out
+# the pinned commit and reinstalls into the venv so drift gets corrected.
+set -euo pipefail
+
+REPO_URL="https://github.com/jkmills/nutanix-mcp-server.git"
+PINNED_COMMIT="be8316bd9b24cae9a912ea7ea41c107d2dfcdf44"
+ROOT="$HOME/.pi/mcp/nutanix-mcp-server"
+
+echo "==> Installing nutanix-mcp-server (pinned ${PINNED_COMMIT}) to ${ROOT}"
+
+if [ ! -d "$ROOT/.git" ]; then
+  mkdir -p "$(dirname "$ROOT")"
+  git clone "$REPO_URL" "$ROOT"
+fi
+
+git -C "$ROOT" fetch --quiet origin
+git -C "$ROOT" checkout --quiet --detach "$PINNED_COMMIT"
+
+if [ ! -d "$ROOT/.venv" ]; then
+  python3 -m venv "$ROOT/.venv"
+fi
+
+"$ROOT/.venv/bin/python" -m pip install --quiet --upgrade pip
+"$ROOT/.venv/bin/python" -m pip install --quiet -e "$ROOT"
+
+if [ ! -x "$ROOT/.venv/bin/nutanix-mcp" ]; then
+  echo "ERROR: expected console script $ROOT/.venv/bin/nutanix-mcp not found after install" >&2
+  exit 1
+fi
+
+echo "==> Done. Binary: $ROOT/.venv/bin/nutanix-mcp"
+echo "==> Enable the server with: /mcp enable nutanix && /reload"
+{{- end -}}

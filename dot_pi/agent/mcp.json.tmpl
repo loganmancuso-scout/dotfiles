@@ -22,6 +22,18 @@
       "args": ["-y", "@microsoft/workiq@latest", "mcp"],
       "disabled": false
     },
+    "nutanix": {
+      "command": "{{ .chezmoi.homeDir }}/.pi/mcp/nutanix-mcp-server/.venv/bin/nutanix-mcp",
+      "env": {
+        "NUTANIX_HOST": "prismcentral.usubv.plant.scoutway.io",
+        "NUTANIX_PORT": "9440",
+        "NUTANIX_USERNAME": "!op read op://gns3spupz3nd54tyfwp4gsffpy/efhhagx7ycoxklb4t7hxxw2u7q/username",
+        "NUTANIX_PASSWORD": "!op read op://gns3spupz3nd54tyfwp4gsffpy/efhhagx7ycoxklb4t7hxxw2u7q/password",
+        "NUTANIX_VERIFY_SSL": "false",
+        "NUTANIX_TIMEOUT": "30"
+      },
+      "disabled": false
+    },
     "mist-cloud": {
       "url": "https://mcp.ai.juniper.net/mcp/mist",
       "auth": "bearer",

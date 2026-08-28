@@ -137,10 +137,31 @@ base protocol:
 - `profile == personal` additionally registers a local Ollama provider
 - `profile == work` additionally installs `pi-mcp-adapter` and configures work
   MCP servers (`dot_pi/agent/mcp.json.tmpl`): GitHub, Jira/Confluence, AWS
-  (multi-account via `mcp-proxy-for-aws`), Microsoft 365 (Teams/Outlook/OneDrive
-  via `@softeria/ms-365-mcp-server`), and Juniper Mist Cloud. No secrets are
-  stored in the template — auth resolves live via `gh auth token`, 1Password CLI
-  (`op read`), or OAuth cached in the OS keychain.
+  (multi-account via `mcp-proxy-for-aws`), Microsoft WorkIQ (M365 Copilot
+  Q&A grounding — read-only, no direct Graph write actions), Nutanix
+  (`jkmills/nutanix-mcp-server`, pinned commit, Scout's internal Prism
+  Central — one-time local install via
+  `dot_pi/agent/scripts/executable_install-nutanix-mcp.sh.tmpl`, see below),
+  and Juniper Mist Cloud. No secrets are stored in the template — auth
+  resolves live via `gh auth token`, 1Password CLI (`op read`), or OAuth
+  cached in the OS keychain.
+
+### Nutanix MCP server — one-time local install required
+
+Unlike the other work MCP servers (which run via `npx`/`uvx` and fetch their
+package on first use), `nutanix` (`jkmills/nutanix-mcp-server`) is pinned to a
+specific commit and vendored as a local git clone + Python venv, since it has
+no published package. After `chezmoi apply`, run once:
+
+```bash
+~/.pi/agent/scripts/install-nutanix-mcp.sh
+```
+
+This clones the repo to `~/.pi/mcp/nutanix-mcp-server`, checks out the pinned
+commit, and `pip install -e .`s it into a local venv. Re-run it any time the
+pinned commit in the script is bumped. Credentials resolve live via 1Password
+CLI (`op read op://<Employee vault>/Nutanix Prism Central/...`) — nothing is
+stored in the template.
 
 ### Pi extensions (both profiles)
 
