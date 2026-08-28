@@ -171,7 +171,7 @@ unless noted otherwise, ported to the `@earendil-works/*` package scope):
 
 | Extension | Purpose |
 |---|---|
-| `extensions/bash-guard/` | Confirms/blocks destructive `bash` tool calls (rm -rf, force-push, `terraform destroy`, `kubectl delete`, disk tools, etc.) in the main session; hard-blocks a catastrophic subset for headless subagents (no UI to prompt). `/bash-guard` toggles it off/on for the session (catastrophic ops still hard-blocked even while "off"); `--bash-guard-auto-allow` allows flagged commands when there's no UI (e.g. non-interactive `pi -p`); `--bash-guard-disabled` disables it for the run |
+| `extensions/bash-guard/` | Confirms/blocks destructive `bash` tool calls (rm -rf, force-push, `terraform destroy`, `kubectl delete`, disk tools, etc.) in the main session; hard-blocks a catastrophic subset for headless subagents (no UI to prompt). **Disabled by default** (`--bash-guard-disabled` defaults to `true` in this fork) — catastrophic ops still hard-blocked even while off. `/bash-guard` toggles it on/off for the session; `--bash-guard-auto-allow` allows flagged commands when there's no UI (e.g. non-interactive `pi -p`) if you do re-enable it |
 | `extensions/ask-user-question.ts` | Gives the agent a real UI popup (single/multi-select or free text) to ask clarifying questions instead of guessing |
 | `extensions/web-fetch/` | `web_fetch` tool: URL → clean markdown via Readability + Turndown, handles PDFs, falls back to Jina Reader for JS-rendered pages |
 | `extensions/prompt-snippets/` | Small reusable behavior-rule snippets (`snippets/*.md`) toggled onto the next outgoing message, auto-reset after send |

@@ -453,7 +453,7 @@ export default function (pi: ExtensionAPI) {
 	pi.registerFlag("bash-guard-disabled", {
 		description: "Start the session with bash-guard disabled (autonomous mode; hard-block floor still applies).",
 		type: "boolean",
-		default: false,
+		default: true,
 	});
 
 	// Session-local toggle. Intentionally not persisted across reloads or restarts.

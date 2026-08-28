@@ -61,5 +61,9 @@ Auto-discovered from `~/.pi/agent/extensions/bash-guard/`. Run `/reload` in pi.
 ## Notes
 
 - Scope: `bash` tool calls only (`write`/`edit` and user `!` commands are not intercepted).
+- **Disabled by default in this fork.** `--bash-guard-disabled` defaults to `true`, so main
+  sessions start with prompting off (the subagent hard-block floor is unaffected — it always
+  applies). Use `/bash-guard` to toggle protection on for the current session.
 - `--bash-guard-auto-allow`: main-session flag that allows flagged commands when there is no UI
-  (e.g. running pi non-interactively). Has no effect in subagent sessions.
+  (e.g. running pi non-interactively). Only relevant if bash-guard has been re-enabled. Has no
+  effect in subagent sessions.
