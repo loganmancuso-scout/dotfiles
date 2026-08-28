@@ -171,7 +171,6 @@ unless noted otherwise, ported to the `@earendil-works/*` package scope):
 
 | Extension | Purpose |
 |---|---|
-| `extensions/bash-guard/` | Confirms/blocks destructive `bash` tool calls (rm -rf, force-push, `terraform destroy`, `kubectl delete`, disk tools, etc.) in the main session; hard-blocks a catastrophic subset for headless subagents (no UI to prompt). **Disabled by default** (`--bash-guard-disabled` defaults to `true` in this fork) — catastrophic ops still hard-blocked even while off. `/bash-guard` toggles it on/off for the session; `--bash-guard-auto-allow` allows flagged commands when there's no UI (e.g. non-interactive `pi -p`) if you do re-enable it |
 | `extensions/ask-user-question.ts` | Gives the agent a real UI popup (single/multi-select or free text) to ask clarifying questions instead of guessing |
 | `extensions/web-fetch/` | `web_fetch` tool: URL → clean markdown via Readability + Turndown, handles PDFs, falls back to Jina Reader for JS-rendered pages |
 | `extensions/prompt-snippets/` | Small reusable behavior-rule snippets (`snippets/*.md`) toggled onto the next outgoing message, auto-reset after send |
@@ -180,12 +179,22 @@ unless noted otherwise, ported to the `@earendil-works/*` package scope):
 | `extensions/subagents/` | Async, interactive subagents in tmux panes — spawn a sub-agent, keep working, get steered the result when it finishes. Source: [amosblomqvist/pi-interactive-subagents](https://github.com/amosblomqvist/pi-interactive-subagents) (separate repo). Bundled agents `scout`/`researcher`/`worker` live in `dot_pi/agent/agents/`; their `model:` frontmatter was stripped so they inherit the session default (`amazon-bedrock`) instead of the upstream `openrouter` default we don't have configured, and `researcher`/`worker` had `web_search` dropped from their tool allowlists (we didn't adopt the `web-search` extension — Google API cost). **Requires tmux**: launch pi as `tmux new -A -s pi 'pi'` for subagent panes to work; this is opt-in per-use and doesn't change plain `pi` invocation |
 | `extensions/observational-memory/` | Tiered, subprocess-backed session memory — parallel observer subprocesses distill conversation into a ledger, a deterministic compaction renders it into the compaction block, a consolidator promotes old observations into durable `.memory/<sessionId>/` topic files. Source: [amosblomqvist/pi-observational-memory](https://github.com/amosblomqvist/pi-observational-memory) (separate repo). **Off by default** (`om.enabled` gate) — `/om on` to enable, `/om:status` to inspect. **Spends real money when on**: each observer/consolidator run is its own subprocess `pi` call; remapped `models.observer`/`models.consolidator` in `settings.json.tmpl`'s `observational-memory` namespace from the upstream `openrouter` default to `amazon-bedrock/us.anthropic.claude-sonnet-5` (no `openrouter` provider configured here) |
 
-`bash-guard`, `web-fetch`, and `browser` ship with a `package.json` — after
-`chezmoi apply`, run `npm install` once in each materialized directory
-(`~/.pi/agent/extensions/{bash-guard,web-fetch,browser}`; `browser` also
-needs `npx playwright install chromium` once), then `/reload` in pi.
-`prompt-snippets`, `custom-header.ts`, `subagents/`, and
-`observational-memory/` have no npm dependencies.
+`web-fetch` and `browser` ship with a `package.json` — after
+`chezmoi apply`, install their npm dependencies once (`node_modules` isn't
+tracked in git, so pi fails to load these extensions until this runs):
+
+```sh
+for ext in web-fetch browser; do
+  (cd ~/.pi/agent/extensions/"$ext" && npm install)
+done
+
+# browser also needs the actual Chromium binary (playwright-core alone
+# doesn't ship it):
+npx --prefix ~/.pi/agent/extensions/browser playwright install chromium
+```
+
+Then `/reload` in pi. `prompt-snippets`, `custom-header.ts`, `subagents/`,
+and `observational-memory/` have no npm dependencies.
 
 ### Pi skills (both profiles)
 
