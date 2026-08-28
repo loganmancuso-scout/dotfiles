@@ -17,14 +17,10 @@
         "AWS_MCP_PROXY_PROFILES": "aft-management audit co-sales-and-ops-planning-dev data-app-dev data-app-prd data-dev data-prd data-sbx-001 digital-dev digital-prd digital-sbx-001 digital-stg integration-dev integration-prd integration-sbx-001 log-archive pe-network-dev pe-network-prd plant-network-prd plant-app-prd plant-app-dev ScoutMotorsInc scout-tools-dev scout-tools-prd vehicle-connectivity-sbx-001 vehicle-infotainment-dev wiz-outpost"
       }
     },
-    "ms365": {
-      "command": "npx",
-      "args": ["-y", "@softeria/ms-365-mcp-server", "--org-mode"]
-    },
     "workiq": {
       "command": "npx",
       "args": ["-y", "@microsoft/workiq@latest", "mcp"],
-      "disabled": true
+      "disabled": false
     },
     "mist-cloud": {
       "url": "https://mcp.ai.juniper.net/mcp/mist",
