@@ -33,13 +33,16 @@ Determine `<project-slug>` in this priority order:
 |---|---|
 | Context | `~/Documents/Notes/knowledge-base/projects/<project-slug>/context.md` |
 | README | `<project-root>/README.md` |
+| Runbook | `~/Documents/Notes/knowledge-base/projects/<project-slug>/runbook.md` |
+| Gotchas | `~/Documents/Notes/knowledge-base/projects/<project-slug>/gotchas.md` |
 | Decision | `~/Documents/Notes/knowledge-base/projects/<project-slug>/decisions/YYYY-MM-DD-<slug>.md` |
 | Session | `~/Documents/Notes/knowledge-base/projects/<project-slug>/sessions/YYYY-MM-DD[-topic].md` |
 | Investigation | `~/Documents/Notes/knowledge-base/projects/<project-slug>/investigations/<slug>/notes.md` |
 | Scratch | `~/Documents/Notes/knowledge-base/projects/<project-slug>/sessions/SCRATCH-YYYY-MM-DD-topic.md` |
 | Inbox scratch | `~/Documents/Notes/knowledge-base/inbox/SCRATCH-YYYY-MM-DD-topic.md` |
-| Cross-project gotchas | `~/Documents/Notes/knowledge-base/index/gotchas.md` |
+| Cross-project gotchas index | `~/Documents/Notes/knowledge-base/index/gotchas.md` (pending retirement — see tagging.md) |
 | KB structure reference | `~/Documents/Notes/knowledge-base/docs/structure.md` |
+| Tagging taxonomy reference | `~/Documents/Notes/knowledge-base/docs/tagging.md` |
 
 Templates live in `~/Documents/Notes/templates/` — always read the template before creating a new file.
 
@@ -64,16 +67,17 @@ Use the KB as a scratch workspace when you need to think, plan, or offload conte
 
 | Trigger | Action |
 |---|---|
-| Gotcha discovered | Add to `context.md` → `## Gotchas & Sharp Edges` |
+| Gotcha discovered | Add to `gotchas.md` (create from template if missing); ensure `context.md` → `## Gotchas & Sharp Edges` links to it |
 | Significant decision | Create ADR in `decisions/`, index in `context.md` → `## Past Decisions` |
 | Work completed | Create session in `sessions/`, link in `context.md` → `## Recent Sessions` |
 | Architecture change | Update `context.md` → `## Architecture` |
 | Pattern identified | Update `context.md` → `## Key Patterns & Conventions` |
 | Question unresolved | Add to `context.md` → `## Open Questions` |
-| Operation documented | Update `context.md` → `## Maintenance Runbook` |
+| Operation documented | Update `runbook.md` (create from template if missing); ensure `context.md` → `## Maintenance Runbook` links to it |
 | Deployment steps change | Update `README.md` → `## Deployment Instructions` |
 | Known issue found/resolved | Update `README.md` → `### Known Issues` |
 | Any KB artifact written | Call `kb-link.sh` to add wikilink to current `notepad/Week-NN.md` |
+| Any KB file created | Stamp `type/`, `audience/`, and `topic/` tags per `knowledge-base/docs/tagging.md` |
 
 ---
 

@@ -219,6 +219,14 @@ function code-date() {
 }
 
 # ─────────────────────────────────────────
+# LOCAL
+# ─────────────────────────────────────────
+# User-local binaries not meant to sit inside a project/vault folder that's
+# already on PATH (avoids support files like ncli-dist/ being tab-completable
+# as if they were commands themselves -- see nutanix-ahv context.md gotchas).
+export PATH="$HOME/.local/bin:$PATH"
+
+# ─────────────────────────────────────────
 # PI
 # ─────────────────────────────────────────
 export PATH="$HOME/.pi/agent/bin:$PATH"

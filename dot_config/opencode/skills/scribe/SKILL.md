@@ -73,7 +73,9 @@ When your context window grows or you need space to think, plan, organize, or ex
 
 | Destination | When | Purpose |
 |---|---|---|
-| `~/Documents/Notes/knowledge-base/projects/<project>/context.md` | Always, as hub | Stable reference: architecture, patterns, gotchas, runbook, open questions, links to decisions/sessions |
+| `~/Documents/Notes/knowledge-base/projects/<project>/context.md` | Always, as hub | Stable reference: architecture, patterns, links to sessions/decisions/investigations/runbook/gotchas, open questions |
+| `~/Documents/Notes/knowledge-base/projects/<project>/runbook.md` | When an operational step is documented or changes | How to safely perform common operations (deploy, rollback, debug, secrets) |
+| `~/Documents/Notes/knowledge-base/projects/<project>/gotchas.md` | When a gotcha/sharp edge is discovered | Non-obvious behaviors, failure modes, sharp edges |
 | `~/Documents/Notes/knowledge-base/projects/<project>/sessions/YYYY-MM-DD[-topic].md` | After work sessions | Goal, work done, findings, next steps |
 | `~/Documents/Notes/knowledge-base/projects/<project>/decisions/YYYY-MM-DD-slug.md` | For significant decisions | Status, context, decision, rationale, alternatives, consequences |
 | `~/Documents/Notes/knowledge-base/projects/<project>/investigations/<issue-slug>/notes.md` | For debugging efforts | Problem, hypotheses, attempts, root cause, resolution, prevention |
@@ -113,11 +115,12 @@ Example:
 ### Documentation Mode
 
 1. Resolve `<project-slug>` using the Project Identity Resolution rules above
-2. Read the existing `context.md` if it exists — understand what is already documented before adding3. Determine file type needed: session, ADR, investigation, or context.md update
+2. Read the existing `context.md` if it exists — understand what is already documented before adding
+3. Determine file type needed: session, ADR, investigation, runbook, gotcha, or context.md update
 4. Read the appropriate template from `~/Documents/Notes/templates/`
 5. Load the `docs` skill and apply markdown/style standards when writing
 6. Load the `schema` skill if you need structure reference for the file type
-7. Write the file with correct frontmatter (project, date, tags)
+7. Write the file with correct frontmatter (project, date, tags — including `type/`, `audience/`, and `topic/` tags per `~/Documents/Notes/knowledge-base/docs/tagging.md`)
 8. Update context.md with links in the appropriate section (Recent Sessions, Past Decisions, Active Investigations)
 9. Call `kb-link.sh` to add a wikilink to the current week's notepad
 10. Report exactly what was written: file paths and section names only
@@ -151,14 +154,28 @@ Example:
 **Update sections:**
 - `## Architecture` — components, dependencies
 - `## Key Patterns & Conventions` — non-obvious patterns, naming
-- `## Gotchas & Sharp Edges` — failure modes discovered
+- `## Gotchas & Sharp Edges` — pointer link to `gotchas.md` (full list lives there, not in context.md)
 - `## Past Decisions` — links to `decisions/YYYY-MM-DD-slug.md` files
-- `## Maintenance Runbook` — deploy, rollback, debug commands
+- `## Maintenance Runbook` — pointer link to `runbook.md` (full runbook lives there, not in context.md)
 - `## Open Questions` — unresolved issues checklist
 - `## Recent Sessions` — links to last 5-10 session files (older ones stay in sessions/)
 - `## Active Investigations` — links to ongoing `investigations/<slug>/` directories
 
 Target size: <200 lines. If growing beyond, audit session links or extract detailed sections.
+
+### runbook.md — Maintenance Runbook
+
+**When:** An operational step is documented or changes (deploy, rollback, dependency update, secret rotation, debugging a known failure mode)
+**Naming:** Single evolving file per project, edited in place — not dated entries like sessions/
+**Sections:**
+- `## Maintenance Runbook` — Deploy / Rollback / Update Dependencies / Rotate Secrets / Debug Common Failures
+
+### gotchas.md — Gotchas & Sharp Edges
+
+**When:** A non-obvious behavior, failure mode, or sharp edge is discovered
+**Naming:** Single evolving file per project, edited in place — not dated entries like sessions/
+**Sections:**
+- `## Gotchas & Sharp Edges` — bullet list, one gotcha per entry
 
 ### sessions/YYYY-MM-DD[-topic].md — Work Sessions
 
@@ -209,12 +226,31 @@ All knowledge base files must include frontmatter:
 ---
 project: <name>
 date: YYYY-MM-DD           # for sessions, investigations
-tags: [technology, tags]
-last-updated: YYYY-MM-DD   # for context.md
+tags: [type/<kind>, audience/ai, topic/<subject>, ...]
+last-updated: YYYY-MM-DD   # for context.md, runbook.md, gotchas.md
 ---
 ```
 
-Common tags: `kubernetes`, `helm`, `opentofu`, `openbao`, `mimir`, `wazuh`, `traefik`, `mongodb`, `grafana`, `backup`, `monitoring`, `security`, `networking`, `storage`, `migration`, `debugging`, `deployment`, `configuration`
+Full taxonomy reference: `~/Documents/Notes/knowledge-base/docs/tagging.md`.
+Three tag families to stamp on every KB file you write, at creation time —
+this is automatic, not something to ask the user about:
+
+- **`type/<kind>`** — always stamp exactly one, matching what you're
+  writing: `type/context`, `type/session`, `type/decision`,
+  `type/investigation`, `type/runbook`, `type/gotcha`.
+- **`audience/ai`** — always stamp this on every file under
+  `knowledge-base/**`. (README.md would be `audience/human`, but that
+  template isn't wired for tags yet — see tagging.md Known Gaps.)
+- **`topic/<subject>`** — one or more, judgment-based, replaces the old
+  flat unnamespaced tags. Flat by default (`topic/kubernetes`); nest one
+  level (`topic/nutanix/ndb`) only for a confirmed recurring parent/child
+  relationship across multiple projects — cap at 2 levels.
+
+Common topics: `topic/kubernetes`, `topic/helm`, `topic/opentofu`,
+`topic/openbao`, `topic/mimir`, `topic/wazuh`, `topic/traefik`,
+`topic/mongodb`, `topic/grafana`, `topic/backup`, `topic/monitoring`,
+`topic/security`, `topic/networking`, `topic/storage`, `topic/migration`,
+`topic/debugging`, `topic/deployment`, `topic/configuration`
 
 ## Markdown Style Standards
 
@@ -236,6 +272,16 @@ If `context.md` does not exist yet:
 1. Read `~/Documents/Notes/templates/context.template.md`
 2. Copy to `~/Documents/Notes/knowledge-base/projects/<project-slug>/context.md`
 3. Populate with project-specific info
+
+If `runbook.md` does not exist yet and you're documenting an operational step:
+1. Read `~/Documents/Notes/templates/runbook.template.md`
+2. Copy to `~/Documents/Notes/knowledge-base/projects/<project-slug>/runbook.md`
+3. Populate with the operation; ensure context.md's `## Maintenance Runbook` section links to it
+
+If `gotchas.md` does not exist yet and you're recording a gotcha:
+1. Read `~/Documents/Notes/templates/gotchas.template.md`
+2. Copy to `~/Documents/Notes/knowledge-base/projects/<project-slug>/gotchas.md`
+3. Populate with the gotcha; ensure context.md's `## Gotchas & Sharp Edges` section links to it
 
 If `README.md` does not exist:
 1. Read `~/Documents/Notes/templates/readme.template.md`
