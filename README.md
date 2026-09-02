@@ -135,6 +135,13 @@ base protocol:
 - Both default to `amazon-bedrock/us.anthropic.claude-sonnet-5`, with
   `github-copilot` registered as an available fallback provider on both profiles
 - `profile == personal` additionally registers a local Ollama provider
+- Both profiles configure the **1Password MCP server** (`dot_pi/agent/mcp.json.tmpl`
+  → `1password`): `1password-mcp`, a local stdio server bundled with the
+  1Password desktop app (`Settings > Labs > MCP Server`), scoped to
+  Environments management only (list/create Environments, list/append
+  variable names, local `.env` mounts) — it never returns secret values, and
+  access is approved interactively via the desktop app's biometric prompt.
+  No config or secrets required.
 - `profile == work` additionally installs `pi-mcp-adapter` and configures work
   MCP servers (`dot_pi/agent/mcp.json.tmpl`): GitHub, Jira/Confluence, AWS
   (multi-account via `mcp-proxy-for-aws`), Microsoft WorkIQ (M365 Copilot

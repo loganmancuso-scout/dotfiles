@@ -1,6 +1,8 @@
-{{- if eq .profile "work" -}}
 {
   "mcpServers": {
+    "1password": {
+      "command": "1password-mcp"
+    }{{ if eq .profile "work" }},
     "github": {
       "url": "https://api.githubcopilot.com/mcp/",
       "auth": "bearer",
@@ -41,7 +43,6 @@
       "headers": {
         "X-Mist-Base-URL": "https://api.ac2.mist.com"
       }
-    }
+    }{{ end }}
   }
 }
-{{- end -}}
