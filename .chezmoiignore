@@ -23,6 +23,7 @@
 # excluded on macOS: linux-only stuff
 .config/VSCodium/**
 .config/systemd/**
+.termux/**
 {{ else if eq .chezmoi.os "android" }}
 # excluded on Android/Termux: macOS-only stuff, plus anything requiring
 # systemd, Docker, VSCodium, ghostty, 1Password, or the pi/opencode agent
@@ -39,9 +40,10 @@ Library/**
 .pi/**
 .config/opencode/**
 {{ else }}
-# excluded elsewhere: macOS-only stuff
+# excluded elsewhere: macOS-only stuff, plus Termux-only stuff
 .colima/**
 Library/**
+.termux/**
 {{ end }}
 
 # Vendored/runtime-managed plugin trees — installed by the tools themselves

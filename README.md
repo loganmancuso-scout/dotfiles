@@ -36,7 +36,15 @@ prompted variable needed. Package inclusion is gated in `.chezmoiignore`:
 | `dot_colima`, `Library/**` (macOS VS Code) | `chezmoi.os == darwin` | Mac-only tooling — applies to any Mac, personal or work |
 | `dot_config/VSCodium`, `dot_vscode-oss` | `chezmoi.os == linux` | Code-OSS/VSCodium, Linux-only |
 | `dot_pi`, `dot_config/opencode`, `dot_config/1Password`, `dot_config/VSCodium`, `dot_vscode-oss`, `dot_config/ghostty`, `dot_config/systemd`, `dot_docker` | `chezmoi.os == android` | Termux/phone has no AI agent apps, 1Password app, VSCodium, ghostty (client-side terminal, irrelevant over SSH), systemd, or Docker |
+| `dot_termux` | `chezmoi.os == android` | Termux terminal app settings (Catppuccin Latte color scheme) — meaningless on desktop OSes, excluded everywhere else |
 | `dot_docker` | *(none — common to both, except android)* | Docker CLI config used on both profiles' desktop machines |
+
+Three files switch their Catppuccin **flavor** (not just gating whether
+they apply at all) based on `chezmoi.os`: `dot_termux/colors.properties`,
+`dot_config/starship.toml.tmpl`, and `dot_config/tmux/tmux.conf.tmpl` all
+use Mocha (dark) normally and Latte (light) when `chezmoi.os == "android"`
+— see "Terminal color scheme (light background)" under Android/Termux
+extras below for why all three need to move together.
 
 Heavily-diverged files (`dot_config/aliases`, `dot_bashrc`, `dot_zshrc`,
 `dot_config/tmux/tmux.conf`) are templated as **whole-file profile branches**
@@ -336,23 +344,50 @@ SSH auth and git commit signing use local key files under `~/.ssh` directly
 since 1Password isn't installed on the phone. These are pre-existing local
 secrets, never managed by chezmoi — see "SSH key material" above.
 
+#### Terminal color scheme (light background)
+
+`dot_termux/colors.properties` is chezmoi-managed and applied automatically
+on every `chezmoi apply` — no manual step needed. It switches Termux from
+its default dark scheme to Catppuccin **Latte** (light background, dark
+text, full 16-color ANSI palette) instead of just overriding background/
+foreground in isolation. `dot_config/starship.toml.tmpl` and
+`dot_config/tmux/tmux.conf.tmpl` both switch from Catppuccin **Mocha**
+(dark, used everywhere else) to **Latte** when `chezmoi.os == "android"`
+for the same reason: Mocha's pastel accent colors are tuned to pop against
+a *dark* background and read as washed-out/low-contrast against a *light*
+one — this is most visible on grayscale e-ink screens, but is really a
+light-vs-dark background mismatch, not an e-ink-specific problem. All three
+files need to agree on light vs dark, or you get a light terminal
+background with dark-theme (Mocha) prompt/status-bar colors. `chezmoi
+apply` doesn't reload Termux's running settings by itself — run
+`termux-reload-settings` once after the first apply (or fully close/reopen
+the app) to pick up the color scheme.
+
 #### Nerd Font glyphs (tofu boxes otherwise)
 
 `starship.toml`, tmux's status bar, and the git-branch/duration icons all
 rely on Nerd Font private-use-area glyphs. Termux's terminal app doesn't
 ship one by default, so without this step those icons render as tofu boxes
 (`□`). Install the same font ghostty uses on desktop (`SauceCodePro NFM`,
-i.e. Sauce Code Pro Nerd Font Mono) as Termux's terminal font:
+i.e. Sauce Code Pro Nerd Font Mono) as Termux's terminal font. This is a
+manual, non-chezmoi step (unlike the color scheme above) — chezmoi doesn't
+manage binary font files:
 
 ```bash
-cd /tmp
+mkdir -p ~/tmp && cd ~/tmp
 curl -sSfL -o SourceCodePro.zip \
   https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip
-unzip -o -j SourceCodePro.zip "SauceCodeProNerdFontMono-Regular.ttf" -d /tmp
+unzip -o -j SourceCodePro.zip "SauceCodeProNerdFontMono-Regular.ttf" -d ~/tmp
 mkdir -p ~/.termux
-cp /tmp/SauceCodeProNerdFontMono-Regular.ttf ~/.termux/font.ttf
+cp ~/tmp/SauceCodeProNerdFontMono-Regular.ttf ~/.termux/font.ttf
 termux-reload-settings
+rm -rf ~/tmp
 ```
+
+> **`/tmp` is not writable by the Termux app user** (it belongs to a
+> different Android app UID) — use `~/tmp` for scratch downloads instead,
+> as above, or `curl`/`unzip` will fail with `client returned ERROR on
+> write`.
 
 > If glyphs still show as boxes after `termux-reload-settings`, fully close
 > and reopen the Termux app — font changes sometimes need a fresh terminal
