@@ -36,6 +36,7 @@ prompted variable needed. Package inclusion is gated in `.chezmoiignore`:
 | `dot_colima`, `Library/**` (macOS VS Code) | `chezmoi.os == darwin` | Mac-only tooling — applies to any Mac, personal or work |
 | `dot_config/VSCodium`, `dot_vscode-oss` | `chezmoi.os == linux` | Code-OSS/VSCodium, Linux-only |
 | `dot_pi`, `dot_config/opencode`, `dot_config/1Password`, `dot_config/VSCodium`, `dot_vscode-oss`, `dot_config/ghostty`, `dot_config/systemd`, `dot_docker` | `chezmoi.os == android` | Termux/phone has no AI agent apps, 1Password app, VSCodium, ghostty (client-side terminal, irrelevant over SSH), systemd, or Docker |
+| `dot_termux` | `chezmoi.os == android` | Termux terminal app settings (color scheme) — meaningless on desktop OSes, excluded everywhere else |
 | `dot_docker` | *(none — common to both, except android)* | Docker CLI config used on both profiles' desktop machines |
 
 Heavily-diverged files (`dot_config/aliases`, `dot_bashrc`, `dot_zshrc`,
@@ -336,23 +337,41 @@ SSH auth and git commit signing use local key files under `~/.ssh` directly
 since 1Password isn't installed on the phone. These are pre-existing local
 secrets, never managed by chezmoi — see "SSH key material" above.
 
+#### Terminal color scheme (light background)
+
+`dot_termux/colors.properties` is chezmoi-managed and applied automatically
+on every `chezmoi apply` — no manual step needed. It overrides Termux's
+default dark scheme with a white background / black text, leaving the 16
+ANSI colors at their defaults so colored command output still reads
+correctly. `chezmoi apply` doesn't reload Termux's running settings by
+itself — run `termux-reload-settings` once after the first apply (or
+fully close/reopen the app) to pick it up.
+
 #### Nerd Font glyphs (tofu boxes otherwise)
 
 `starship.toml`, tmux's status bar, and the git-branch/duration icons all
 rely on Nerd Font private-use-area glyphs. Termux's terminal app doesn't
 ship one by default, so without this step those icons render as tofu boxes
 (`□`). Install the same font ghostty uses on desktop (`SauceCodePro NFM`,
-i.e. Sauce Code Pro Nerd Font Mono) as Termux's terminal font:
+i.e. Sauce Code Pro Nerd Font Mono) as Termux's terminal font. This is a
+manual, non-chezmoi step (unlike the color scheme above) — chezmoi doesn't
+manage binary font files:
 
 ```bash
-cd /tmp
+mkdir -p ~/tmp && cd ~/tmp
 curl -sSfL -o SourceCodePro.zip \
   https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip
-unzip -o -j SourceCodePro.zip "SauceCodeProNerdFontMono-Regular.ttf" -d /tmp
+unzip -o -j SourceCodePro.zip "SauceCodeProNerdFontMono-Regular.ttf" -d ~/tmp
 mkdir -p ~/.termux
-cp /tmp/SauceCodeProNerdFontMono-Regular.ttf ~/.termux/font.ttf
+cp ~/tmp/SauceCodeProNerdFontMono-Regular.ttf ~/.termux/font.ttf
 termux-reload-settings
+rm -rf ~/tmp
 ```
+
+> **`/tmp` is not writable by the Termux app user** (it belongs to a
+> different Android app UID) — use `~/tmp` for scratch downloads instead,
+> as above, or `curl`/`unzip` will fail with `client returned ERROR on
+> write`.
 
 > If glyphs still show as boxes after `termux-reload-settings`, fully close
 > and reopen the Termux app — font changes sometimes need a fresh terminal
