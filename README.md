@@ -36,8 +36,15 @@ prompted variable needed. Package inclusion is gated in `.chezmoiignore`:
 | `dot_colima`, `Library/**` (macOS VS Code) | `chezmoi.os == darwin` | Mac-only tooling — applies to any Mac, personal or work |
 | `dot_config/VSCodium`, `dot_vscode-oss` | `chezmoi.os == linux` | Code-OSS/VSCodium, Linux-only |
 | `dot_pi`, `dot_config/opencode`, `dot_config/1Password`, `dot_config/VSCodium`, `dot_vscode-oss`, `dot_config/ghostty`, `dot_config/systemd`, `dot_docker` | `chezmoi.os == android` | Termux/phone has no AI agent apps, 1Password app, VSCodium, ghostty (client-side terminal, irrelevant over SSH), systemd, or Docker |
-| `dot_termux` | `chezmoi.os == android` | Termux terminal app settings (color scheme) — meaningless on desktop OSes, excluded everywhere else |
+| `dot_termux` | `chezmoi.os == android` | Termux terminal app settings (Catppuccin Latte color scheme) — meaningless on desktop OSes, excluded everywhere else |
 | `dot_docker` | *(none — common to both, except android)* | Docker CLI config used on both profiles' desktop machines |
+
+Three files switch their Catppuccin **flavor** (not just gating whether
+they apply at all) based on `chezmoi.os`: `dot_termux/colors.properties`,
+`dot_config/starship.toml.tmpl`, and `dot_config/tmux/tmux.conf.tmpl` all
+use Mocha (dark) normally and Latte (light) when `chezmoi.os == "android"`
+— see "Terminal color scheme (light background)" under Android/Termux
+extras below for why all three need to move together.
 
 Heavily-diverged files (`dot_config/aliases`, `dot_bashrc`, `dot_zshrc`,
 `dot_config/tmux/tmux.conf`) are templated as **whole-file profile branches**
@@ -340,12 +347,21 @@ secrets, never managed by chezmoi — see "SSH key material" above.
 #### Terminal color scheme (light background)
 
 `dot_termux/colors.properties` is chezmoi-managed and applied automatically
-on every `chezmoi apply` — no manual step needed. It overrides Termux's
-default dark scheme with a white background / black text, leaving the 16
-ANSI colors at their defaults so colored command output still reads
-correctly. `chezmoi apply` doesn't reload Termux's running settings by
-itself — run `termux-reload-settings` once after the first apply (or
-fully close/reopen the app) to pick it up.
+on every `chezmoi apply` — no manual step needed. It switches Termux from
+its default dark scheme to Catppuccin **Latte** (light background, dark
+text, full 16-color ANSI palette) instead of just overriding background/
+foreground in isolation. `dot_config/starship.toml.tmpl` and
+`dot_config/tmux/tmux.conf.tmpl` both switch from Catppuccin **Mocha**
+(dark, used everywhere else) to **Latte** when `chezmoi.os == "android"`
+for the same reason: Mocha's pastel accent colors are tuned to pop against
+a *dark* background and read as washed-out/low-contrast against a *light*
+one — this is most visible on grayscale e-ink screens, but is really a
+light-vs-dark background mismatch, not an e-ink-specific problem. All three
+files need to agree on light vs dark, or you get a light terminal
+background with dark-theme (Mocha) prompt/status-bar colors. `chezmoi
+apply` doesn't reload Termux's running settings by itself — run
+`termux-reload-settings` once after the first apply (or fully close/reopen
+the app) to pick up the color scheme.
 
 #### Nerd Font glyphs (tofu boxes otherwise)
 

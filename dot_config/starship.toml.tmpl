@@ -1,0 +1,81 @@
+# Author: Logan Mancuso | LastEdit: 2026-09-08
+#
+# Colors are Catppuccin — Mocha (dark) everywhere except Android/Termux,
+# which uses Latte (light) instead. Mocha's pastel accents are tuned to pop
+# against a dark terminal background; on Android the terminal background is
+# white (see dot_termux/colors.properties), so Latte's darker/higher-contrast
+# equivalents are used there instead. Values below map 1:1 to the official
+# Catppuccin accent names, except $rosepink (a custom shade in Mocha, not an
+# exact official color) which maps to Latte's closest named counterpart,
+# Flamingo.
+{{- $white := "#FFFFFF" -}}
+{{- $lavender := "#B4BEFE" -}}
+{{- $rosepink := "#E8A2AF" -}}
+{{- $green := "#A6E3A1" -}}
+{{- $peach := "#FAB387" -}}
+{{- $red := "#F38BA8" -}}
+{{- if eq .chezmoi.os "android" -}}
+{{- $white = "#4C4F69" -}}
+{{- $lavender = "#7287FD" -}}
+{{- $rosepink = "#DD7878" -}}
+{{- $green = "#40A02B" -}}
+{{- $peach = "#FE640B" -}}
+{{- $red = "#D20F39" -}}
+{{- end }}
+
+format = """
+$os$shell$terraform$directory$git_branch$git_status 
+$cmd_duration$character\
+"""
+
+[line_break]
+disabled = true
+
+[character]
+success_symbol = '[❯](bold {{ $green }})'
+error_symbol = '[❯](bold {{ $red }})'
+format = '$symbol '
+disabled = false
+
+[os]
+format = '[$symbol ]($style)'
+style = 'fg:{{ $white }}'
+disabled = false 
+
+[os.symbols]
+Linux = '󰌽'
+Pop = '󰌽'
+Ubuntu = '󰌽'
+Windows = '󰍹'
+Macos = ''
+Android = ''
+
+[shell]
+zsh_indicator = "󰬡"
+bash_indicator = "󱆃"
+powershell_indicator = "\ue683"
+style = 'fg:{{ $white }}'
+disabled = false
+
+[terraform]
+format = '[$workspace ]($style)'
+style = 'fg:{{ $lavender }}'
+
+[directory]
+style = 'fg:{{ $rosepink }}'
+format = '[$path ]($style)'
+truncation_length = 2
+
+[git_branch]
+symbol = ''
+style = 'fg:{{ $green }}'
+format = '[$symbol$branch]($style)'
+
+[git_status]
+style = 'fg:{{ $green }}'
+format = '([$all_status$ahead_behind]($style))'
+
+[cmd_duration]
+min_time = 2000
+style = 'fg:{{ $peach }}'
+format = '[󰔛 $duration ]($style)'

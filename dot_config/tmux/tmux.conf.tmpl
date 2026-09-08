@@ -153,7 +153,7 @@ set -g @resurrect-capture-pane-contents 'on'
 # ==========================
 
 # Configure Catppuccin plugin
-set -g @catppuccin_flavor "mocha"
+set -g @catppuccin_flavor "{{ if eq .chezmoi.os "android" }}latte{{ else }}mocha{{ end }}"
 set -g @catppuccin_window_status_style "rounded"
 
 # Disable window status hints
@@ -167,8 +167,8 @@ run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 # window-tabs status bar at the bottom instead.
 
 # Override window status format to show window name instead of pane title
-setw -g window-status-format "#{?#{==:#{window_index},1},#[fg=#{@thm_overlay_2}]#{@catppuccin_status_left_separator},}#[fg=#11111b,bg=#{@thm_overlay_2}]#[fg=#181825,reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #W#[fg=#181825,reverse]#[none]"
-setw -g window-status-current-format "#{?#{==:#{window_index},1},#[fg=#{@thm_mauve}]#{@catppuccin_status_left_separator},}#[fg=#11111b,bg=#{@thm_mauve}]#[fg=#181825,reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W#[fg=#181825,reverse]#[none]"
+setw -g window-status-format "#{?#{==:#{window_index},1},#[fg=#{@thm_overlay_2}]#{@catppuccin_status_left_separator},}#[fg=#{@thm_crust},bg=#{@thm_overlay_2}]#[fg=#{@thm_mantle},reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#{@thm_fg},bg=#{@thm_surface_0}] #W#[fg=#{@thm_mantle},reverse]#[none]"
+setw -g window-status-current-format "#{?#{==:#{window_index},1},#[fg=#{@thm_mauve}]#{@catppuccin_status_left_separator},}#[fg=#{@thm_crust},bg=#{@thm_mauve}]#[fg=#{@thm_mantle},reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#{@thm_fg},bg=#{@thm_surface_1}] #W#[fg=#{@thm_mantle},reverse]#[none]"
 setw -g window-status-separator ""
 
 # Bottom status bar: window tabs (default, running-process names) on the
@@ -372,7 +372,7 @@ set -g @resurrect-capture-pane-contents 'on'
 # ==========================
 
 # Configure Catppuccin plugin
-set -g @catppuccin_flavor "mocha"
+set -g @catppuccin_flavor "{{ if eq .chezmoi.os "android" }}latte{{ else }}mocha{{ end }}"
 set -g @catppuccin_window_status_style "rounded"
 
 # Disable window status hints
@@ -386,8 +386,8 @@ run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 # window-tabs status bar at the bottom instead.
 
 # Override window status format to show window name instead of pane title
-setw -g window-status-format "#{?#{==:#{window_index},1},#[fg=#{@thm_overlay_2}]#{@catppuccin_status_left_separator},}#[fg=#11111b,bg=#{@thm_overlay_2}]#[fg=#181825,reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #W#[fg=#181825,reverse]#[none]"
-setw -g window-status-current-format "#{?#{==:#{window_index},1},#[fg=#{@thm_mauve}]#{@catppuccin_status_left_separator},}#[fg=#11111b,bg=#{@thm_mauve}]#[fg=#181825,reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W#[fg=#181825,reverse]#[none]"
+setw -g window-status-format "#{?#{==:#{window_index},1},#[fg=#{@thm_overlay_2}]#{@catppuccin_status_left_separator},}#[fg=#{@thm_crust},bg=#{@thm_overlay_2}]#[fg=#{@thm_mantle},reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#{@thm_fg},bg=#{@thm_surface_0}] #W#[fg=#{@thm_mantle},reverse]#[none]"
+setw -g window-status-current-format "#{?#{==:#{window_index},1},#[fg=#{@thm_mauve}]#{@catppuccin_status_left_separator},}#[fg=#{@thm_crust},bg=#{@thm_mauve}]#[fg=#{@thm_mantle},reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#{@thm_fg},bg=#{@thm_surface_1}] #W#[fg=#{@thm_mantle},reverse]#[none]"
 setw -g window-status-separator ""
 
 # Bottom status bar: window tabs (default, running-process names) on the
