@@ -1,23 +1,25 @@
 ---
 name: debug
 description: >
-  Generic debugging methodology for any system or codebase — Java apps, K8s clusters,
-  Docker Compose, scripts, APIs, or anything else. Focuses on evidence gathering,
-  hypothesis testing, fix validation, and knowledge base updates.
-  Load ops skill to execute infrastructure commands. Load knowledge-base for project context.
+  Generic debugging and investigation methodology for any system or codebase — Java apps,
+  K8s clusters, Docker Compose, scripts, APIs, or anything else. Use when something is broken,
+  when investigating why something happened, tracking down a root cause, or figuring out
+  the cause of an alert, error, or unexpected behavior — even if nothing is confirmed "broken"
+  yet. Focuses on evidence gathering, hypothesis testing, fix validation, and knowledge base
+  updates. Load ops skill to execute infrastructure commands. Load knowledge-base for project context.
 ---
 
-Something is wrong. Work systematically: gather evidence first, form a hypothesis, make one change, validate, repeat.
+Something is wrong, or something needs investigating. Work systematically: gather evidence first, form a hypothesis, make one change, validate, repeat.
+
+## Step 0 — Delegate Before You Investigate Serially
+
+**Before Step 1**, scan the task for how many independent targets or leads it involves — services, pods, hosts, namespaces, environments, or plausible-but-unrelated causes. If there is more than one, dispatch one `investigator` sub-agent per target/lead in this same turn, before running any diagnostic command yourself. Do not loop through targets one at a time in this session. This is a hard rule, not a suggestion — see "Parallel Work & Subagent Delegation" in global `AGENTS.md` for the full mechanics.
+
+If there is exactly one target/lead, proceed directly with Step 1 yourself — dispatching a sub-agent for a single target is unnecessary overhead.
 
 ## Timeout Policy
 
-Keep command timeouts low. Do not wait indefinitely — a hang is evidence, not a reason to keep waiting.
-
-- Read-only commands (`curl`, `nc`, `kubectl get`, `docker logs`): **30s max**
-- Use `curl --connect-timeout 5 --max-time 30` for all HTTP probes
-- Use `nc -zv -w 5 <host> <port>` for TCP connectivity checks
-- Use `kubectl logs --tail=100` rather than streaming indefinitely
-- If a command hangs past 60s: kill it, record what was observed, treat the hang as a symptom
+Same numbers as the `ops` skill's Timeout Policy — read-only diagnostic commands follow that policy too (30s-ish default, treat any hang past it as a symptom, not a reason to keep waiting). Load `ops` for the exact figures rather than duplicating them here.
 
 ---
 
@@ -25,7 +27,7 @@ Keep command timeouts low. Do not wait indefinitely — a hang is evidence, not 
 
 Before touching anything, establish what you're working with.
 
-Load the `knowledge-base` skill and read the project `context.md`. It may already contain relevant gotchas, runbook entries, or past decisions that explain the failure.
+Load the `scribe` skill (`/skill:scribe`) and read the project `context.md`. It may already contain relevant gotchas, runbook entries, or past decisions that explain the failure.
 
 Then identify:
 - **What kind of system is this?** (JVM app, containerized service, K8s workload, Docker Compose stack, shell script, API, CLI tool, etc.)
@@ -111,11 +113,9 @@ git diff HEAD~1
 git stash list
 ```
 
-### Parallel Evidence Gathering
+### Parallel Evidence Gathering (examples)
 
-If the failure could span multiple independent systems, services, pods, namespaces, or hosts — or you have several plausible-but-unrelated leads to check — don't probe them one at a time. Dispatch one `investigator` sub-agent per target/lead in the same turn (see the `subagent` tool and "Parallel Work & Subagent Delegation" in global `AGENTS.md`). Each `investigator` is read-only and returns raw findings without touching state, so this is safe to fan out freely.
-
-Good candidates for parallel investigator dispatch:
+See Step 0 above for the rule. Examples of what "multiple independent targets/leads" looks like in practice:
 - Same symptom reported across multiple pods/replicas — one investigator per pod, compare results
 - A failure that could originate in any of several services (e.g. a gateway timeout that could be network, upstream, or DB) — one investigator per hypothesis, checking its specific evidence
 - Multi-environment comparison (does staging show the same symptom as prod?) — one investigator per environment

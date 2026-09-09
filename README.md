@@ -138,7 +138,7 @@ knowledge base protocol.
 
 - `AGENTS.md` — global session instructions
 - `agents/` — `scout`/`researcher`/`worker` subagents (see Pi extensions below)
-- `prompts/` — `/commit`, `/init-project`, `/summarize-issue`, `/closeout`
+- `prompts/` — `/commit`, `/summarize-issue`, `/closeout`
 - `skills/` — `analyze-sessions`, `caveman`, `debug`, `docs`, `ops`, `pdf-reader`,
   `schema`, `scribe`, `youtube-transcript`
 - Defaults to `amazon-bedrock/us.anthropic.claude-sonnet-5`, `defaultThinkingLevel:
@@ -252,7 +252,7 @@ Two-layer knowledge system, shared path across both profiles:
 - `~/Documents/Notes/knowledge-base/bin/kb-link.sh` — appends a wikilink to the
   current week's notepad after any KB write (ported from the work machine).
 
-Run `/init-project` when starting work on a new project.
+Starting work on a new project auto-bootstraps the knowledge base via the `scribe` skill's documentation-mode flow (see Session Start Procedure in `AGENTS.md`).
 
 ---
 
