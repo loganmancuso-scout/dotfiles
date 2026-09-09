@@ -240,71 +240,16 @@ Host tablet
   User u0_a130
   Port 8022
 
-Host bytevault
-  HostName bytevault.cluster.vpc.home.arpa
-  User root
-
-Host core
-  HostName core.vpc.home.arpa
-  User cluster-user
-
-Host ragnarok
-  HostName ragnarok.cluster.vpc.home.arpa
-  User root
-
-## VPC ##
-
-Host thoth
-  HostName thoth.infra.vpc.home.arpa
-  User instance-user
-
-Host ingress
-  HostName ingress.lb.vpc.home.arpa
-  User instance-user
-
-Host home
-  HostName home.app.vpc.home.arpa
-  User instance-user
-
-Host sentry
-  HostName sentry.infra.vpc.home.arpa
-  User instance-user
-
-Host glacial
-  HostName glacial.infra.vpc.home.arpa
-  User instance-user
-
-Host localai
-  HostName localai.app.vpc.home.arpa
-  User instance-user
-
-Host sandbox
-  HostName 192.168.17.240
-  User instance-user
-
 ## Edge ##
-Host asus
-  # HostName rm-asus-eth.edge.home.arpa #eth
-  HostName rm-asus.edge.home.arpa #wlan
-  User instance-user
 
 Host orangepizero3
   HostName rm-orangepizero3.edge.home.arpa #eth
   # HostName rm-orangepizero3-wlan.edge.home.arpa #wlan
   User instance-user
 
-## DEV-LAN ##
+Host orangepi4pro
+  HostName rm-orangepi4pro.edge.home.arpa #eth
+  # HostName rm-orangepi4pro-wlan.edge.home.arpa #wlan
+  User loganmancuso
 
-Host test-debian
-  HostName 100.50.0.146
-  User testuser
-  # PreferredAuthentications password
-
-Host dev-core
-  HostName 100.50.0.5
-  User cluster-user
-
-Host pve.dev-cluster
-  HostName 100.50.0.10
-  User root
 {{ end -}}
