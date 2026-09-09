@@ -1,6 +1,6 @@
 {
-  "defaultProvider": "{{ if eq .profile "work" }}amazon-bedrock{{ else }}ollama{{ end }}",
-  "defaultModel": "{{ if eq .profile "work" }}us.anthropic.claude-sonnet-5{{ else }}qwen2.5-coder:7b{{ end }}",
+  "defaultProvider": "amazon-bedrock",
+  "defaultModel": "us.anthropic.claude-sonnet-5",
   "defaultThinkingLevel": "medium",
   "compaction": {
     "enabled": true,
@@ -46,16 +46,6 @@
   },
   "enabledModels": [
     "amazon-bedrock/us.anthropic.claude-sonnet-5",
-    "amazon-bedrock/us.anthropic.claude-sonnet-4-6",
-    "amazon-bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0",
-    "amazon-bedrock/us.anthropic.claude-opus-4-8",
-    "amazon-bedrock/us.anthropic.claude-opus-4-7",
-    "amazon-bedrock/us.anthropic.claude-opus-4-6-v1",
-    "amazon-bedrock/us.anthropic.claude-opus-4-5-20251101-v1:0",
-    "amazon-bedrock/us.openai.gpt-6-astra",
-    "amazon-bedrock/us.openai.gpt-5.6-terra",
-    "amazon-bedrock/us.openai.gpt-5.6-sol",
-    "amazon-bedrock/us.openai.gpt-5.6-luna",
     "amazon-bedrock/us.xai.grok-4.6",
     "amazon-bedrock/us.amazon.nova-pro-v1:0",
     "amazon-bedrock/us.amazon.nova-2-lite-v1:0",
