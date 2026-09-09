@@ -183,7 +183,7 @@ For Tofu/Terraform: check `tofu output` and verify the expected resource state.
 
 ## Step 7 — Record Findings
 
-After resolving, invoke `@scribe` with a summary of:
+After resolving, invoke the `scribe` skill (`/skill:scribe`) with a summary of:
 - What the root cause was
 - What the fix was
 - Any non-obvious behavior discovered (goes into `## Gotchas & Sharp Edges`)

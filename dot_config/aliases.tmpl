@@ -231,23 +231,41 @@ export PATH="$HOME/.local/bin:$PATH"
 # ─────────────────────────────────────────
 export PATH="$HOME/.pi/agent/bin:$PATH"
 
-alias p='pi'
+# Export OP_SERVICE_ACCOUNT_TOKEN from a local cache file in /tmp instead
+# of calling `op` on every new shell/tmux pane -- a per-shell `op item get`
+# call was one biometric prompt per pane, which is worse than the original
+# problem for a tmux-heavy workflow. The cache file is refreshed (one
+# biometric prompt) at most once every 12 hours; every shell/pane opened
+# in between just reads the file, no `op` call, no prompt at all. Lives
+# under /tmp (not ~/.cache) so a reboot clears it automatically -- no
+# stale token can outlive the machine session. Scoped to whatever vaults
+# the svc-loganmancuso service account has access to (currently:
+# loganmancuso-automation). Once set, every subprocess this shell spawns
+# (including pi and its own !op read calls in mcp.json.tmpl) inherits it,
+# skipping 1Password's per-process biometric/trust check for the life of
+# the shell. Cache file is chmod 600, user-only, never written to the repo.
+_op_token_cache="/tmp/.1password-cli-token"
+if [[ ! -s "$_op_token_cache" ]] || [[ $(( $(date +%s) - $(stat -f %m "$_op_token_cache" 2>/dev/null || echo 0) )) -gt 43200 ]]; then
+  if op item get "Service Account Auth Token: svc-loganmancuso" --fields label=credential --reveal > "$_op_token_cache" 2>/dev/null; then
+    chmod 600 "$_op_token_cache"
+  fi
+fi
+export OP_SERVICE_ACCOUNT_TOKEN=$(cat "$_op_token_cache" 2>/dev/null)
+unset _op_token_cache
 
 # ─────────────────────────────────────────
-# OPENCODE
+# KB TOOLS
 # ─────────────────────────────────────────
-export PATH="$HOME/.config/opencode/bin:$HOME/Documents/Notes/knowledge-base/bin:$PATH"
+export PATH="$HOME/Documents/Notes/knowledge-base/bin:$PATH"
 
-alias opc='opencode'
-
-function opc-login() {
+function gh-login() {
   export GITHUB_TOKEN=$(op read "op://Employee/Github/token")
 }
 
-# opc-document — end-of-day KB article generator; delegates to vault script
-#   Usage: opc-document [--week]
-#          DRY_RUN=1 opc-document [--week]
-function opc-document() {
+# kb-document — end-of-day KB article generator; delegates to vault script
+#   Usage: kb-document [--week]
+#          DRY_RUN=1 kb-document [--week]
+function kb-document() {
   kb-eod.sh "$@"
 }
 
@@ -575,7 +593,22 @@ export PATH="$HOME/.local/bin:$HOME/.pi/agent/bin:$HOME/.local/share/pi-node/cur
 
 # export QT_QPA_PLATFORM="xcb" # xpentablet needs this for wayland
 
-alias p='pi'
+# Export OP_SERVICE_ACCOUNT_TOKEN from a local cache file in /tmp instead
+# of calling `op` on every new shell/tmux pane -- see the matching work-
+# profile block above for the full rationale (per-process biometric trust
+# checks in 1Password's desktop-app CLI integration, tmux-pane friction
+# from re-fetching per shell). Same mechanism, different service account
+# item ("home.arpa", scoped to this profile's own vault). Lives under
+# /tmp so a reboot clears it automatically. No-ops harmlessly if `op`
+# isn't installed (e.g. Android/Termux).
+_op_token_cache="/tmp/.1password-cli-token"
+if [[ ! -s "$_op_token_cache" ]] || [[ $(( $(date +%s) - $(stat -f %m "$_op_token_cache" 2>/dev/null || stat -c %Y "$_op_token_cache" 2>/dev/null || echo 0) )) -gt 43200 ]]; then
+  if command -v op >/dev/null 2>&1 && op item get "Service Account Auth Token: home.arpa" --fields label=credential --reveal > "$_op_token_cache" 2>/dev/null; then
+    chmod 600 "$_op_token_cache"
+  fi
+fi
+export OP_SERVICE_ACCOUNT_TOKEN=$(cat "$_op_token_cache" 2>/dev/null)
+unset _op_token_cache
 
 # ─────────────────────────────────────────
 # CORE
@@ -736,16 +769,14 @@ function code-date() {
 }
 
 # ─────────────────────────────────────────
-# OPENCODE
+# KB TOOLS
 # ─────────────────────────────────────────
-export PATH="$HOME/.config/opencode/bin:$HOME/Documents/Notes/knowledge-base/bin:$PATH"
+export PATH="$HOME/Documents/Notes/knowledge-base/bin:$PATH"
 
-alias opc='opencode'
-
-# opc-document — end-of-day KB article generator; delegates to vault script
-#   Usage: opc-document [--week]
-#          DRY_RUN=1 opc-document [--week]
-function opc-document() {
+# kb-document — end-of-day KB article generator; delegates to vault script
+#   Usage: kb-document [--week]
+#          DRY_RUN=1 kb-document [--week]
+function kb-document() {
   kb-eod.sh "$@"
 }
 
