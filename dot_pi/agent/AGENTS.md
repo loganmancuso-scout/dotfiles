@@ -179,6 +179,7 @@ The following prompt templates are available in any session (type `/name` to inv
 - `/commit` — review staged changes, generate a conventional commit message, and commit to git
 - `/init-project` — bootstrap the knowledge base for the current project (creates `context.md` and `README.md`)
 - `/summarize-issue` — summarize a GitHub issue
+- `/closeout` — end-of-session wrap-up (KB updates, session log)
 
 ---
 
@@ -193,3 +194,6 @@ The following skills are available:
 - `ops` — infrastructure commands (kubectl, Helm, Docker, OpenTofu); load when executing fixes
 - `docs` — writing standards (code comments, markdown, changelogs); apply to all documentation work
 - `caveman` — ultra-compressed communication mode (~75% token reduction); optional output mode
+- `analyze-sessions` — cost rollups, prompt-pattern mining, and session search/rendering over pi's own session store
+- `pdf-reader` — read and comprehend PDF files (text + vision hybrid extraction)
+- `youtube-transcript` — fetch a YouTube video's title and transcript as JSON

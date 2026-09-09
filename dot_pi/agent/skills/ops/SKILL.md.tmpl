@@ -58,8 +58,8 @@ Once authenticated, you do not need to re-run these for subsequent commands in t
 
 **Examples:**
 ```bash
-tflogin dev-core && kconf dev-core.config
-tflogin core     && kconf core.config
+tflogin dev && kconf dev.config
+tflogin prd && kconf prd.config
 ```
 {{ end }}
 ### Determining the environment
@@ -67,8 +67,11 @@ tflogin core     && kconf core.config
 Use context clues from the working directory, project name, or task description to infer
 the target environment. When ambiguous or not obvious, **ask the user** before proceeding:
 
-> "Which environment are we targeting? (e.g. dev-core, core)"
-
+{{ if eq .profile "work" -}}
+> "Which environment are we targeting? (e.g. core, app-prd, app-uat)"
+{{ else -}}
+> "Which environment are we targeting? (e.g. dev, prd)"
+{{ end }}
 Do not guess the environment and do not run any `kubectl`, `helm`, or `tofu` command until
 auth is confirmed. A wrong environment could mutate production infrastructure.
 
