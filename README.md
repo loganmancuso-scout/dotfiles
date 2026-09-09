@@ -35,7 +35,7 @@ prompted variable needed. Package inclusion is gated in `.chezmoiignore`:
 | `dot_config/1Password` | `profile == personal` | Home-lab SSH key routing rules |
 | `dot_colima`, `Library/**` (macOS VS Code) | `chezmoi.os == darwin` | Mac-only tooling — applies to any Mac, personal or work |
 | `dot_config/VSCodium`, `dot_vscode-oss` | `chezmoi.os == linux` | Code-OSS/VSCodium, Linux-only |
-| `dot_pi`, `dot_config/opencode`, `dot_config/1Password`, `dot_config/VSCodium`, `dot_vscode-oss`, `dot_config/ghostty`, `dot_config/systemd`, `dot_docker` | `chezmoi.os == android` | Termux/phone has no AI agent apps, 1Password app, VSCodium, ghostty (client-side terminal, irrelevant over SSH), systemd, or Docker |
+| `dot_pi`, `dot_config/1Password`, `dot_config/VSCodium`, `dot_vscode-oss`, `dot_config/ghostty`, `dot_config/systemd`, `dot_docker` | `chezmoi.os == android` | Termux/phone has no AI agent apps, 1Password app, VSCodium, ghostty (client-side terminal, irrelevant over SSH), systemd, or Docker |
 | `dot_termux` | `chezmoi.os == android` | Termux terminal app settings (Catppuccin Latte color scheme) — meaningless on desktop OSes, excluded everywhere else |
 | `dot_docker` | *(none — common to both, except android)* | Docker CLI config used on both profiles' desktop machines |
 
@@ -127,22 +127,45 @@ chezmoi cd        # cd into the source dir (this repo)
 
 > **Habit to build:** unlike the old Stow `--adopt` setup, `chezmoi apply` copies
 > files into `$HOME` rather than symlinking — so an app that mutates its own
-> config live (e.g. `pi`/`opencode` settings.json theme/changelog fields) won't
+> config live (e.g. `pi`'s settings.json theme/changelog fields) won't
 > automatically flow back into the repo. Run `chezmoi re-add <path>` periodically
 > to pull that drift back in before it's lost.
 
-## OpenCode / Pi agent config
+## Pi agent config
 
-Both `opencode` and `pi` share the same instruction set, skills, and knowledge
-base protocol:
+`dot_pi/agent/` holds the full Pi configuration: instruction set, skills, and
+knowledge base protocol.
 
 - `AGENTS.md` — global session instructions
-- `agents/scribe.md` — `@scribe` subagent, sole writer of KB files and READMEs
-- `commands/` / `prompts/` — `/commit`, `/init-project`, `/summarize-issue`, `/closeout`
-- `skills/` — `caveman`, `debug`, `docs`, `ops`, `schema`, `scribe`
-- Both default to `amazon-bedrock/us.anthropic.claude-sonnet-5`, with
-  `github-copilot` registered as an available fallback provider on both profiles
+- `agents/` — `scout`/`researcher`/`worker` subagents (see Pi extensions below)
+- `prompts/` — `/commit`, `/init-project`, `/summarize-issue`, `/closeout`
+- `skills/` — `analyze-sessions`, `caveman`, `debug`, `docs`, `ops`, `pdf-reader`,
+  `schema`, `scribe`, `youtube-transcript`
+- Defaults to `amazon-bedrock/us.anthropic.claude-sonnet-5`, `defaultThinkingLevel:
+  "medium"` (same on both profiles), with `github-copilot` registered as an
+  available fallback provider on both profiles
 - `profile == personal` additionally registers a local Ollama provider
+  (`dot_pi/agent/models.json`)
+- `enabledModels` in `settings.json.tmpl` is a curated **favorites** list —
+  it's not a hard filter: models on the list show first in `/model` and
+  Ctrl+P cycling, and pressing **Tab** in `/model` switches to browsing the
+  full catalog. The current list was built by live-testing every Bedrock
+  (99 candidates) and Copilot (10 candidates) model with a real API call to
+  confirm which respond — several Bedrock IDs fail outright (unprefixed
+  `anthropic.*`/`openai.*` IDs lack on-demand throughput; `us.anthropic.claude-haiku-4-5`,
+  `-opus-4-1`, and `-opus-5` need an AWS Marketplace subscription this
+  account doesn't have; Meta Llama models are region/EULA-blocked).
+- `packages: ["npm:pi-mcp-adapter", "npm:pi-sessions"]` — `pi-mcp-adapter`
+  bridges MCP servers (see below); `pi-sessions` provides the auto-title,
+  global session search/ask (`session_search`/`session_ask`), the `Alt+O`
+  session picker, and the `/handoff` subagent board. Requires Node 24+ for
+  `node:sqlite` FTS5 (tested working on Node 26 despite the package's
+  stated `<26` ceiling).
+- Global session **resume** (any session, any originating directory, from
+  anywhere) is `pi -r` / `pi --resume` — this is Pi's own built-in picker
+  (Tab toggles current-directory-only vs. all-sessions scope); it already
+  auto-switches to the session's original working directory, so no wrapper
+  script is needed.
 - Both profiles configure the **1Password MCP server** (`dot_pi/agent/mcp.json.tmpl`
   → `1password`): `1password-mcp`, a local stdio server bundled with the
   1Password desktop app (`Settings > Labs > MCP Server`), scoped to
@@ -268,26 +291,16 @@ systemctl --user start backup.service          # trigger a manual run
 
 ## Known Issues
 
-### OpenCode — `edit` permission path rules not evaluated
+### Microsoft WorkIQ MCP server
 
-File edit permissions configured via `permission.edit` path patterns (e.g. `~/SourceControl/**": "allow"`)
-do not work — edits still prompt regardless of config. This is a confirmed upstream OpenCode bug.
-
-**Workaround:** When prompted, approve with "always" to whitelist the pattern for the rest of the session.
-
-**Upstream issues:**
-- [#13872](https://github.com/anomalyco/opencode/issues/13872) — Permission edit patterns not working
-- [#16331](https://github.com/anomalyco/opencode/issues/16331) — Permissions ignored
-- [#5395](https://github.com/anomalyco/opencode/issues/5395) — Split `external_directory` into read vs write (root cause feature gap)
-
-### Microsoft WorkIQ MCP server — pending tenant admin consent
-
-`@microsoft/workiq` (Microsoft's official MCP server that hands questions off
-to M365 Copilot's own grounding pipeline, rather than raw Graph API calls) is
-staged in `dot_pi/agent/mcp.json.tmpl` as `"disabled": true` on the
-`feature/workiq-mcp` branch. It requires Entra tenant admin consent before it
-can authenticate. Waiting on Scout IT to approve before flipping `disabled` to
-`false` and merging to `main`.
+`@microsoft/workiq` connects successfully and registers its tools (confirmed
+live, both via manual testing and normal use) — the tenant-admin-consent
+blocker noted in earlier revisions of this file has been resolved. Startup
+latency is inconsistent (observed 5-20+ seconds, occasionally timing out)
+since it authenticates over the network on every Pi launch; the package is
+pinned (`@microsoft/workiq@1.0.0` instead of `@latest`) to at least remove
+the npm-registry-resolution cost from that variance. See
+`auth-improvements.md` for the full startup-latency investigation.
 
 ### `chezmoi apply` copies, doesn't symlink
 
@@ -335,7 +348,7 @@ pkg install chezmoi git zsh tmux neovim fzf starship openssh
 ```
 
 `chezmoi.os` resolves to `android` automatically under Termux — no extra
-prompt needed. `pi`, `opencode`, 1Password, VSCodium, ghostty, systemd, and
+prompt needed. `pi`, 1Password, VSCodium, ghostty, systemd, and
 Docker are all excluded on this OS value (see "Profiles vs OS" above).
 
 SSH auth and git commit signing use local key files under `~/.ssh` directly

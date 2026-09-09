@@ -234,20 +234,18 @@ export PATH="$HOME/.pi/agent/bin:$PATH"
 alias p='pi'
 
 # ─────────────────────────────────────────
-# OPENCODE
+# KB TOOLS
 # ─────────────────────────────────────────
-export PATH="$HOME/.config/opencode/bin:$HOME/Documents/Notes/knowledge-base/bin:$PATH"
+export PATH="$HOME/Documents/Notes/knowledge-base/bin:$PATH"
 
-alias opc='opencode'
-
-function opc-login() {
+function gh-login() {
   export GITHUB_TOKEN=$(op read "op://Employee/Github/token")
 }
 
-# opc-document — end-of-day KB article generator; delegates to vault script
-#   Usage: opc-document [--week]
-#          DRY_RUN=1 opc-document [--week]
-function opc-document() {
+# kb-document — end-of-day KB article generator; delegates to vault script
+#   Usage: kb-document [--week]
+#          DRY_RUN=1 kb-document [--week]
+function kb-document() {
   kb-eod.sh "$@"
 }
 
@@ -736,16 +734,14 @@ function code-date() {
 }
 
 # ─────────────────────────────────────────
-# OPENCODE
+# KB TOOLS
 # ─────────────────────────────────────────
-export PATH="$HOME/.config/opencode/bin:$HOME/Documents/Notes/knowledge-base/bin:$PATH"
+export PATH="$HOME/Documents/Notes/knowledge-base/bin:$PATH"
 
-alias opc='opencode'
-
-# opc-document — end-of-day KB article generator; delegates to vault script
-#   Usage: opc-document [--week]
-#          DRY_RUN=1 opc-document [--week]
-function opc-document() {
+# kb-document — end-of-day KB article generator; delegates to vault script
+#   Usage: kb-document [--week]
+#          DRY_RUN=1 kb-document [--week]
+function kb-document() {
   kb-eod.sh "$@"
 }
 
