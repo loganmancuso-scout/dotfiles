@@ -1,0 +1,17 @@
+# ~/.config/ghostty/config.toml
+#
+# font-size is set per machine profile (work/personal) via chezmoi's
+# .profile data variable. See .chezmoi.toml.tmpl.
+
+font-family = "SauceCodePro NFM"
+{{ if eq .profile "work" -}}
+font-size = 20
+{{ else -}}
+font-size = 16
+{{ end }}
+theme = "Catppuccin Mocha"
+
+background-opacity = 0.95
+
+window-height = 40
+window-width = 90

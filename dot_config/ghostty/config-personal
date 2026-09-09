@@ -1,6 +1,0 @@
-# Personal profile — default font size.
-# Launch with: ghostty --config-file=~/.config/ghostty/config-personal
-
-config-file = config
-
-font-size = 16
