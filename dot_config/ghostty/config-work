@@ -1,0 +1,6 @@
+# Work profile — larger font size.
+# Launch with: ghostty --config-file=~/.config/ghostty/config-work
+
+config-file = config
+
+font-size = 20

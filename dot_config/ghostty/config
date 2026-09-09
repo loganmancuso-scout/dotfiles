@@ -1,7 +1,10 @@
 # ~/.config/ghostty/config.toml
+#
+# Base/shared settings. Font size is set per-profile — see config-work and
+# config-personal in this same directory. Launch a profile with:
+#   ghostty --config-file=<path-to-profile>
 
 font-family = "SauceCodePro NFM"
-font-size = 18
 
 theme = "Catppuccin Mocha"
 
