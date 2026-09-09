@@ -1,7 +1,7 @@
 {
   "defaultProvider": "amazon-bedrock",
   "defaultModel": "us.anthropic.claude-sonnet-5",
-  "defaultThinkingLevel": {{ if eq .profile "work" }}"medium"{{ else }}"high"{{ end }},
+  "defaultThinkingLevel": "medium",
   "compaction": {
     "enabled": true,
     "reserveTokens": 10000,
@@ -15,7 +15,6 @@
   "enableSkillCommands": true,
   "extensions": [
     "extensions/notification.ts",
-    "extensions/session-title.ts",
     "extensions/ask-user-question.ts",
     "extensions/web-fetch/index.ts",
     "extensions/prompt-snippets/index.ts",
@@ -31,7 +30,46 @@
     }
   },
   "packages": [
-    "npm:pi-mcp-adapter"
+    "npm:pi-mcp-adapter",
+    "npm:pi-sessions"
+  ],
+  "sessions": {
+    "autoTitle": {
+      "model": "amazon-bedrock/us.amazon.nova-pro-v1:0",
+      "thinkingLevel": "off"
+    }
+  },
+  "enabledModels": [
+    "amazon-bedrock/us.anthropic.claude-sonnet-5",
+    "amazon-bedrock/us.anthropic.claude-sonnet-4-6",
+    "amazon-bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    "amazon-bedrock/us.anthropic.claude-opus-4-8",
+    "amazon-bedrock/us.anthropic.claude-opus-4-7",
+    "amazon-bedrock/us.anthropic.claude-opus-4-6-v1",
+    "amazon-bedrock/us.anthropic.claude-opus-4-5-20251101-v1:0",
+    "amazon-bedrock/us.openai.gpt-6-astra",
+    "amazon-bedrock/us.openai.gpt-5.6-terra",
+    "amazon-bedrock/us.openai.gpt-5.6-sol",
+    "amazon-bedrock/us.openai.gpt-5.6-luna",
+    "amazon-bedrock/us.xai.grok-4.6",
+    "amazon-bedrock/us.amazon.nova-pro-v1:0",
+    "amazon-bedrock/us.amazon.nova-2-lite-v1:0",
+    "amazon-bedrock/us.amazon.nova-micro-v1:0",
+    "amazon-bedrock/deepseek.v3.2",
+    "amazon-bedrock/qwen.qwen3-coder-30b-a3b-v1:0",
+    "amazon-bedrock/moonshotai.kimi-k2.5",
+    "amazon-bedrock/zai.glm-4.7-flash",
+    "amazon-bedrock/openai.gpt-oss-20b-1:0",
+    "github-copilot/claude-sonnet-5",
+    "github-copilot/claude-opus-5",
+    "github-copilot/claude-opus-4.8",
+    "github-copilot/gpt-5.6-luna",
+    "github-copilot/gpt-5.6-sol",
+    "github-copilot/gpt-5.6-terra",
+    "github-copilot/gpt-5.3-codex",
+    "github-copilot/gpt-5.5",
+    "github-copilot/mai-code-1-flash-picker",
+    "ollama/*"
   ],
   "theme": "dark"
 }

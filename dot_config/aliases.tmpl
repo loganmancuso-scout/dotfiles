@@ -571,9 +571,11 @@ set -o vi
 export TERM=xterm-256color
 export EDITOR=nvim
 export _ZO_DOCTOR=0
-export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.local/share/pi-node/current/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.pi/agent/bin:$HOME/.local/share/pi-node/current/bin:$PATH"
 
 # export QT_QPA_PLATFORM="xcb" # xpentablet needs this for wayland
+
+alias p='pi'
 
 # ─────────────────────────────────────────
 # CORE
