@@ -105,7 +105,7 @@ kubectl config current-context
 
 ---
 
-## Timeout Policy
+## Timeout Policy — canonical (debug skill defers to this)
 
 Keep command timeouts low. Default to **60s** for read-only commands, **120s** for mutating operations. Do not wait indefinitely for a command — a hang is itself a signal worth surfacing.
 
@@ -122,7 +122,7 @@ If a command exceeds its timeout: stop, report what was observed up to that poin
 
 ## Parallelizing Multi-Target Operations
 
-When a read-only check needs to run across many independent targets — namespaces, clusters, Helm releases, pods, hosts — don't loop through them one at a time in this session. Dispatch one `investigator` sub-agent per target in the same turn (see "Parallel Work & Subagent Delegation" in global `AGENTS.md`) and let each one report back independently.
+Same rule as `debug` skill's Step 0: more than one independent target (namespace, cluster, Helm release, pod, host) → dispatch one `investigator` sub-agent per target in the same turn instead of looping (see "Parallel Work & Subagent Delegation" in global `AGENTS.md` for the canonical explanation).
 
 Good fan-out candidates (all read-only):
 - `kubectl get/describe/top` across several namespaces or clusters

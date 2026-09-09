@@ -44,7 +44,7 @@ Covers:
 
 2. Check for `~/Documents/Notes/knowledge-base/projects/<project-name>/context.md`.
    - If it exists: read it silently before doing any work. Do not summarize it back to the user unless asked.
-   - If it does not exist: note that this project has no context file yet. Offer to run `/init-project` to bootstrap it, or create it automatically when you first learn something worth keeping.
+   - If it does not exist: note that this project has no context file yet. Load the `scribe` skill (documentation mode) to bootstrap it, or create it automatically when you first learn something worth keeping.
 
 3. Proceed with the user's request.
 
@@ -206,7 +206,6 @@ If you believe you need to take an action the user has **explicitly prohibited o
 The following prompt templates are available in any session (type `/name` to invoke):
 
 - `/commit` — review staged changes, generate a conventional commit message, and commit to git
-- `/init-project` — bootstrap the knowledge base for the current project (creates `context.md` and `README.md`)
 - `/summarize-issue` — summarize a GitHub issue
 - `/closeout` — end-of-session wrap-up (KB updates, session log)
 
