@@ -1,6 +1,6 @@
 {
-  "defaultProvider": "amazon-bedrock",
-  "defaultModel": "us.anthropic.claude-sonnet-5",
+  "defaultProvider": "{{ if eq .profile "work" }}amazon-bedrock{{ else }}ollama{{ end }}",
+  "defaultModel": "{{ if eq .profile "work" }}us.anthropic.claude-sonnet-5{{ else }}qwen2.5-coder:7b{{ end }}",
   "defaultThinkingLevel": "medium",
   "compaction": {
     "enabled": true,
@@ -25,8 +25,13 @@
   ],
   "observational-memory": {
     "models": {
+{{- if eq .profile "work" }}
       "observer": { "provider": "amazon-bedrock", "id": "us.anthropic.claude-sonnet-5", "thinking": "low" },
       "consolidator": { "provider": "amazon-bedrock", "id": "us.anthropic.claude-sonnet-5", "thinking": "medium" }
+{{- else }}
+      "observer": { "provider": "ollama", "id": "qwen2.5-coder:7b", "thinking": "low" },
+      "consolidator": { "provider": "ollama", "id": "qwen2.5-coder:7b", "thinking": "medium" }
+{{- end }}
     }
   },
   "packages": [
@@ -35,7 +40,7 @@
   ],
   "sessions": {
     "autoTitle": {
-      "model": "amazon-bedrock/us.amazon.nova-pro-v1:0",
+      "model": "{{ if eq .profile "work" }}amazon-bedrock/us.amazon.nova-pro-v1:0{{ else }}ollama/qwen2.5-coder:7b{{ end }}",
       "thinkingLevel": "off"
     }
   },

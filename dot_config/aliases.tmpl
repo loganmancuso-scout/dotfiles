@@ -602,7 +602,7 @@ export PATH="$HOME/.local/bin:$HOME/.pi/agent/bin:$HOME/.local/share/pi-node/cur
 # /tmp so a reboot clears it automatically. No-ops harmlessly if `op`
 # isn't installed (e.g. Android/Termux).
 _op_token_cache="/tmp/.1password-cli-token"
-if [[ ! -s "$_op_token_cache" ]] || [[ $(( $(date +%s) - $(stat -f %m "$_op_token_cache" 2>/dev/null || stat -c %Y "$_op_token_cache" 2>/dev/null || echo 0) )) -gt 43200 ]]; then
+if [[ ! -s "$_op_token_cache" ]] || [[ $(( $(date +%s) - $(stat -c %Y "$_op_token_cache" 2>/dev/null || echo 0) )) -gt 43200 ]]; then
   if command -v op >/dev/null 2>&1 && op item get "Service Account Auth Token: home.arpa" --fields label=credential --reveal > "$_op_token_cache" 2>/dev/null; then
     chmod 600 "$_op_token_cache"
   fi
