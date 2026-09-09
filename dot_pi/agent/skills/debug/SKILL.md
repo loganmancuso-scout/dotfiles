@@ -111,6 +111,21 @@ git diff HEAD~1
 git stash list
 ```
 
+### Parallel Evidence Gathering
+
+If the failure could span multiple independent systems, services, pods, namespaces, or hosts — or you have several plausible-but-unrelated leads to check — don't probe them one at a time. Dispatch one `investigator` sub-agent per target/lead in the same turn (see the `subagent` tool and "Parallel Work & Subagent Delegation" in global `AGENTS.md`). Each `investigator` is read-only and returns raw findings without touching state, so this is safe to fan out freely.
+
+Good candidates for parallel investigator dispatch:
+- Same symptom reported across multiple pods/replicas — one investigator per pod, compare results
+- A failure that could originate in any of several services (e.g. a gateway timeout that could be network, upstream, or DB) — one investigator per hypothesis, checking its specific evidence
+- Multi-environment comparison (does staging show the same symptom as prod?) — one investigator per environment
+
+Keep this serial instead:
+- Steps that depend on each other's output (e.g. "check the config value" before "test with that value")
+- Anything requiring a mutating command — those are Step 5, not evidence gathering, and stay serial/user-directed
+
+Collect all investigator results before moving to Step 3 — more evidence up front means a sharper hypothesis.
+
 ---
 
 ## Step 3 — Form a Hypothesis

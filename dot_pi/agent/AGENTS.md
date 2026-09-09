@@ -121,6 +121,35 @@ If new information during execution changes the plan materially, stop and re-pro
 
 ---
 
+## Parallel Work & Subagent Delegation
+
+Pi has access to `subagent`, `subagent_message`, and `subagents_list` — tools that spawn autonomous sub-agents in their own tmux panes. Spawning is fire-and-forget: the call returns immediately, the sub-agent works independently, and its result is steered back as a notification when it finishes. **Default to using this when the work supports it** — don't wait to be asked.
+
+### When to parallelize
+
+Look for this pattern proactively, not just when told to "go faster":
+
+- **Independent investigations** — exploring an unfamiliar module AND looking up a library's API are unrelated; dispatch both at once instead of serially.
+- **Fan-out over a list of targets** — checking logs/state across multiple services, namespaces, clusters, pods, or repos. One `investigator` or `scout` per target, dispatched in the same turn.
+- **Read-heavy recon before an edit** — mapping a codebase before touching it protects your own context window; delegate the mapping.
+- **Bounded implementation slices** — genuinely independent pieces of a larger task (different files/modules, no shared state) can go to separate `worker` sub-agents.
+
+### When NOT to parallelize
+
+- Steps with a dependency chain (step 2 needs step 1's output) — serialize those.
+- Any mutating operation against shared state (infra changes, git history, migrations) — these stay serial and user-directed. Never run parallel mutating actions against the same target.
+- Trivial work cheaper to just do directly than to spawn and wait for.
+
+### How to do it
+
+1. Pick the right agent for the job: `scout` (read-only codebase recon), `researcher` (web research), `worker` (implements code changes, may itself delegate to scout/researcher), `investigator` (read-only shell diagnostics — kubectl/docker/curl/logs — for ops and debugging).
+2. Emit multiple `subagent` calls **in the same turn** for independent work — they run concurrently. Never poll or sleep waiting on them; the harness delivers results as steer messages when ready.
+3. Give each spawned sub-agent explicit, disjoint scope — what it may read/touch, and whether it may write files or must stay read-only.
+4. Don't fabricate or assume a sub-agent's result before it reports back. If you need to keep working while waiting, work on something else independent; otherwise end your turn and let the result wake you.
+5. The `debug` and `ops` skills have specific guidance on when to fan out sub-agents for evidence gathering — load them for infra/diagnostic work.
+
+---
+
 ## Git Workflow & Collaboration Protocol
 
 These rules are **non-negotiable defaults** in every session. They apply to all git operations across all projects.
@@ -197,3 +226,14 @@ The following skills are available:
 - `analyze-sessions` — cost rollups, prompt-pattern mining, and session search/rendering over pi's own session store
 - `pdf-reader` — read and comprehend PDF files (text + vision hybrid extraction)
 - `youtube-transcript` — fetch a YouTube video's title and transcript as JSON
+
+---
+
+## Subagents
+
+Available agents for delegation (via `subagent`, see "Parallel Work & Subagent Delegation" above):
+
+- `scout` — read-only codebase recon (read, grep, find, ls)
+- `researcher` — web research, synthesized into a sourced brief
+- `worker` — implements code changes; may itself delegate to scout/researcher
+- `investigator` — read-only shell diagnostics (kubectl, docker, curl, logs) for ops/debug fan-out

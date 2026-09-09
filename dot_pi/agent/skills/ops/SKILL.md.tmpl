@@ -120,6 +120,22 @@ If a command exceeds its timeout: stop, report what was observed up to that poin
 
 ---
 
+## Parallelizing Multi-Target Operations
+
+When a read-only check needs to run across many independent targets — namespaces, clusters, Helm releases, pods, hosts — don't loop through them one at a time in this session. Dispatch one `investigator` sub-agent per target in the same turn (see "Parallel Work & Subagent Delegation" in global `AGENTS.md`) and let each one report back independently.
+
+Good fan-out candidates (all read-only):
+- `kubectl get/describe/top` across several namespaces or clusters
+- `helm list/status/get values` across several releases
+- Log tailing/grepping across several pods or replicas
+- Health-check `curl` probes across several endpoints/environments
+
+Each `investigator` needs authentication context in its task prompt — include the exact `kconf`/`tflogin` commands for its target environment, since it starts with a clean session and must authenticate itself before running anything.
+
+**Never parallelize mutating operations.** `apply`, `upgrade`, `install`, `rollback`, `scale`, `rollout restart`, `destroy` — anything that changes state — stays serial, in this session, one target at a time, with explicit user direction. Concurrent mutations against shared infrastructure are how you get race conditions and half-applied state. If you need the same mutation across multiple targets, do them sequentially and confirm each one before moving to the next.
+
+---
+
 ## Kubernetes
 
 ### Cluster context
