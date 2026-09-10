@@ -76,7 +76,6 @@ Use the KB as a scratch workspace when you need to think, plan, or offload conte
 | Operation documented | Update `runbook.md` (create from template if missing); ensure `context.md` → `## Maintenance Runbook` links to it |
 | Deployment steps change | Update `README.md` → `## Deployment Instructions` |
 | Known issue found/resolved | Update `README.md` → `### Known Issues` |
-| Any KB artifact written | Call `kb-link.sh` to add wikilink to current `notepad/Week-NN.md` |
 | Any KB file created | Stamp `type/`, `audience/`, and `topic/` tags per `knowledge-base/docs/tagging.md` |
 
 ---

@@ -249,8 +249,6 @@ Two-layer knowledge system, shared path across both profiles:
 - **`<project-root>/README.md`** — human-facing. Deployment steps, known issues, tasks.
 - **`~/Documents/Notes/knowledge-base/projects/<project-name>/context.md`** —
   AI-facing institutional memory. Read silently at session start, updated via `@scribe`.
-- `~/Documents/Notes/knowledge-base/bin/kb-link.sh` — appends a wikilink to the
-  current week's notepad after any KB write (ported from the work machine).
 
 Starting work on a new project auto-bootstraps the knowledge base via the `scribe` skill's documentation-mode flow (see Session Start Procedure in `AGENTS.md`).
 

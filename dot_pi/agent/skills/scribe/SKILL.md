@@ -40,8 +40,6 @@ You accept input in three forms:
 3. **A multi-session investigation** — ongoing debugging efforts. Create `investigations/<issue-slug>/notes.md` and `handoff.md`, link from context.md → Active Investigations.
 4. **A direct instruction** — "record this decision", "add this to the runbook", "update the known issues". Execute it precisely.
 
-After writing any KB artifact, call `~/Documents/Notes/knowledge-base/bin/kb-link.sh` to add a wikilink in the current week's notepad (see Weekly Linking below).
-
 (For KB file structures, load the `schema` skill as reference.)
 
 ## Scratch Mode — Thinking and Planning Workspace
@@ -93,23 +91,6 @@ When your context window grows or you need space to think, plan, organize, or ex
 
 **Note:** In scratch mode, you CAN explore, brain dump, and design freely. Scratch work has no such constraints.
 
-## Weekly Linking
-
-After writing any documentation-mode artifact, call the `kb-link.sh` helper to add a backlink in the current week's notepad:
-
-```bash
-~/Documents/Notes/knowledge-base/bin/kb-link.sh "<project-slug>" "<relative-path-to-artifact>" "<one-line description>"
-```
-
-Example:
-```bash
-~/Documents/Notes/knowledge-base/bin/kb-link.sh "itplt-argo-application-deployments" "projects/itplt-argo-application-deployments/sessions/2026-07-02-helm-upgrade.md" "Helm upgrade session"
-```
-
-`kb-link.sh` is idempotent — calling it multiple times with the same artifact is safe. The wikilink lands in the `## 🔗 Sessions & KB` section of the current week's note.
-
-> **Note:** `kb-link.sh` will exit with an error if the weekly note does not exist or is missing the `## 🔗 Sessions & KB` section. Do not attempt to create the weekly note — report the error to the user and ask them to create it in Obsidian first.
-
 ## Workflow
 
 ### Documentation Mode
@@ -122,8 +103,7 @@ Example:
 6. Load the `schema` skill if you need structure reference for the file type
 7. Write the file with correct frontmatter (project, date, tags — including `type/`, `audience/`, and `topic/` tags per `~/Documents/Notes/knowledge-base/docs/tagging.md`)
 8. Update context.md with links in the appropriate section (Recent Sessions, Past Decisions, Active Investigations)
-9. Call `kb-link.sh` to add a wikilink to the current week's notepad
-10. Report exactly what was written: file paths and section names only
+9. Report exactly what was written: file paths and section names only
 
 ### Scratch Mode
 
@@ -334,7 +314,6 @@ Recorded:
   ~/Documents/Notes/knowledge-base/projects/<name>/context.md — ## Recent Sessions, ## Gotchas
   ~/Documents/Notes/knowledge-base/projects/<name>/sessions/2026-05-29-feature-x.md — new session
   ~/Documents/Notes/knowledge-base/projects/<name>/decisions/2026-05-29-helm-charts.md — new ADR
-  notepad/2026/07-July/Week-27.md — wikilink added via kb-link.sh
 ```
 
 Nothing else. The user does not need a summary of what was written — they already know, they told you.
