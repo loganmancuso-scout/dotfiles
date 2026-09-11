@@ -573,10 +573,10 @@ alias tffmt="terraform fmt -recursive"
 alias tfsclear='terraform state rm $(terraform state list)'
 
 function tflogin() {
-  export NUTANIX_USER=$(op read "op://Employee/Nutanix Prism Central/username")
-  export NUTANIX_USERNAME=$(op read "op://Employee/Nutanix Prism Central/username")
-  export NUTANIX_PASSWORD=$(op read "op://Employee/Nutanix Prism Central/password")
-  export OP_SERVICE_ACCOUNT_TOKEN=$(op item get 'plantit-terraform-readonly' --fields password --reveal)
+  export NUTANIX_USER=$(op read "op://LoganMancuso-Automation/Nutanix Prism Central/username")
+  export NUTANIX_USERNAME=$(op read "op://LoganMancuso-Automation/Nutanix Prism Central/username")
+  export NUTANIX_PASSWORD=$(op read "op://LoganMancuso-Automation/Nutanix Prism Central/password")
+  export OP_SERVICE_ACCOUNT_TOKEN=$(op read "op://LoganMancuso-Automation/plantit-terraform-readonly/password")
 }
 {{ else -}}
 # Author: Logan Mancuso | LastEdit: 2026-03-24
