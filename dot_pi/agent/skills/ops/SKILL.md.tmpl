@@ -15,51 +15,44 @@ Command reference for infrastructure operations. No diagnosis — load `debug` f
 Before running any `kubectl`, `helm`, or `tofu` command, the environment must be authenticated
 **once per session**.
 
+Kubeconfigs are merged into a single `~/.kube/config` file with one context per environment.
+Switching environments means switching `kubectl` context — no separate file/alias needed.
+
 {{ if eq .profile "work" -}}
-> **Important:** `kconf` is a shell alias defined in `~/.config/aliases`.
-> It is not available in a plain bash subshell. Always source the aliases file first:
-
 ```bash
-source ~/.config/aliases
-kconf <environment>.yaml
-```
-
-Or chain in a single command:
-
-```bash
-source ~/.config/aliases && kconf <environment>.yaml
+kubectl config use-context <context>
 ```
 
 Once authenticated, you do not need to re-run this for subsequent commands in the same session.
 
 **Examples:**
 ```bash
-kconf core.yaml
-kconf app-prd.yaml
-kconf app-uat.yaml
+kubectl config use-context core
+kubectl config use-context app-prd
+kubectl config use-context app-uat
 ```
 {{ else -}}
-> **Important:** `tflogin` and `kconf` are shell aliases defined in `~/.config/aliases`.
-> They are not available in a plain bash subshell. Always source the aliases file first:
+> **Important:** `tflogin` is a shell alias defined in `~/.config/aliases`.
+> It is not available in a plain bash subshell. Always source the aliases file first:
 
 ```bash
 source ~/.config/aliases
 tflogin <environment>
-kconf <environment>.config
+kubectl config use-context <environment>
 ```
 
 Or chain in a single command:
 
 ```bash
-source ~/.config/aliases && tflogin <environment> && kconf <environment>.config
+source ~/.config/aliases && tflogin <environment> && kubectl config use-context <environment>
 ```
 
 Once authenticated, you do not need to re-run these for subsequent commands in the same session.
 
 **Examples:**
 ```bash
-tflogin dev && kconf dev.config
-tflogin prd && kconf prd.config
+tflogin dev && kubectl config use-context dev
+tflogin prd && kubectl config use-context prd
 ```
 {{ end }}
 ### Determining the environment
@@ -76,14 +69,14 @@ Do not guess the environment and do not run any `kubectl`, `helm`, or `tofu` com
 auth is confirmed. A wrong environment could mutate production infrastructure.
 
 **When switching environments mid-session**, re-run the full auth sequence for the new
-environment before executing any further commands — credentials and kubeconfig from the
-previous environment are not automatically cleared:
+environment before executing any further commands — credentials from the previous
+environment are not automatically cleared:
 
 ```bash
 {{ if eq .profile "work" -}}
-source ~/.config/aliases && kconf <new-env>.yaml
+kubectl config use-context <new-env>
 {{ else -}}
-source ~/.config/aliases && tflogin <new-env> && kconf <new-env>.config
+source ~/.config/aliases && tflogin <new-env> && kubectl config use-context <new-env>
 {{ end -}}
 ```
 
@@ -96,11 +89,11 @@ kubectl config current-context
 ### Auth checklist before any ops session
 
 - [ ] Environment identified (from context or user confirmation)
-- [ ] `source ~/.config/aliases` run successfully
 {{ if eq .profile "personal" -}}
+- [ ] `source ~/.config/aliases` run successfully
 - [ ] `tflogin <env>` run successfully
 {{ end -}}
-- [ ] `kconf <env>` run successfully
+- [ ] `kubectl config use-context <env>` run successfully
 - [ ] `kubectl config current-context` confirms correct cluster
 
 ---
@@ -130,7 +123,7 @@ Good fan-out candidates (all read-only):
 - Log tailing/grepping across several pods or replicas
 - Health-check `curl` probes across several endpoints/environments
 
-Each `investigator` needs authentication context in its task prompt — include the exact `kconf`/`tflogin` commands for its target environment, since it starts with a clean session and must authenticate itself before running anything.
+Each `investigator` needs authentication context in its task prompt — include the exact `kubectl config use-context`{{ if eq .profile "personal" }}/`tflogin`{{ end }} commands for its target environment, since it starts with a clean session and must authenticate itself before running anything.
 
 **Never parallelize mutating operations.** `apply`, `upgrade`, `install`, `rollback`, `scale`, `rollout restart`, `destroy` — anything that changes state — stays serial, in this session, one target at a time, with explicit user direction. Concurrent mutations against shared infrastructure are how you get race conditions and half-applied state. If you need the same mutation across multiple targets, do them sequentially and confirm each one before moving to the next.
 

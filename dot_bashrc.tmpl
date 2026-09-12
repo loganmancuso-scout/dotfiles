@@ -90,17 +90,6 @@ fi
 # FZF Configuration #
 [ -f $HOME/.config/fzf/fzf.bash ] && source $HOME/.config/fzf/fzf.bash
 
-## Kconf Completion (Bash) ##
-_kconf_completion() {
-  local kubeconfig_dir="$HOME/.kube"
-  local cur="${COMP_WORDS[COMP_CWORD]}"
-
-  if [ -d "$kubeconfig_dir" ]; then
-    COMPREPLY=( $(compgen -W "$(ls -1 "$kubeconfig_dir")" -- "$cur") )
-  fi
-}
-complete -o bashdefault -o default -o nospace -F _kconf_completion kconf
-
 ## Set Prompt ##
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
