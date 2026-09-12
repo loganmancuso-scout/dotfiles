@@ -598,12 +598,12 @@ export PATH="$HOME/.local/bin:$HOME/.pi/agent/bin:$HOME/.local/share/pi-node/cur
 # profile block above for the full rationale (per-process biometric trust
 # checks in 1Password's desktop-app CLI integration, tmux-pane friction
 # from re-fetching per shell). Same mechanism, different service account
-# item ("home.arpa", scoped to this profile's own vault). Lives under
+# item ("pi-agent", scoped to this profile's own vault). Lives under
 # /tmp so a reboot clears it automatically. No-ops harmlessly if `op`
 # isn't installed (e.g. Android/Termux).
 _op_token_cache="/tmp/.1password-cli-token"
 if [[ ! -s "$_op_token_cache" ]] || [[ $(( $(date +%s) - $(stat -c %Y "$_op_token_cache" 2>/dev/null || echo 0) )) -gt 43200 ]]; then
-  if command -v op >/dev/null 2>&1 && op item get "Service Account Auth Token: home.arpa" --fields label=credential --reveal > "$_op_token_cache" 2>/dev/null; then
+  if command -v op >/dev/null 2>&1 && op item get "Service Account Auth Token: pi-agent" --fields label=credential --reveal > "$_op_token_cache" 2>/dev/null; then
     chmod 600 "$_op_token_cache"
   fi
 fi
