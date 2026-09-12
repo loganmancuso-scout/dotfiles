@@ -1,9 +1,9 @@
 ---
 name: ops
 description: >
-  Command reference for infrastructure operations — kubectl, Helm, Docker, and OpenTofu.
-  Covers the right commands, flags, and patterns for running infra efficiently and safely.
-  Load when executing deployments, upgrades, scaling, or infrastructure management.
+  Command reference for infrastructure operations — kubectl, Helm, Docker, Argo CD/Rollouts,
+  and OpenTofu. Covers the right commands, flags, and patterns for running infra efficiently
+  and safely. Load when executing deployments, upgrades, scaling, or infrastructure management.
 ---
 
 Command reference for infrastructure operations. No diagnosis — load `debug` for that.
@@ -183,6 +183,71 @@ kubectl rollout restart deployment/<name> -n <ns>     # rolling restart
 ```bash
 kubectl scale deployment/<name> -n <ns> --replicas=<n>
 ```
+
+---
+
+## Argo CD — Feature Branch Rollout Testing SOP
+
+**Default behavior** whenever a Kubernetes feature is being built and Argo CD drives the
+rollout for that app: test against the feature branch via Argo, then restore Argo to its
+original branch once the feature is verified and committed. This is the standing procedure —
+follow it automatically, without being asked, any time these conditions are both true.
+
+### 0. Preconditions
+- A feature branch already exists and is checked out for the change (never do this from `main`/`master`).
+- The target Argo CD `Application` resource is identified (`kubectl get applications -n argocd` or `argocd app list`).
+- Auth is confirmed for the target environment (see Authentication section above).
+
+This is a **mutating operation against shared infra** (it changes what Argo deploys for everyone
+watching that Application). Confirm the target Application and environment with the user before
+patching it, same as any other mutating ops action.
+
+### 1. Record the original state before touching anything
+```bash
+kubectl get application <app-name> -n argocd -o jsonpath='{.spec.source.targetRevision}{"\n"}'
+# or, for multi-source apps:
+kubectl get application <app-name> -n argocd -o jsonpath='{.spec.sources[*].targetRevision}{"\n"}'
+```
+Write down the exact original value (usually `main`, `master`, or `HEAD`) — this is what gets restored in step 4. Never guess it; always read it back from the live resource.
+
+### 2. Point Argo at the feature branch
+```bash
+kubectl patch application <app-name> -n argocd --type merge \
+  -p '{"spec":{"source":{"targetRevision":"<feature-branch>"}}}'
+
+# or via argocd CLI:
+argocd app set <app-name> --revision <feature-branch>
+```
+Then sync and wait for the rollout to settle:
+```bash
+argocd app sync <app-name>
+argocd app wait <app-name> --health --timeout 300
+kubectl rollout status deployment/<name> -n <ns> --timeout=120s
+# if using Argo Rollouts (canary/blue-green):
+kubectl argo rollouts status <rollout-name> -n <ns>
+```
+
+### 3. Test the feature against the live rollout
+Run whatever validation is appropriate for the change (smoke tests, manual checks, `kubectl logs`,
+port-forward probes, etc.). Do not proceed to step 4 until the feature is confirmed working.
+
+### 4. Commit, then restore Argo to the original branch
+Once testing passes:
+1. Follow the global Commit Checkpoint protocol — surface the summary and get explicit user confirmation before committing (never commit autonomously).
+2. After the commit lands, point Argo back at the original revision recorded in step 1:
+```bash
+kubectl patch application <app-name> -n argocd --type merge \
+  -p '{"spec":{"source":{"targetRevision":"<original-branch>"}}}'
+
+argocd app sync <app-name>
+argocd app wait <app-name> --health --timeout 300
+```
+3. Confirm the Application shows the original `targetRevision` and is `Synced`/`Healthy` before ending the session on this task.
+
+### Notes
+- If the feature branch gets merged to the original branch instead of just committed, restoring `targetRevision` to the original branch will naturally pick up the merged change on the next sync — that's fine, still explicitly re-sync and verify.
+- If multiple Argo Applications track the same repo (e.g. per-environment apps), only repoint the one(s) explicitly in scope for this feature — never fan this out across environments without direction.
+- Never leave an Application pointed at a feature branch across a session boundary without flagging it — a stray `targetRevision` pointed at a stale branch is a footgun for the next person (or the next session).
 
 ### Exec / copy
 ```bash

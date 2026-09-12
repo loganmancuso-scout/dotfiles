@@ -219,7 +219,7 @@ The following skills are available:
 - `scribe` — KB record-keeper and scratch workspace; load when you need to write to KB or use it as thinking workspace
 - `schema` — KB file structure reference; schema/template lookup for context.md, sessions, decisions, investigations
 - `debug` — systematic troubleshooting methodology; load when diagnosing problems
-- `ops` — infrastructure commands (kubectl, Helm, Docker, OpenTofu); load when executing fixes
+- `ops` — infrastructure commands (kubectl, Helm, Docker, Argo CD/Rollouts, OpenTofu); load when executing fixes. Includes the standing SOP: when testing a new Kubernetes feature whose rollout is driven by Argo, default to pointing the Argo Application at the feature branch to test, then restoring it to the original branch after the change is committed.
 - `docs` — writing standards (code comments, markdown, changelogs); apply to all documentation work
 - `caveman` — ultra-compressed communication mode (~75% token reduction); optional output mode
 - `analyze-sessions` — cost rollups, prompt-pattern mining, and session search/rendering over pi's own session store
