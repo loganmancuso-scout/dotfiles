@@ -1,0 +1,428 @@
+---
+name: ops
+description: >
+  Command reference for infrastructure operations — kubectl, Helm, Docker, Argo CD/Rollouts,
+  and OpenTofu. Covers the right commands, flags, and patterns for running infra efficiently
+  and safely. Load when executing deployments, upgrades, scaling, or infrastructure management.
+---
+
+Command reference for infrastructure operations. No diagnosis — load `debug` for that.
+
+---
+
+## Authentication — Required Before Any Ops
+
+Before running any `kubectl`, `helm`, or `tofu` command, the environment must be authenticated
+**once per session**.
+
+Kubeconfigs are merged into a single `~/.kube/config` file with one context per environment.
+Switching environments means switching `kubectl` context — no separate file/alias needed.
+
+```bash
+kubectl config use-context <context>
+```
+
+Once authenticated, you do not need to re-run this for subsequent commands in the same session.
+
+**Examples:**
+```bash
+kubectl config use-context core
+kubectl config use-context app-prd
+kubectl config use-context app-uat
+```
+
+### Determining the environment
+
+Use context clues from the working directory, project name, or task description to infer
+the target environment. When ambiguous or not obvious, **ask the user** before proceeding:
+
+> "Which environment are we targeting? (e.g. core, app-prd, app-uat)"
+
+Do not guess the environment and do not run any `kubectl`, `helm`, or `tofu` command until
+auth is confirmed. A wrong environment could mutate production infrastructure.
+
+**When switching environments mid-session**, re-run the full auth sequence for the new
+environment before executing any further commands — credentials from the previous
+environment are not automatically cleared:
+
+```bash
+kubectl config use-context <new-env>
+```
+
+Verify the switch succeeded before continuing:
+
+```bash
+kubectl config current-context
+```
+
+### Auth checklist before any ops session
+
+- [ ] Environment identified (from context or user confirmation)
+- [ ] `kubectl config use-context <env>` run successfully
+- [ ] `kubectl config current-context` confirms correct cluster
+
+---
+
+## Timeout Policy — canonical (debug skill defers to this)
+
+Keep command timeouts low. Default to **60s** for read-only commands, **120s** for mutating operations. Do not wait indefinitely for a command — a hang is itself a signal worth surfacing.
+
+- `helm upgrade` / `helm install` — use `--timeout 2m` unless the workload is known to take longer
+- `kubectl rollout status` — add `--timeout=120s`
+- `kubectl wait` — always set `--timeout`
+- `tofu apply` — if a resource is taking >2m, surface it rather than waiting silently
+- `curl` — always use `--connect-timeout 5 --max-time 30` unless testing a slow endpoint
+- `docker build` — no artificial timeout; image builds vary. Surface slow steps.
+
+If a command exceeds its timeout: stop, report what was observed up to that point, and treat the hang as a symptom to investigate with `debug`.
+
+---
+
+## Parallelizing Multi-Target Operations
+
+Same rule as `debug` skill's Step 0: more than one independent target (namespace, cluster, Helm release, pod, host) → dispatch one `investigator` sub-agent per target in the same turn instead of looping (see "Parallel Work & Subagent Delegation" in global `AGENTS.md` for the canonical explanation).
+
+Good fan-out candidates (all read-only):
+- `kubectl get/describe/top` across several namespaces or clusters
+- `helm list/status/get values` across several releases
+- Log tailing/grepping across several pods or replicas
+- Health-check `curl` probes across several endpoints/environments
+
+Each `investigator` needs authentication context in its task prompt — include the exact `kubectl config use-context` commands for its target environment, since it starts with a clean session and must authenticate itself before running anything.
+
+**Never parallelize mutating operations.** `apply`, `upgrade`, `install`, `rollback`, `scale`, `rollout restart`, `destroy` — anything that changes state — stays serial, in this session, one target at a time, with explicit user direction. Concurrent mutations against shared infrastructure are how you get race conditions and half-applied state. If you need the same mutation across multiple targets, do them sequentially and confirm each one before moving to the next.
+
+---
+
+## Kubernetes
+
+### Cluster context
+```bash
+kubectl config current-context
+kubectl config get-contexts
+kubectl config use-context <context>
+kubectl cluster-info
+```
+
+### Inspect resources
+```bash
+kubectl get pods -n <ns>
+kubectl get pods -n <ns> -o wide                      # node placement
+kubectl get pods -n <ns> -w                           # watch
+kubectl get all -n <ns>                               # pods, svc, deploy, rs
+kubectl get nodes
+kubectl describe pod <pod> -n <ns>
+kubectl describe deployment <name> -n <ns>
+kubectl describe node <node>
+kubectl top pods -n <ns>
+kubectl top nodes
+```
+
+### Apply / delete
+```bash
+kubectl apply -f <file>
+kubectl apply -f <dir>/                               # all files in directory
+kubectl apply --dry-run=client -f <file>              # validate without applying
+kubectl delete -f <file>
+kubectl delete pod <pod> -n <ns>
+kubectl delete pod <pod> -n <ns> --force --grace-period=0  # force delete stuck pod
+```
+
+### Rollouts
+```bash
+kubectl rollout status deployment/<name> -n <ns>
+kubectl rollout history deployment/<name> -n <ns>
+kubectl rollout undo deployment/<name> -n <ns>        # roll back one revision
+kubectl rollout undo deployment/<name> -n <ns> --to-revision=<n>
+kubectl rollout restart deployment/<name> -n <ns>     # rolling restart
+```
+
+### Scale
+```bash
+kubectl scale deployment/<name> -n <ns> --replicas=<n>
+```
+
+---
+
+## Argo CD — Feature Branch Rollout Testing SOP
+
+**Default behavior** whenever a Kubernetes feature is being built and Argo CD drives the
+rollout for that app: test against the feature branch via Argo, then restore Argo to its
+original branch once the feature is verified and committed. This is the standing procedure —
+follow it automatically, without being asked, any time these conditions are both true.
+
+### 0. Preconditions
+- A feature branch already exists and is checked out for the change (never do this from `main`/`master`).
+- The target Argo CD `Application` resource is identified (`kubectl get applications -n argocd` or `argocd app list`).
+- Auth is confirmed for the target environment (see Authentication section above).
+
+This is a **mutating operation against shared infra** (it changes what Argo deploys for everyone
+watching that Application). Confirm the target Application and environment with the user before
+patching it, same as any other mutating ops action.
+
+### 1. Record the original state before touching anything
+```bash
+kubectl get application <app-name> -n argocd -o jsonpath='{.spec.source.targetRevision}{"\n"}'
+# or, for multi-source apps:
+kubectl get application <app-name> -n argocd -o jsonpath='{.spec.sources[*].targetRevision}{"\n"}'
+```
+Write down the exact original value (usually `main`, `master`, or `HEAD`) — this is what gets restored in step 4. Never guess it; always read it back from the live resource.
+
+### 2. Point Argo at the feature branch
+```bash
+kubectl patch application <app-name> -n argocd --type merge \
+  -p '{"spec":{"source":{"targetRevision":"<feature-branch>"}}}'
+
+# or via argocd CLI:
+argocd app set <app-name> --revision <feature-branch>
+```
+Then sync and wait for the rollout to settle:
+```bash
+argocd app sync <app-name>
+argocd app wait <app-name> --health --timeout 300
+kubectl rollout status deployment/<name> -n <ns> --timeout=120s
+# if using Argo Rollouts (canary/blue-green):
+kubectl argo rollouts status <rollout-name> -n <ns>
+```
+
+### 3. Test the feature against the live rollout
+Run whatever validation is appropriate for the change (smoke tests, manual checks, `kubectl logs`,
+port-forward probes, etc.). Do not proceed to step 4 until the feature is confirmed working.
+
+### 4. Commit, then restore Argo to the original branch
+Once testing passes:
+1. Follow the global Commit Checkpoint protocol — surface the summary and get explicit user confirmation before committing (never commit autonomously).
+2. After the commit lands, point Argo back at the original revision recorded in step 1:
+```bash
+kubectl patch application <app-name> -n argocd --type merge \
+  -p '{"spec":{"source":{"targetRevision":"<original-branch>"}}}'
+
+argocd app sync <app-name>
+argocd app wait <app-name> --health --timeout 300
+```
+3. Confirm the Application shows the original `targetRevision` and is `Synced`/`Healthy` before ending the session on this task.
+
+### Notes
+- If the feature branch gets merged to the original branch instead of just committed, restoring `targetRevision` to the original branch will naturally pick up the merged change on the next sync — that's fine, still explicitly re-sync and verify.
+- If multiple Argo Applications track the same repo (e.g. per-environment apps), only repoint the one(s) explicitly in scope for this feature — never fan this out across environments without direction.
+- Never leave an Application pointed at a feature branch across a session boundary without flagging it — a stray `targetRevision` pointed at a stale branch is a footgun for the next person (or the next session).
+
+### Exec / copy
+```bash
+kubectl exec -it <pod> -n <ns> -- /bin/sh
+kubectl exec -it <pod> -n <ns> -c <container> -- /bin/sh
+kubectl cp <ns>/<pod>:/path/to/file ./local-file
+kubectl port-forward <pod> <local>:<remote> -n <ns>
+kubectl port-forward svc/<service> <local>:<remote> -n <ns>
+```
+
+### Logs
+```bash
+kubectl logs <pod> -n <ns>
+kubectl logs <pod> -n <ns> --previous
+kubectl logs <pod> -n <ns> -c <container>
+kubectl logs <pod> -n <ns> -f --tail=100
+kubectl logs -n <ns> -l app=<label> --tail=50         # logs from all matching pods
+```
+
+### ConfigMaps / Secrets
+```bash
+kubectl get configmap <name> -n <ns> -o yaml
+kubectl create configmap <name> --from-file=<file> -n <ns>
+kubectl get secret <name> -n <ns>
+kubectl create secret generic <name> --from-literal=key=value -n <ns>
+```
+
+---
+
+## Helm
+
+### Inspect
+```bash
+helm list -n <ns>
+helm list -A                                          # all namespaces
+helm status <release> -n <ns>
+helm history <release> -n <ns>
+helm get values <release> -n <ns>
+helm get manifest <release> -n <ns>
+helm get all <release> -n <ns>
+```
+
+### Search / show
+```bash
+helm search repo <chart>
+helm search hub <chart>
+helm show values <chart>
+helm show chart <chart>
+```
+
+### Install
+```bash
+helm install <release> <chart> -n <ns> -f values.yaml
+helm install <release> <chart> -n <ns> --create-namespace -f values.yaml
+```
+
+### Upgrade
+```bash
+# Always diff first if helm-diff plugin is available
+helm diff upgrade <release> <chart> -n <ns> -f values.yaml
+
+# Dry-run to preview rendered output
+helm upgrade <release> <chart> -n <ns> -f values.yaml --dry-run --debug
+
+# Apply — prefer --atomic for safety (auto-rollback on failure)
+helm upgrade <release> <chart> -n <ns> -f values.yaml \
+  --atomic \
+  --timeout 5m \
+  --wait
+
+# Upgrade and install if not present
+helm upgrade --install <release> <chart> -n <ns> -f values.yaml --atomic
+```
+
+### Rollback
+```bash
+helm rollback <release> -n <ns>                       # previous revision
+helm rollback <release> <revision> -n <ns>            # specific revision
+helm history <release> -n <ns>                        # check revisions first
+```
+
+### Uninstall
+```bash
+helm uninstall <release> -n <ns>
+```
+
+### Repos
+```bash
+helm repo add <name> <url>
+helm repo update
+helm repo list
+```
+
+---
+
+## Docker
+
+### Images
+```bash
+docker images
+docker pull <image>:<tag>
+docker build -t <image>:<tag> .
+docker build -t <image>:<tag> -f <Dockerfile> .
+docker push <image>:<tag>
+docker rmi <image>:<tag>
+docker image prune                                    # remove dangling images
+```
+
+### Containers
+```bash
+docker ps
+docker ps -a                                          # include stopped
+docker run -d --name <name> <image>:<tag>
+docker run -it --rm <image>:<tag> /bin/sh             # interactive, delete on exit
+docker stop <container>
+docker start <container>
+docker restart <container>
+docker rm <container>
+docker rm -f <container>                              # force remove running container
+```
+
+### Inspect / exec
+```bash
+docker inspect <container>
+docker logs <container>
+docker logs <container> -f --tail=100
+docker exec -it <container> /bin/sh
+docker stats <container>
+docker top <container>
+```
+
+### Networking / volumes
+```bash
+docker network ls
+docker network inspect <network>
+docker volume ls
+docker volume inspect <volume>
+```
+
+### Compose
+```bash
+docker compose up -d
+docker compose down
+docker compose ps
+docker compose logs -f
+docker compose pull
+docker compose build
+```
+
+### Cleanup
+```bash
+docker system df                                      # disk usage summary
+docker system prune                                   # remove unused resources
+docker system prune -a                               # include unused images
+```
+
+---
+
+## OpenTofu / Terraform
+
+> Commands below use `tofu`. Substitute `terraform` if using Terraform directly.
+
+### Init / format / validate
+```bash
+tofu init                                             # initialize working directory
+tofu init -upgrade                                    # upgrade provider versions
+tofu fmt                                              # format all .tf files
+tofu fmt -check                                       # check formatting without writing
+tofu validate                                         # validate configuration syntax
+```
+
+### Plan
+```bash
+tofu plan                                             # show what will change
+tofu plan -out=tfplan                                 # save plan to file
+tofu plan -refresh=false                              # skip state refresh
+tofu plan -target=<resource>                          # plan a single resource
+```
+
+### Apply
+```bash
+tofu apply                                            # apply with confirmation prompt
+tofu apply tfplan                                     # apply saved plan (no prompt)
+tofu apply -target=<resource>                         # apply single resource
+tofu apply -auto-approve                              # skip confirmation (use carefully)
+```
+
+### Destroy
+```bash
+tofu destroy                                          # destroy all resources
+tofu destroy -target=<resource>                       # destroy single resource
+```
+
+### State
+```bash
+tofu state list                                       # list all managed resources
+tofu state show <resource>                            # detail on one resource
+tofu state mv <source> <dest>                         # rename resource in state
+tofu state rm <resource>                              # remove from state (not real infra)
+tofu import <resource> <id>                           # import existing infra into state
+tofu force-unlock <lock-id>                           # release stuck state lock
+```
+
+### Outputs / workspace
+```bash
+tofu output                                           # show all outputs
+tofu output <name>                                    # show specific output
+tofu output -json                                     # machine-readable
+tofu workspace list
+tofu workspace show
+tofu workspace select <name>
+tofu workspace new <name>
+```
+
+### Providers
+```bash
+tofu providers
+tofu providers lock                                   # lock provider versions
+tofu version
+```

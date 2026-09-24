@@ -1,0 +1,59 @@
+{
+  "mcpServers": {
+    "1password": {
+      "command": "1password-mcp"
+    },
+    "browsermcp": {
+      "command": "npx",
+      "args": ["-y", "@browsermcp/mcp@latest"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "env": {
+        "CONTEXT7_API_KEY": "!op read op://LoganMancuso-Automation/4c2424tq5pzh34fizvqe5hfouq/password"
+      }
+    },
+    "github": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "auth": "bearer",
+      "bearerToken": "!gh auth token"
+    },
+    "jira": {
+      "url": "https://mcp.atlassian.com/v1/mcp/authv2",
+      "auth": "oauth"
+    },
+    "aws": {
+      "command": "uvx",
+      "args": ["mcp-proxy-for-aws@1.6.4", "https://aws-mcp.us-east-1.api.aws/mcp"],
+      "env": {
+        "AWS_MCP_PROXY_PROFILES": "aft-management audit co-sales-and-ops-planning-dev data-app-dev data-app-prd data-dev data-prd data-sbx-001 digital-dev digital-prd digital-sbx-001 digital-stg integration-dev integration-prd integration-sbx-001 log-archive pe-network-dev pe-network-prd plant-network-prd plant-app-prd plant-app-dev ScoutMotorsInc scout-tools-dev scout-tools-prd vehicle-connectivity-sbx-001 vehicle-infotainment-dev wiz-outpost"
+      }
+    },
+    "workiq": {
+      "command": "npx",
+      "args": ["-y", "@microsoft/workiq@1.0.0", "mcp"],
+      "disabled": false
+    },
+    "nutanix": {
+      "command": "{{ .chezmoi.homeDir }}/.pi/mcp/nutanix-mcp-server/.venv/bin/nutanix-mcp",
+      "env": {
+        "NUTANIX_HOST": "prismcentral.usubv.plant.scoutway.io",
+        "NUTANIX_PORT": "9440",
+        "NUTANIX_USERNAME": "!op read op://LoganMancuso-Automation/svgvb4fqxnvlcvrbdrdhwkwnxy/username",
+        "NUTANIX_PASSWORD": "!op read op://LoganMancuso-Automation/svgvb4fqxnvlcvrbdrdhwkwnxy/password",
+        "NUTANIX_VERIFY_SSL": "false",
+        "NUTANIX_TIMEOUT": "30"
+      },
+      "disabled": false
+    },
+    "mist-cloud": {
+      "url": "https://mcp.ai.juniper.net/mcp/mist",
+      "auth": "bearer",
+      "bearerToken": "!op read op://wqghe4bimpx7yuizvsas4ysiwu/6qo2ly55qzuxileusuy4bba6ve/password",
+      "headers": {
+        "X-Mist-Base-URL": "https://api.ac2.mist.com"
+      }
+    }
+  }
+}

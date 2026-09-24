@@ -1,0 +1,14 @@
+[Unit]
+Description=Restic Backup to USB
+# Only run if the backup drive is mounted (udisks2 auto-mounts to /media/%u/<label>)
+ConditionPathIsMountPoint=/media/%u/1TB
+After=media-%u-1TB.mount
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash %h/SourceControl/Personal/backup-restore/scripts/restic-backup.sh
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=Restic Backup Timer — every 4 hours
+
+[Timer]
+# Fire at 00:00, 04:00, 08:00, 12:00, 16:00, 20:00
+OnCalendar=*-*-* 00/4:00:00
+# If the system was off or asleep at a scheduled time, fire once on next wake
+Persistent=true
+# Spread load slightly to avoid exact-clock contention
+RandomizedDelaySec=2min
+
+[Install]
+WantedBy=timers.target

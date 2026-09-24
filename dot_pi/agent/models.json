@@ -1,0 +1,36 @@
+{
+  "providers": {
+    "ollama": {
+      "baseUrl": "https://ollama.apps.vpc.home.arpa/v1",
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": false
+      },
+      "models": [
+        {
+          "id": "qwen3-coder:30b",
+          "name": "Qwen3 Coder 30B (Local)"
+        },
+        {
+          "id": "qwen2.5-coder:7b",
+          "name": "Qwen2.5 Coder 7B (Local)"
+        },
+        {
+          "id": "deepseek-coder-v2:latest",
+          "name": "DeepSeek Coder V2 (Local)"
+        },
+        {
+          "id": "devstral:24b",
+          "name": "Devstral 24B (Local)"
+        },
+        {
+          "id": "deepseek-r1:8b",
+          "name": "DeepSeek R1 8B (Local)",
+          "reasoning": true
+        }
+      ]
+    }
+  }
+}

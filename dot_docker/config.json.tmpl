@@ -1,0 +1,11 @@
+{
+	"auths": {
+		"artifactory.sctmtrs.xyz": {}
+	},
+{{- if eq .chezmoi.os "darwin" }}
+	"credsStore": "osxkeychain",
+	"currentContext": "colima"
+{{- else }}
+	"currentContext": "default"
+{{- end }}
+}

@@ -1,0 +1,67 @@
+# Package gating is OS-only — this repo has a single identity/access profile
+# (work), so the only remaining axis is chezmoi.os.
+#
+# NOTE: patterns here match TARGET paths (as applied to $HOME), not chezmoi's
+# source-state naming — so ".aws" not "dot_aws".
+#
+# chezmoi.os has three values (darwin/linux/android) since Android support
+# was added — its block is if/else-if/else to cover all three explicitly.
+
+{{ if eq .chezmoi.os "darwin" }}
+# excluded on macOS: linux-only stuff
+.config/VSCodium/**
+.config/systemd/**
+.termux/**
+{{ else if eq .chezmoi.os "android" }}
+# excluded on Android/Termux: macOS-only stuff, plus anything requiring
+# systemd, Docker, VSCodium, ghostty, 1Password, or the pi agent tooling
+# that isn't present on the phone.
+.colima/**
+Library/**
+.config/systemd/**
+.docker/**
+.config/VSCodium/**
+.vscode-oss/**
+.config/ghostty/**
+.config/1Password/**
+.ssh/1Password/**
+.pi/**
+{{ else }}
+# excluded elsewhere: macOS-only stuff, plus Termux-only stuff
+.colima/**
+Library/**
+.termux/**
+{{ end }}
+
+# Vendored/runtime-managed plugin trees — installed by the tools themselves
+# on first run (zsh-autosuggestions only tracks the single script file).
+# NOTE: .config/tmux/plugins/** is intentionally NOT listed here — those
+# paths are fetched via .chezmoiexternal.toml (git-repo externals for tpm
+# and catppuccin) and must remain chezmoi-managed for that to apply.
+.config/1Password/**
+.ssh/1Password/**
+.config/tmux/plugins/**
+
+# Defense in depth: never let chezmoi apply raw SSH private/public key
+# material into ~/.ssh on any device, even if one somehow lands in the
+# source tree despite the .gitignore guard. authorized_keys and
+# allowed_signers are plain pubkey listings, not standalone key files, and
+# are intentionally excluded from this rule.
+.ssh/*.priv
+.ssh/*.pem
+.ssh/*.pub
+.ssh/id_rsa*
+.ssh/id_ed25519*
+.ssh/id_ecdsa*
+.ssh/id_dsa*
+
+# Machine-local mutable state — deliberately NOT managed. known_hosts is
+# rewritten by ssh itself on every first connection to a new host, so
+# managing it guarantees permanent drift: every `chezmoi apply` would revert
+# host keys this machine legitimately learned, and every new host would show
+# up as a spurious diff. known_hosts.old is ssh-keygen -R's backup file.
+.ssh/known_hosts
+.ssh/known_hosts.old
+
+# Repo-only docs — not meant to be applied to $HOME
+README.md

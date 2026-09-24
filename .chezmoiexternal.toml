@@ -1,0 +1,13 @@
+# Third-party plugin repos not owned by this dotfiles repo, fetched by chezmoi
+# on every `chezmoi apply` instead of being manually cloned per-machine.
+# See https://www.chezmoi.io/reference/source-state-attributes/#external
+
+[".config/tmux/plugins/tpm"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tpm.git"
+    refreshPeriod = "168h"
+
+[".config/tmux/plugins/catppuccin/tmux"]
+    type = "git-repo"
+    url = "https://github.com/catppuccin/tmux.git"
+    refreshPeriod = "168h"

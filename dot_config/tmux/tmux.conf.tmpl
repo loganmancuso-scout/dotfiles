@@ -1,0 +1,203 @@
+# ==========================
+# Tmux Configuration
+# ==========================
+# Prefix: Ctrl-Space
+# Inspired by: https://micahkepe.com/blog/tmux-config/
+
+# ==========================
+# General Settings
+# ==========================
+
+# Set true color support
+set -g default-terminal "screen-256color"
+set -ga terminal-overrides ",xterm-256color:Tc"
+
+# Pass through modified Enter/other extended keys (needed by pi TUIs)
+set -g extended-keys on
+set -g extended-keys-format csi-u
+
+# Change prefix from C-b to C-Space
+unbind C-b
+set-option -g prefix C-Space
+bind-key C-Space send-prefix
+
+# Faster command sequences (reduce escape time)
+set -s escape-time 10
+set -sg repeat-time 600
+set -s focus-events on
+
+# Increase history limit
+set -g history-limit 10000
+
+# Enable mouse support
+set -g mouse on
+
+# Start windows and panes at 1, not 0
+set -g base-index 1
+setw -g pane-base-index 1
+
+# Auto renumber windows on close
+set -g renumber-windows on
+
+# Automatically set window title
+setw -g automatic-rename on
+set -g set-titles on
+
+# Display settings
+set -g display-panes-time 800
+set -g display-time 1000
+set -g status-interval 10
+
+# ==========================
+# Key Bindings
+# ==========================
+
+# Reload configuration
+bind r source-file ~/.config/tmux/tmux.conf \; display "Config reloaded!"
+
+# Better window splitting (more intuitive)
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+unbind '"'
+unbind %
+
+# Create new window in current path
+bind c new-window -c "#{pane_current_path}"
+
+# Pane navigation with vim-style keys
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Pane resizing
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+# Window navigation
+bind -r C-h previous-window
+bind -r C-l next-window
+
+# tmux-sessionizer: Fuzzy find and switch to project directories
+bind f run-shell "tmux neww ~/.config/tmux/scripts/tmux-sessionizer.sh"
+
+# Session switching popup with fzf
+bind s display-popup -E "~/.config/tmux/scripts/session-fzf.sh"
+
+# Toggle pane layout orientation (horizontal <-> vertical) for the current window
+bind o run-shell "~/.config/tmux/scripts/toggle-layout.sh"
+
+# ==========================
+# Copy Mode (Vi-style)
+# ==========================
+
+# Enter copy mode with prefix + [
+setw -g mode-keys vi
+
+# Vi-like selection in copy mode
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi C-v send -X rectangle-toggle
+bind -T copy-mode-vi y send -X copy-pipe-and-cancel 'pbcopy'
+bind -T copy-mode-vi Escape send -X cancel
+bind -T copy-mode-vi H send -X start-of-line
+bind -T copy-mode-vi L send -X end-of-line
+
+# Allow tmux clipboard to copy to system clipboard
+set -s set-clipboard on
+
+# Copy to macOS clipboard
+bind y run -b "tmux save-buffer - | pbcopy"
+
+# ==========================
+# vim-tmux-navigator (DISABLED)
+# ==========================
+# Disabled to avoid conflicts with k9s shortcuts.
+# k9s uses Ctrl-k (kill resource) and Ctrl-j (navigation).
+# Use prefix-based navigation instead: Ctrl-Space + h/j/k/l
+#
+# If you need vim-tmux integration back, consider using Alt-based
+# shortcuts or a different modifier key that doesn't conflict with k9s.
+# ==========================
+
+# NOTE: Ctrl-h/j/k/l are now available for applications like k9s and vim
+# Use the following prefix-based shortcuts instead:
+#   Ctrl-Space + h/j/k/l - Navigate panes (lines 64-67)
+#   Ctrl-Space + H/J/K/L - Resize panes (lines 70-73)
+
+# ==========================
+# Plugins (TPM)
+# ==========================
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'tmux-plugins/tmux-battery'
+set -g @plugin 'tmux-plugins/tmux-cpu'
+
+# tmux-continuum: auto-save sessions
+set -g @continuum-restore 'on'
+set -g @continuum-save-interval '15'
+
+# tmux-resurrect: restore vim/neovim sessions
+set -g @resurrect-strategy-vim 'session'
+set -g @resurrect-strategy-nvim 'session'
+set -g @resurrect-capture-pane-contents 'on'
+
+# ==========================
+# Catppuccin Theme
+# ==========================
+
+# Configure Catppuccin plugin
+set -g @catppuccin_flavor "{{ if eq .chezmoi.os "android" }}latte{{ else }}mocha{{ end }}"
+set -g @catppuccin_window_status_style "rounded"
+
+# Disable window status hints
+set -g @catppuccin_status_default_window_behavior "no"
+
+# Load Catppuccin (manually cloned, not via TPM due to naming conflicts)
+run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
+
+# Git branch and current directory live in a pane-border-status line pinned
+# to the top of each pane (see below); session id/battery live in the
+# window-tabs status bar at the bottom instead.
+
+# Override window status format to show window name instead of pane title
+setw -g window-status-format "#{?#{==:#{window_index},1},#[fg=#{@thm_overlay_2}]#{@catppuccin_status_left_separator},}#[fg=#{@thm_crust},bg=#{@thm_overlay_2}]#[fg=#{@thm_mantle},reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#{@thm_fg},bg=#{@thm_surface_0}] #W#[fg=#{@thm_mantle},reverse]#[none]"
+setw -g window-status-current-format "#{?#{==:#{window_index},1},#[fg=#{@thm_mauve}]#{@catppuccin_status_left_separator},}#[fg=#{@thm_crust},bg=#{@thm_mauve}]#[fg=#{@thm_mantle},reverse]#[none]#{?#{==:#{window_index},1},, }#I #[fg=#{@thm_fg},bg=#{@thm_surface_1}] #W#[fg=#{@thm_mantle},reverse]#[none]"
+setw -g window-status-separator ""
+
+# Bottom status bar: window tabs (default, running-process names) on the
+# left, session id + battery on the right.
+set -g status on
+set -g status-left ""
+set -g status-right "#{E:@catppuccin_status_session}#[fg=#{@thm_lavender}]#[fg=#{@thm_crust},bg=#{@thm_lavender}] #(~/.config/tmux/plugins/tmux-battery/scripts/battery_icon.sh) #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(~/.config/tmux/plugins/tmux-battery/scripts/battery_percentage.sh)#[fg=#{@thm_surface_0}] "
+
+# Top-of-pane info line (native tmux feature, not the status bar): git branch
+# on the left, current directory (folder icon) on the right. This uses
+# pane-border-status rather than the status-format array, since
+# pane-border-format is a genuine top-level option (its #() jobs execute
+# directly, same as status-left/right), and it renders pinned to the top of
+# the pane -- independent of the tabs bar at the bottom. See
+# https://github.com/tmux/tmux/issues/3105 for background (there is no way to
+# split a single status bar across top and bottom; this pane-border line is
+# the documented alternative).
+#
+# Battery (used in status-right below) is invoked directly via the
+# tmux-battery plugin's own scripts (#() calls) rather than through
+# @catppuccin_status_battery, because the plugin only patches the literal
+# status-left/status-right options with its #() jobs at load time -- it never
+# touches custom @options, so referencing it indirectly anywhere else would
+# just render the literal, unexpanded "#{battery_icon}" text.
+set -g pane-border-status top
+set -g pane-border-format "#[align=left]#[fg=#{@thm_teal}]#{@catppuccin_status_left_separator}#[fg=#{@thm_crust},bg=#{@thm_teal}] #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#(cd \"#{pane_current_path}\" 2>/dev/null && git branch --show-current 2>/dev/null)#[fg=#{@thm_surface_0}] #[align=right]#[fg=#{@thm_rosewater}]#{@catppuccin_status_left_separator}#[fg=#{@thm_crust},bg=#{@thm_rosewater}] #[fg=#{@thm_fg},bg=#{@thm_surface_0}]#{b:pane_current_path}#[fg=#{@thm_surface_0}] "
+
+# ==========================
+# Initialize TMUX plugin manager
+# (keep this line at the very bottom of tmux.conf)
+# ==========================
+run '~/.config/tmux/plugins/tpm/tpm'
+

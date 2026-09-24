@@ -1,0 +1,59 @@
+{{ if eq .chezmoi.os "linux" -}}
+# On Linux, gnome-keyring's ssh-agent shim advertises itself via
+# SSH_AUTH_SOCK (e.g. /run/user/1000/gcr/ssh) but holds no identities.
+# Tools that read SSH_AUTH_SOCK directly instead of consulting ssh_config's
+# IdentityAgent -- notably 1Password's op-ssh-sign, used for signed git
+# commits -- hit that empty socket and fail with a confusing 1Password
+# error. Override it here so signing (and anything else expecting a real
+# agent) finds 1Password's socket instead.
+[ -S "$HOME/.1password/agent.sock" ] && export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+{{ end -}}
+setopt histignorealldups sharehistory
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+# Enable auto-completion
+autoload -U compinit && compinit
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  autoload -Uz compinit
+  compinit
+fi
+
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+# eval "$(dircolors -b)"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# Custom Aliases #
+[ -f $HOME/.config/aliases ] && source $HOME/.config/aliases
+
+# FZF Configuration #
+[ -f $HOME/.config/fzf/fzf.zsh ] && source $HOME/.config/fzf/fzf.zsh
+
+## Set Prompt ##
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+source <(fzf --zsh)
+source $HOME/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
