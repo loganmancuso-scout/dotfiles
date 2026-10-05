@@ -123,7 +123,7 @@ aws sso login --sso-session ScoutIT
 
 Then any profile in the file works without a separate login
 (`aws --profile <name> ...`, or `AWS_PROFILE=<name>`). The `aws` MCP server
-(`dot_pi/agent/mcp.json.tmpl`) also targets these same accounts via
+(`dot_pi/agent/mcp-adapter.json.tmpl`) also targets these same accounts via
 `mcp-proxy-for-aws` (`AWS_MCP_PROXY_PROFILES`), so both the CLI and the AI
 agent authenticate against the same SSO session.
 
@@ -137,8 +137,8 @@ knowledge base protocol.
 - `prompts/` — `/commit`, `/summarize-issue`, `/closeout`
 - `skills/` — `analyze-sessions`, `caveman`, `debug`, `docs`, `ops`, `pdf-reader`,
   `schema`, `scribe`, `youtube-transcript`
-- Defaults to `amazon-bedrock/us.anthropic.claude-sonnet-5`,
-  `defaultThinkingLevel: "medium"`, with `github-copilot` registered as an
+- Defaults to `amazon-bedrock/us.openai.gpt-5.6-luna`,
+  `defaultThinkingLevel: "low"`, with `github-copilot` registered as an
   available fallback provider.
 - `enabledModels` in `settings.json` is a curated **favorites** list — it's
   not a hard filter: models on the list show first in `/model` and Ctrl+P
@@ -160,7 +160,7 @@ knowledge base protocol.
   (Tab toggles current-directory-only vs. all-sessions scope); it already
   auto-switches to the session's original working directory, so no wrapper
   script is needed.
-- Configures the full work MCP server set (`dot_pi/agent/mcp.json.tmpl`):
+- Configures the full work MCP server set (`dot_pi/agent/mcp-adapter.json.tmpl`):
   `1password` (local stdio server bundled with the 1Password desktop app,
   Environments-management only, no secrets in config), `github` (bearer via
   `!gh auth token`, no static PAT), `jira` (OAuth against Atlassian's
