@@ -1,13 +1,3 @@
-{{ if eq .chezmoi.os "linux" -}}
-# On Linux, gnome-keyring's ssh-agent shim advertises itself via
-# SSH_AUTH_SOCK (e.g. /run/user/1000/gcr/ssh) but holds no identities.
-# Tools that read SSH_AUTH_SOCK directly instead of consulting ssh_config's
-# IdentityAgent -- notably 1Password's op-ssh-sign, used for signed git
-# commits -- hit that empty socket and fail with a confusing 1Password
-# error. Override it here so signing (and anything else expecting a real
-# agent) finds 1Password's socket instead.
-[ -S "$HOME/.1password/agent.sock" ] && export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
-{{ end -}}
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples

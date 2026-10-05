@@ -68,19 +68,16 @@ autoActivate: true
 
 # Network configurations for the virtual machine.
 network:
-  # Assign reachable IP address to the virtual machine.
-  # NOTE: this is currently macOS only and ignored on Linux.
+  # Assign reachable IP address to the macOS VM.
   # Default: false
   address: true
   
-  # Network mode for the virtual machine (shared, bridged).
-  # NOTE: this is currently macOS only and ignored on Linux.
+  # Network mode for the macOS VM (shared, bridged).
   # Default: shared
   mode: shared
   
-  # Network interface to use for bridged mode.
+  # Network interface for macOS bridged mode.
   # This is only used when mode is set to bridged.
-  # NOTE: this is currently macOS only and ignored on Linux.
   # Default: en0
   interface: ""
   
@@ -153,7 +150,7 @@ forwardAgent: false
 docker: {}
 
 # Virtual Machine type (krunkit, qemu, vz)
-# NOTE: this is macOS 13 only. For Linux and macOS <13.0, qemu is always used.
+# On macOS 13+, vz uses Apple's virtualization framework; otherwise qemu is used.
 #
 # vz is macOS virtualization framework and requires macOS 13.
 # krunkit runs super‑light VMs on macOS/ARM64 with a focus on GPU access. It is experimental.

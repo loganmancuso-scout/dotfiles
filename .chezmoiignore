@@ -1,38 +1,3 @@
-# Package gating is OS-only — this repo has a single identity/access profile
-# (work), so the only remaining axis is chezmoi.os.
-#
-# NOTE: patterns here match TARGET paths (as applied to $HOME), not chezmoi's
-# source-state naming — so ".aws" not "dot_aws".
-#
-# chezmoi.os has three values (darwin/linux/android) since Android support
-# was added — its block is if/else-if/else to cover all three explicitly.
-
-{{ if eq .chezmoi.os "darwin" }}
-# excluded on macOS: linux-only stuff
-.config/VSCodium/**
-.config/systemd/**
-.termux/**
-{{ else if eq .chezmoi.os "android" }}
-# excluded on Android/Termux: macOS-only stuff, plus anything requiring
-# systemd, Docker, VSCodium, ghostty, 1Password, or the pi agent tooling
-# that isn't present on the phone.
-.colima/**
-Library/**
-.config/systemd/**
-.docker/**
-.config/VSCodium/**
-.vscode-oss/**
-.config/ghostty/**
-.config/1Password/**
-.ssh/1Password/**
-.pi/**
-{{ else }}
-# excluded elsewhere: macOS-only stuff, plus Termux-only stuff
-.colima/**
-Library/**
-.termux/**
-{{ end }}
-
 # Vendored/runtime-managed plugin trees — installed by the tools themselves
 # on first run (zsh-autosuggestions only tracks the single script file).
 # NOTE: .config/tmux/plugins/** is intentionally NOT listed here — those
