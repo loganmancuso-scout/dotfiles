@@ -21,7 +21,8 @@
     "extensions/custom-header.ts",
     "extensions/browser/index.ts",
     "extensions/subagents/pi-extension/subagents/index.ts",
-    "extensions/observational-memory/src/index.ts"
+    "extensions/observational-memory/src/index.ts",
+    "-builtin:mcp"
   ],
   "observational-memory": {
     "models": {
