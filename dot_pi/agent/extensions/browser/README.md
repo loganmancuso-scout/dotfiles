@@ -1,6 +1,6 @@
 # pi browser extension
 
-Playwright-driven headless Chromium that pi can drive directly. Lets the agent
+Playwright-driven Google Chrome that pi can drive directly. Lets the agent
 debug a live SPA the same way a human would in devtools: navigate, run JS,
 inspect localStorage, watch the console and network, fill forms, click.
 
@@ -16,7 +16,7 @@ questions itself.
 ```bash
 cd ~/.pi/agent/extensions/browser
 npm install
-npx playwright install chromium    # one-time browser binary download (~150MB)
+# Uses the installed Google Chrome; no Playwright browser download is needed
 ```
 
 Then `/reload` inside pi (or restart). The new tools (`browser_goto`,
@@ -41,7 +41,7 @@ Flip them on when you actually need them:
 
 The enable bit persists for the current session via a custom session entry,
 so `/reload` and pi restart keep it on. `/new` resets to off. Disabling also
-tears down the Chromium context (`browser_close` semantics) so no
+tears down the Google Chrome context (`browser_close` semantics) so no
 background browser is left running.
 
 ## Tools
@@ -70,8 +70,8 @@ for status; `close` and `kill` are aliases for `off`).
 
 - Browser state (cookies, localStorage, IndexedDB) is persisted to
   `~/.pi/agent/extensions/browser/.profile` via
-  `chromium.launchPersistentContext`. Login sessions survive across pi turns
-  and pi restarts.
+  `chromium.launchPersistentContext` using the installed Google Chrome channel.
+  Login sessions survive across pi turns and pi restarts.
 - Console + network events are captured into in-memory ring buffers (max 1000
   entries each). `browser_console` and `browser_network` drain them by default.
 - The persistent context is closed in `session_shutdown`, so a `/new` or pi
@@ -81,7 +81,7 @@ for status; `close` and `kill` are aliases for `off`).
 
 | Env var | Default | Effect |
 |---|---|---|
-| `PI_BROWSER_HEADFUL` | unset | If set, launch a visible Chromium window. Useful when debugging the extension itself. |
+| `PI_BROWSER_HEADFUL` | unset | If set, launch a visible Google Chrome window. Useful when debugging the extension itself. |
 | `PI_BROWSER_PROFILE` | `~/.pi/agent/extensions/browser/.profile` | Override the persistent user-data dir. Set to a tempdir for ephemeral sessions. |
 
 ## Network output: terse by default, headers on opt-in
@@ -116,8 +116,8 @@ to peek without draining.
 
 ## Caveats and known limits
 
-- `playwright-core` ships without browser binaries; the `npx playwright install
-  chromium` step above is required exactly once per machine.
+- `playwright-core` uses the installed Google Chrome executable through Playwright's
+  `chrome` channel; no Playwright browser binary download is required.
 - The page object is a singleton — there's no tab/window management. If you
   need multiple tabs, extend `ensurePage` to accept a tab id.
 - `browser_eval` evaluates the source once and, if the result is a function,

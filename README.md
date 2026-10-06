@@ -76,8 +76,10 @@ After applying, install the extensions that have npm dependencies:
 for ext in web-fetch browser; do
   (cd ~/.pi/agent/extensions/"$ext" && npm install)
 done
-npx --prefix ~/.pi/agent/extensions/browser playwright install chromium
 ```
+
+The browser extension uses the installed Google Chrome application through
+Playwright's `chrome` channel; it does not download a separate browser binary.
 
 Install the pinned Nutanix MCP server once:
 

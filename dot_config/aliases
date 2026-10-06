@@ -229,6 +229,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # PI
 # ─────────────────────────────────────────
 export PATH="$HOME/.pi/agent/bin:$PATH"
+export PI_BROWSER_HEADFUL=1
 
 # Export OP_SERVICE_ACCOUNT_TOKEN from a local cache file in /tmp instead
 # of calling `op` on every new shell/tmux pane -- a per-shell `op item get`

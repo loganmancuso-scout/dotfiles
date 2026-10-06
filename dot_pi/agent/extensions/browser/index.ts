@@ -1,5 +1,5 @@
 /**
- * Browser extension — Playwright-driven headless Chromium pi can drive.
+ * Browser extension — Playwright-driven Google Chrome pi can drive.
  *
  * Exposes a small set of tools the LLM can call to debug a live web app:
  *   - browser_goto         navigate
@@ -21,7 +21,7 @@
  * Setup:
  *   cd ~/.pi/agent/extensions/browser
  *   npm install
- *   npx playwright install chromium
+ *   # Google Chrome is selected through Playwright's `chrome` channel
  *   # then /reload in pi (or restart)
  *
  * Tweaks:
@@ -140,6 +140,7 @@ export default function browserExtension(pi: ExtensionAPI) {
 
     if (!context) {
       context = await chromium.launchPersistentContext(profileDir, {
+        channel: "chrome",
         headless,
         viewport: { width: 1280, height: 800 },
       });
@@ -266,7 +267,7 @@ export default function browserExtension(pi: ExtensionAPI) {
     name: "browser_goto",
     label: "Browser Goto",
     description:
-      "Navigate the persistent headless Chromium to a URL. Returns final URL and HTTP status. Cookies + localStorage persist across calls.",
+      "Navigate the persistent headless Google Chrome browser to a URL. Returns final URL and HTTP status. Cookies + localStorage persist across calls.",
     promptSnippet:
       "Open a URL in a persistent headless browser to inspect a live web app's DOM, storage, network, and console — instead of asking the user to copy from devtools",
     promptGuidelines: [
