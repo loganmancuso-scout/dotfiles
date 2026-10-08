@@ -1,0 +1,124 @@
+// Zed settings managed by chezmoi
+//
+// Language servers and extensions are installed by Zed as needed. External
+// toolchains such as Python, Go, .NET, Terraform, and PowerShell remain
+// machine-level prerequisites.
+{
+  "diagnostics": {
+    "button": false
+  },
+  "debugger": {
+    "dock": "left"
+  },
+  "auto_install_extensions": {
+    "catppuccin": true,
+    "catppuccin-icons": true,
+    "csharp": true,
+    "powershell": true,
+    "terraform": true
+  },
+  "theme": {
+    "mode": "dark",
+    "dark": "Catppuccin Mocha",
+    "light": "Catppuccin Latte"
+  },
+  "icon_theme": {
+    "mode": "dark",
+    "dark": "Catppuccin Mocha",
+    "light": "Catppuccin Latte"
+  },
+  "base_keymap": "VSCode",
+  "ui_font_family": "SauceCodePro NFM",
+  "ui_font_size": 16,
+  "buffer_font_family": "SauceCodePro NFM",
+  "buffer_font_size": 16,
+  "tab_size": 2,
+  "hard_tabs": false,
+  "minimap": {
+    "show": "never"
+  },
+  "diff_view_style": "split",
+  "file_scan_depth": 0,
+  "on_new_window": "empty_tab",
+  "restore_on_startup": "last_session",
+  "project_panel": {
+    "dock": "left",
+    "default_width": 280,
+    "starts_open": true,
+    "git_status": true
+  },
+  "outline_panel": {
+    "button": false,
+    "dock": "left",
+    "default_width": 280
+  },
+  "git_panel": {
+    "dock": "right",
+    "default_width": 420,
+    "starts_open": true,
+    "tree_view": true,
+    "entry_primary_click_action": "project_diff"
+  },
+  "collaboration_panel": {
+    "button": false,
+    "dock": "left"
+  },
+  "agent": {
+    "button": false,
+    "dock": "right",
+    "default_width": 480,
+    "flexible": false,
+    "threads_sidebar": {
+      "position": "right"
+    }
+  },
+  "terminal": {
+    "dock": "left",
+    "font_family": "SauceCodePro NFM",
+    "font_size": 16,
+    "working_directory": "current_project_directory",
+    "detect_venv": {
+      "on": {
+        "directories": [".env", "env", ".venv", "venv"],
+        "activate_script": "default"
+      }
+    }
+  },
+  "languages": {
+    "Python": {
+      "tab_size": 2,
+      "hard_tabs": false
+    },
+    "Go": {
+      "tab_size": 2,
+      "hard_tabs": false
+    },
+    "Terraform": {
+      "tab_size": 2,
+      "hard_tabs": false
+    },
+    "CSharp": {
+      "tab_size": 2,
+      "hard_tabs": false
+    },
+    "PowerShell": {
+      "tab_size": 2,
+      "hard_tabs": false
+    },
+    "YAML": {
+      "tab_size": 2,
+      "hard_tabs": false
+    }
+  },
+  "lsp": {
+    "yaml-language-server": {
+      "settings": {
+        "yaml": {
+          "schemaStore": {
+            "enable": true
+          }
+        }
+      }
+    }
+  }
+}

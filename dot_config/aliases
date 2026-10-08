@@ -24,6 +24,7 @@ alias ll='eza --icons -a'
 alias x='eza --icons -a'
 alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
 alias python='python3'
+alias zed-sourcecontrol='zed -r "$HOME/SourceControl"'
 
 function delete() {
   for item in "$@"; do

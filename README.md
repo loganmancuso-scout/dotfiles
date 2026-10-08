@@ -64,6 +64,47 @@ aws sso login --sso-session ScoutIT
 aws --profile <name> ...
 ```
 
+## Zed configuration
+
+`dot_config/zed/settings.json` manages the Zed editor configuration. It mirrors
+selected VS Code preferences: Catppuccin Mocha, SauceCodePro NFM, 2-space
+indentation, a left project/outline dock, a right Git/agent dock, and a left
+integrated terminal.
+
+Zed's native language support is enabled for Python, Go, YAML, and Kubernetes
+manifests. Zed is configured to auto-install the Catppuccin, Catppuccin Icons,
+C#, Terraform, and PowerShell extensions. The corresponding external toolchains
+must still be installed separately, for example:
+
+```bash
+brew install go powershell dotnet terraform
+brew install python
+```
+
+After changing the source configuration, preview and apply it with:
+
+```bash
+chezmoi diff
+chezmoi apply
+```
+
+Restart Zed after applying settings. Open **Command Palette** (`Cmd+Shift+P`)
+and run `zed: extensions` to confirm extension installation and language-server
+status. Kubernetes files use Zed's built-in YAML support and the YAML language
+server's schema store.
+
+For the multi-repository workspace, launch:
+
+```bash
+zed-sourcecontrol
+```
+
+This opens `~/SourceControl` as the workspace root. Zed is configured to
+activate nested repositories immediately, keep the Git panel open on the right,
+group Git changes in tree view, and open project diffs in split view. Once opened, Zed's
+`last_session` startup behavior restores this workspace on normal launches.
+Use the Git panel's repository selector to switch between subprojects.
+
 ## Pi agent configuration
 
 `dot_pi/agent/` contains the Pi configuration, extensions, agents, prompts,
