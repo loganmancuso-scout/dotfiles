@@ -40,6 +40,8 @@ Determine `<project-slug>` in this priority order:
 | Investigation | `~/Documents/Notes/knowledge-base/projects/<project-slug>/investigations/<slug>/notes.md` |
 | Scratch | `~/Documents/Notes/knowledge-base/projects/<project-slug>/sessions/SCRATCH-YYYY-MM-DD-topic.md` |
 | Inbox scratch | `~/Documents/Notes/knowledge-base/inbox/SCRATCH-YYYY-MM-DD-topic.md` |
+| Reusable project script | `~/Documents/Notes/knowledge-base/projects/<project-slug>/scripts/<name>` |
+| Cross-project tooling | `~/Documents/Notes/knowledge-base/bin/<name>` |
 | Cross-project gotchas index | `~/Documents/Notes/knowledge-base/index/gotchas.md` (pending retirement — see tagging.md) |
 | KB structure reference | `~/Documents/Notes/knowledge-base/docs/structure.md` |
 | Tagging taxonomy reference | `~/Documents/Notes/knowledge-base/docs/tagging.md` |
@@ -74,6 +76,7 @@ Use the KB as a scratch workspace when you need to think, plan, or offload conte
 | Pattern identified | Update `context.md` → `## Key Patterns & Conventions` |
 | Question unresolved | Add to `context.md` → `## Open Questions` |
 | Operation documented | Update `runbook.md` (create from template if missing); ensure `context.md` → `## Maintenance Runbook` links to it |
+| Reusable script written | Save under `scripts/` (project) or `bin/` (cross-project) — not `/tmp`; add a line in `runbook.md` pointing at it. See `AGENTS.md` → Work Artifacts |
 | Deployment steps change | Update `README.md` → `## Deployment Instructions` |
 | Known issue found/resolved | Update `README.md` → `### Known Issues` |
 | Any KB file created | Stamp `type/`, `audience/`, and `topic/` tags per `knowledge-base/docs/tagging.md` |

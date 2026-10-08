@@ -10,15 +10,17 @@ This directory contains the configuration and skills for a personalized pi codin
 
 - **Knowledge Base Management** — Record work, decisions, and findings systematically
 - **Troubleshooting Methodology** — 7-step systematic debugging approach
-- **Infrastructure Operations** — Safe command reference for kubectl, Helm, Docker, Tofu
+- **Infrastructure Operations** — Safe command reference for kubectl, Helm, Docker, Tofu, and passwordless SSH via `~/.ssh/config`
+- **Credential Handling** — 1Password `op` CLI patterns for retrieving/storing secrets without ever asking the user to paste one
 - **Documentation Standards** — Consistent writing conventions across code and KB
 - **Communication Modes** — Compressed output (caveman mode) for token efficiency
+- **Session Analysis, PDF Reading, YouTube Transcripts, Browser Automation** — see Skills below and `extensions/browser/README.md`
 
 ---
 
 ## Skills
 
-The agent has 6 specialized skills, organized into a clear taxonomy:
+The agent has 12 specialized skills (plus an opt-in browser automation extension), organized into a clear taxonomy:
 
 ### Executor Skills (WHEN + HOW)
 These skills make decisions and execute workflows.
@@ -72,6 +74,21 @@ These skills provide structure, methodology, or standards without executing.
 - Changelog format: Keep a Changelog standards
 - Emoji policy: only in markdown files, never in code
 - Load when: Writing code, KB files, or documentation
+
+**`secrets`** — Credential retrieval and storage via the 1Password `op` CLI
+- Tool-selection table: `op` CLI for passwords/keys/tokens vs. the `1password` MCP server (Environments only)
+- Read patterns (`op read`, `op item get`, `op run`) and store patterns (`op item create/edit`)
+- The `op://` reference convention used throughout this repo's own configs
+- Hygiene rules: never echo a resolved secret, never write one to a file/KB/git
+- Load when: a task needs a password, API key, token, or vault item
+
+**`infra-access`** — Passwordless SSH access to infrastructure
+- `~/.ssh/config` as the authoritative, 41-host inventory (routers, switches, plant/PLC gear)
+- Access is via the 1Password SSH agent — no local key files
+- Bounded non-interactive command patterns and multi-host fan-out via `investigator`
+- Load when: an investigation needs to reach a host directly, or you're unsure what's reachable
+
+**`analyze-sessions`**, **`pdf-reader`**, **`youtube-transcript`** — utility skills for mining pi's own session store, reading PDFs, and fetching YouTube transcripts respectively. Load by name when the task matches.
 
 ### Modes (Optional Meta-Layers)
 

@@ -41,6 +41,10 @@ the target environment. When ambiguous or not obvious, **ask the user** before p
 Do not guess the environment and do not run any `kubectl`, `helm`, or `tofu` command until
 auth is confirmed. A wrong environment could mutate production infrastructure.
 
+If a credential (not a kubeconfig context) is needed — a service account password, an API
+token, a database password — load the `secrets` skill and pull it via the `op` CLI. Never
+ask the user to paste it.
+
 **When switching environments mid-session**, re-run the full auth sequence for the new
 environment before executing any further commands — credentials from the previous
 environment are not automatically cleared:
@@ -75,6 +79,20 @@ Keep command timeouts low. Default to **60s** for read-only commands, **120s** f
 - `docker build` — no artificial timeout; image builds vary. Surface slow steps.
 
 If a command exceeds its timeout: stop, report what was observed up to that point, and treat the hang as a symptom to investigate with `debug`.
+
+**Note:** neither `timeout` nor `gtimeout` is installed on this machine. Enforce the
+numbers above with the `bash` tool's own `timeout` parameter or the command's native flag
+(`--connect-timeout`/`--max-time`, `--timeout`, `ConnectTimeout=`), not a `timeout` wrapper.
+
+---
+
+## SSH / Remote Hosts
+
+Some infrastructure (network gear, plant/PLC equipment, Zscaler connectors) is reached by
+`ssh`, not `kubectl`/`helm`/`docker`. Load the `infra-access` skill — `~/.ssh/config` is the
+inventory of what's reachable passwordless via the 1Password SSH agent. Same timeout and
+mutating-ops discipline applies: bounded, non-interactive commands for recon; explicit user
+confirmation before anything that reconfigures a device.
 
 ---
 

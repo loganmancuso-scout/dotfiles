@@ -106,6 +106,16 @@ env | sort                         # environment variables
 <process> --help | grep config     # find config file locations
 ```
 
+If a config value is a secret reference (`op://...`) or the investigation needs a
+credential to probe further, load the `secrets` skill and pull it via `op` — don't ask the
+user for it.
+
+### Remote hosts
+If the system under investigation lives on infrastructure reachable only by `ssh`
+(network gear, plant equipment, a host without a kubectl/docker surface), load the
+`infra-access` skill — `~/.ssh/config` is the inventory, passwordless via the 1Password
+SSH agent. Don't assume a host is out of reach before checking it.
+
 ### Recent changes
 ```bash
 git log --oneline -20

@@ -118,6 +118,7 @@ When your context window grows or you need space to think, plan, organize, or ex
 - Extract key findings to `sessions/YYYY-MM-DD[-topic].md` with proper sections (Goal, Work Done, Findings, Next Steps)
 - Extract gotchas to `context.md` → Gotchas & Sharp Edges
 - Extract decisions to `decisions/YYYY-MM-DD-slug.md` if significant
+- **If a script was produced during the session and is likely to be reused**, do not delete it with the rest of the scratch work. Move it to `scripts/<name>` (project-specific) or `~/Documents/Notes/knowledge-base/bin/<name>` (cross-project), add a purpose/usage header comment, `chmod +x` it, and add a line in `runbook.md` pointing at it. Markdown notes get deleted after promotion; working scripts get kept and indexed.
 - Apply `docs` markdown standards to any promoted files
 - Delete the SCRATCH file once promoted
 

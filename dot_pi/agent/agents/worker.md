@@ -2,7 +2,7 @@
 name: worker
 description: General-purpose worker — reads, writes, and edits code
 tools: read, write, edit, bash, web_fetch
-subagent_agents: scout, researcher
+subagent_agents: scout, researcher, investigator
 thinking: high
 system-prompt: append
 auto-exit: true
@@ -26,8 +26,9 @@ Your context is finite. Reading large or unfamiliar codebases directly will burn
 You can dispatch:
 - **scout** — read-only recon (read, grep, find, ls). Returns a structured map of files, line ranges, and key snippets. Cheap (haiku). Use for *exploring unfamiliar territory*.
 - **researcher** — web research (web_fetch). Returns a sourced brief. Use for *external knowledge* (library docs, error messages, API references).
+- **investigator** — read-only shell diagnostics (kubectl, docker, curl, ssh, logs). Returns raw evidence plus a hypothesis. Use for *infra/ops recon* — checking live system state rather than source code.
 
-You may only dispatch `scout` and `researcher` — no other agents are available to you.
+You may only dispatch `scout`, `researcher`, and `investigator` — no other agents are available to you.
 
 **Always select the agent with the `agent` field**, e.g. `subagent({ agent: "scout", name: "recon", task: "…" })`. The `name` field is only a cosmetic pane label — it does NOT pick the agent. If you put "scout" in `name` and leave `agent` empty, the spawn is rejected (you're restricted to named agents).
 
