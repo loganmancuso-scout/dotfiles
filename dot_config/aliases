@@ -24,7 +24,6 @@ alias ll='eza --icons -a'
 alias x='eza --icons -a'
 alias xx='eza --long --icons --no-filesize --no-permissions --no-user --no-time'
 alias python='python3'
-alias zed-sourcecontrol='zed -r "$HOME/SourceControl"'
 
 function delete() {
   for item in "$@"; do
@@ -159,6 +158,55 @@ function timer() {
 }
 
 # ─────────────────────────────────────────
+# GIT
+# ─────────────────────────────────────────
+alias g='git'
+
+# Finish a feature branch: switch to main, pull, delete locally + remotely
+# Usage: gclean [branch] [--force]
+function gclean() {
+  local branch=""
+  local force=false
+
+  for arg in "$@"; do
+    case "$arg" in
+      --force) force=true ;;
+      *)       branch="$arg" ;;
+    esac
+  done
+
+  branch="${branch:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null)}"
+
+  if [[ "$branch" == "main" ]]; then
+    echo "Already on main, nothing to clean."
+    return 1
+  fi
+
+  git switch main && git pull || return 1
+
+  if $force; then
+    git branch -D "$branch" && echo "Force deleted local branch: $branch"
+  else
+    git branch -d "$branch" && echo "Deleted local branch: $branch"
+  fi
+
+  git push origin --delete "$branch" 2>/dev/null && echo "Deleted remote branch: $branch"
+  git fetch --prune
+}
+
+# ─────────────────────────────────────────
+# KUBERNETES
+# ─────────────────────────────────────────
+alias k="kubectl"
+
+# ─────────────────────────────────────────
+# TERRAFORM
+# ─────────────────────────────────────────
+alias tffmt="terraform fmt -recursive"
+alias tfclean='rm -rf .terraform/ .terraform.lock.hcl'
+alias tfsclear='terraform state rm $(terraform state list)'
+
+# ─────────────────────────────────────────
 # DEV TOOLS
 # ─────────────────────────────────────────
 alias ff='nvim $(fzf -m --preview="bat --color=always --style=numbers --line-range=:500 {}")'
@@ -231,44 +279,6 @@ export PATH="$HOME/.local/bin:$PATH"
 # ─────────────────────────────────────────
 export PATH="$HOME/.pi/agent/bin:$PATH"
 export PI_BROWSER_HEADFUL=1
-
-# Export OP_SERVICE_ACCOUNT_TOKEN from a local cache file in /tmp instead
-# of calling `op` on every new shell/tmux pane -- a per-shell `op item get`
-# call was one biometric prompt per pane, which is worse than the original
-# problem for a tmux-heavy workflow. The cache file is refreshed (one
-# biometric prompt) at most once every 12 hours; every shell/pane opened
-# in between just reads the file, no `op` call, no prompt at all. Lives
-# under /tmp (not ~/.cache) so a reboot clears it automatically -- no
-# stale token can outlive the machine session. Scoped to whatever vaults
-# the svc-loganmancuso service account has access to (currently:
-# loganmancuso-automation). Once set, every subprocess this shell spawns
-# (including pi and its own !op read calls in mcp.json.tmpl) inherits it,
-# skipping 1Password's per-process biometric/trust check for the life of
-# the shell. Cache file is chmod 600, user-only, never written to the repo.
-_op_token_cache="/tmp/.1password-cli-token"
-if [[ ! -s "$_op_token_cache" ]] || [[ $(( $(date +%s) - $(stat -f %m "$_op_token_cache" 2>/dev/null || echo 0) )) -gt 43200 ]]; then
-  if op item get "Service Account Auth Token: svc-loganmancuso" --fields label=credential --reveal > "$_op_token_cache" 2>/dev/null; then
-    chmod 600 "$_op_token_cache"
-  fi
-fi
-export OP_SERVICE_ACCOUNT_TOKEN=$(cat "$_op_token_cache" 2>/dev/null)
-unset _op_token_cache
-
-# ─────────────────────────────────────────
-# KB TOOLS
-# ─────────────────────────────────────────
-export PATH="$HOME/Documents/Notes/knowledge-base/bin:$PATH"
-
-function gh-login() {
-  export GITHUB_TOKEN=$(op read "op://Employee/Github/token")
-}
-
-# kb-document — end-of-day KB article generator; delegates to vault script
-#   Usage: kb-document [--week]
-#          DRY_RUN=1 kb-document [--week]
-function kb-document() {
-  kb-eod.sh "$@"
-}
 
 # ─────────────────────────────────────────
 # SYSTEM
@@ -490,86 +500,4 @@ function monitor-hosts() {
     done
     sleep "$interval"
   done
-}
-
-# ─────────────────────────────────────────
-# GIT
-# ─────────────────────────────────────────
-alias g='git'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gpl='git pull'
-alias gl='git log --oneline --graph --decorate --all'
-alias gb='git branch'
-alias gbd='git branch -d'
-alias gf='git fetch --prune'
-alias gd='git diff'
-alias gst='git stash'
-alias gstp='git stash pop'
-
-# Smart switch: auto-pulls when landing on main
-function gco() {
-  git switch "$@"
-  [[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" == "main" ]] && git pull
-}
-
-# Create and switch to a new branch
-function gnb() {
-  if [[ -z "$1" ]]; then
-    echo "Usage: gnb <branch-name>"
-    return 1
-  fi
-  git switch -c "$1"
-}
-
-# Finish a feature branch: switch to main, pull, delete locally + remotely
-# Usage: gclean [branch] [--force]
-function gclean() {
-  local branch=""
-  local force=false
-
-  for arg in "$@"; do
-    case "$arg" in
-      --force) force=true ;;
-      *)       branch="$arg" ;;
-    esac
-  done
-
-  branch="${branch:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null)}"
-
-  if [[ "$branch" == "main" ]]; then
-    echo "Already on main, nothing to clean."
-    return 1
-  fi
-
-  git switch main && git pull || return 1
-
-  if $force; then
-    git branch -D "$branch" && echo "Force deleted local branch: $branch"
-  else
-    git branch -d "$branch" && echo "Deleted local branch: $branch"
-  fi
-
-  git push origin --delete "$branch" 2>/dev/null && echo "Deleted remote branch: $branch"
-  git fetch --prune
-}
-
-# ─────────────────────────────────────────
-# KUBERNETES
-# ─────────────────────────────────────────
-alias k="kubectl"
-
-# ─────────────────────────────────────────
-# TERRAFORM
-# ─────────────────────────────────────────
-alias tffmt="terraform fmt -recursive"
-alias tfsclear='terraform state rm $(terraform state list)'
-
-function tflogin() {
-  export NUTANIX_USER=$(op read "op://LoganMancuso-Automation/Nutanix Prism Central/username")
-  export NUTANIX_USERNAME=$(op read "op://LoganMancuso-Automation/Nutanix Prism Central/username")
-  export NUTANIX_PASSWORD=$(op read "op://LoganMancuso-Automation/Nutanix Prism Central/password")
-  export OP_SERVICE_ACCOUNT_TOKEN=$(op read "op://LoganMancuso-Automation/plantit-terraform-readonly/password")
 }

@@ -13,6 +13,7 @@
     "baseDelayMs": 2000
   },
   "enableSkillCommands": true,
+  "defaultTools": ["+codemode"],
   "extensions": [
     "extensions/notification.ts",
     "extensions/ask-user-question.ts",
