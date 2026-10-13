@@ -47,6 +47,17 @@
       "command": "npx",
       "args": ["@browsermcp/mcp@latest"]
     },
+    "zscaler": {
+      "command": "uvx",
+      "args": ["zscaler-mcp"],
+      "env": {
+        "ZSCALER_CLIENT_ID": "!op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/jv5pcwtzgdsawzsgejiohec3ha",
+        "ZSCALER_CLIENT_SECRET": "!op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/password",
+        "ZSCALER_CUSTOMER_ID": "!op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/rhq6qnyifnvgar3eezlhkmkgoq",
+        "ZSCALER_VANITY_DOMAIN": "!op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/6jymnubzaxtbfz3hez3lkkjjqq"
+      },
+      "description": "Zscaler MCP server in read-only mode by default"
+    },
     "mist-cloud": {
       "url": "https://mcp.ai.juniper.net/mcp/mist",
       "auth": "bearer",
