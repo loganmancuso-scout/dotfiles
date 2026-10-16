@@ -33,7 +33,8 @@
   },
   "packages": [
     "npm:pi-mcp-adapter",
-    "npm:pi-sessions"
+    "npm:pi-sessions",
+    "npm:pi-spell-check"
   ],
   "sessions": {
     "autoTitle": {
