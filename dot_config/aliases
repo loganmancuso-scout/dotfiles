@@ -202,6 +202,7 @@ alias k="kubectl"
 # ─────────────────────────────────────────
 # TERRAFORM
 # ─────────────────────────────────────────
+alias tf="terraform"
 alias tffmt="terraform fmt -recursive"
 alias tfclean='rm -rf .terraform/ .terraform.lock.hcl'
 alias tfsclear='terraform state rm $(terraform state list)'
