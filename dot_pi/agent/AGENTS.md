@@ -82,7 +82,6 @@ Configured MCP servers and when to reach for each:
 | Server | Use for |
 |---|---|
 | `1password` | 1Password **Environments** only (not passwords — see Credentials & Secrets) |
-| `context7` | Up-to-date library/framework docs — prefer this over `web_fetch` for API references |
 | `github` | GitHub repo/issue/PR operations |
 | `jira` | Jira issues |
 | `aws` | AWS across ~28 configured profiles (dev/prd/sbx per domain — aft-management, data, digital, integration, plant, vehicle, etc.) |

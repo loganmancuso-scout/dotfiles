@@ -73,8 +73,7 @@ op item create --category=password --title "<title>" --vault LoganMancuso-Automa
 
 Config files in this environment store secrets as `op://<vault>/<item>/<field>` references
 resolved at load time via `!op read ...`, not as literal values. See
-`dot_pi/agent/mcp-adapter.json.tmpl` for four live examples (context7, nutanix x2,
-mist-cloud). Follow this pattern for any new config that needs a credential — write the
+`dot_pi/agent/mcp-adapter.json.tmpl` for live examples (nutanix, zscaler, etc.). Follow this pattern for any new config that needs a credential — write the
 `op://` reference, never the resolved value, into the file.
 
 ## Hygiene rules — hard requirements
