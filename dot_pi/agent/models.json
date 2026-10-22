@@ -14,12 +14,8 @@
           "name": "Qwen3 8B (Local)"
         },
         {
-          "id": "gemma3n:e2b",
-          "name": "Gemma 3n E2B (Local)"
-        },
-        {
-          "id": "lfm2.5:8b",
-          "name": "LFM2.5 8B A1B (Local)"
+          "id": "qwen3.5:4b",
+          "name": "Qwen3.5 4B (Local)"
         }
       ]
     }
