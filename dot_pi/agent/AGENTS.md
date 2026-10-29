@@ -89,7 +89,7 @@ Configured MCP servers and when to reach for each:
 | `nutanix` | Prism Central at `prismcentral.usubv.plant.scoutway.io` |
 | `mist-cloud` | Juniper Mist cloud API |
 
-Built-in MCP support is disabled in favor of the `pi-mcp-adapter` package — tools arrive through the `mcp` / `mcp__<server>` proxies, not a separate native path.
+Pi's built-in MCP support is configured through `dot_pi/agent/mcp.json.tmpl` and applied as `~/.pi/agent/mcp.json`. MCP tools are available through the built-in `codemode` and `tool_search` paths.
 
 **Browser automation** is available but off by default (saves ~800 tokens/session). A Playwright-driven Chrome instance can navigate, run JS, inspect console/network/localStorage, fill forms, and click — useful for debugging a live SPA the way a human would in devtools. Run `/browser on` to enable (`/browser off` to disable, `/browser` for status); the tools (`browser_goto`, `browser_eval`, `browser_console`, `browser_network`, `browser_fill`, `browser_click`, `browser_screenshot`, `browser_close`) only appear once enabled. State persists across turns via a profile dir, so logins survive. See `dot_pi/agent/extensions/browser/README.md` for the full tool reference.
 

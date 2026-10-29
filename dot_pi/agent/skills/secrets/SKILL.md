@@ -44,7 +44,7 @@ Prefer the forms that never print the raw secret into the transcript:
 op run --env-file=.env.op -- <command>
 
 # Fetch a single field by secret reference (the convention already used in
-# mcp-adapter.json.tmpl: "!op read op://<vault>/<item>/<field>")
+# mcp.json.tmpl: "!op read op://<vault>/<item>/<field>")
 op read "op://LoganMancuso-Automation/<item-id>/password"
 
 # List items to find the right one before reading
@@ -73,7 +73,7 @@ op item create --category=password --title "<title>" --vault LoganMancuso-Automa
 
 Config files in this environment store secrets as `op://<vault>/<item>/<field>` references
 resolved at load time via `!op read ...`, not as literal values. See
-`dot_pi/agent/mcp-adapter.json.tmpl` for live examples (nutanix, zscaler, etc.). Follow this pattern for any new config that needs a credential — write the
+`dot_pi/agent/mcp.json.tmpl` for live examples (nutanix, zscaler, etc.). Follow this pattern for any new config that needs a credential — write the
 `op://` reference, never the resolved value, into the file.
 
 ## Hygiene rules — hard requirements

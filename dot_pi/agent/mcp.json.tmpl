@@ -5,12 +5,12 @@
     },
     "github": {
       "url": "https://api.githubcopilot.com/mcp/",
-      "auth": "bearer",
-      "bearerToken": "!gh auth token"
+      "headers": {
+        "Authorization": "!sh -c 'printf \"Bearer \"; gh auth token'"
+      }
     },
     "jira": {
-      "url": "https://mcp.atlassian.com/v1/mcp/authv2",
-      "auth": "oauth"
+      "url": "https://mcp.atlassian.com/v1/mcp/authv2"
     },
     "aws": {
       "command": "uvx",
@@ -21,20 +21,18 @@
     },
     "workiq": {
       "command": "npx",
-      "args": ["-y", "@microsoft/workiq@latest", "mcp"],
-      "disabled": false
+      "args": ["-y", "@microsoft/workiq@latest", "mcp"]
     },
     "nutanix": {
       "command": "{{ .chezmoi.homeDir }}/.pi/mcp/nutanix-mcp-server/.venv/bin/nutanix-mcp",
       "env": {
         "NUTANIX_HOST": "prismcentral.usubv.plant.scoutway.io",
         "NUTANIX_PORT": "9440",
-        "NUTANIX_USERNAME": "!op read op://LoganMancuso-Automation/svgvb4fqxnvlcvrbdrdhwkwnxy/username",
-        "NUTANIX_PASSWORD": "!op read op://LoganMancuso-Automation/svgvb4fqxnvlcvrbdrdhwkwnxy/password",
+        "NUTANIX_USERNAME": "!/opt/homebrew/bin/op read op://LoganMancuso-Automation/svgvb4fqxnvlcvrbdrdhwkwnxy/username",
+        "NUTANIX_PASSWORD": "!/opt/homebrew/bin/op read op://LoganMancuso-Automation/svgvb4fqxnvlcvrbdrdhwkwnxy/password",
         "NUTANIX_VERIFY_SSL": "false",
         "NUTANIX_TIMEOUT": "30"
-      },
-      "disabled": false
+      }
     },
     "browsermcp": {
       "command": "npx",
@@ -44,18 +42,17 @@
       "command": "uvx",
       "args": ["zscaler-mcp"],
       "env": {
-        "ZSCALER_CLIENT_ID": "!op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/jv5pcwtzgdsawzsgejiohec3ha",
-        "ZSCALER_CLIENT_SECRET": "!op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/password",
-        "ZSCALER_CUSTOMER_ID": "!op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/rhq6qnyifnvgar3eezlhkmkgoq",
-        "ZSCALER_VANITY_DOMAIN": "!op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/6jymnubzaxtbfz3hez3lkkjjqq"
+        "ZSCALER_CLIENT_ID": "!/opt/homebrew/bin/op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/jv5pcwtzgdsawzsgejiohec3ha",
+        "ZSCALER_CLIENT_SECRET": "!/opt/homebrew/bin/op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/password",
+        "ZSCALER_CUSTOMER_ID": "!/opt/homebrew/bin/op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/rhq6qnyifnvgar3eezlhkmkgoq",
+        "ZSCALER_VANITY_DOMAIN": "!/opt/homebrew/bin/op read op://LoganMancuso-Automation/lxuyja6uaielrhji7xg2s4fhta/6jymnubzaxtbfz3hez3lkkjjqq"
       },
       "description": "Zscaler MCP server in read-only mode by default"
     },
     "mist-cloud": {
       "url": "https://mcp.ai.juniper.net/mcp/mist",
-      "auth": "bearer",
-      "bearerToken": "!op read op://wqghe4bimpx7yuizvsas4ysiwu/6qo2ly55qzuxileusuy4bba6ve/password",
       "headers": {
+        "Authorization": "!sh -c 'printf \"Bearer \"; /opt/homebrew/bin/op read op://wqghe4bimpx7yuizvsas4ysiwu/6qo2ly55qzuxileusuy4bba6ve/password'",
         "X-Mist-Base-URL": "https://api.ac2.mist.com"
       }
     }
