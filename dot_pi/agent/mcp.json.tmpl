@@ -1,18 +1,22 @@
 {
   "mcpServers": {
     "1password": {
+      "enabled": false,
       "command": "1password-mcp"
     },
     "github": {
+      "enabled": false,
       "url": "https://api.githubcopilot.com/mcp/",
       "headers": {
         "Authorization": "!sh -c 'printf \"Bearer \"; gh auth token'"
       }
     },
     "jira": {
+      "enabled": false,
       "url": "https://mcp.atlassian.com/v1/mcp/authv2"
     },
     "aws": {
+      "enabled": false,
       "command": "uvx",
       "args": ["mcp-proxy-for-aws@1.6.4", "https://aws-mcp.us-east-1.api.aws/mcp"],
       "env": {
@@ -20,10 +24,12 @@
       }
     },
     "workiq": {
+      "enabled": false,
       "command": "npx",
       "args": ["-y", "@microsoft/workiq@latest", "mcp"]
     },
     "nutanix": {
+      "enabled": false,
       "command": "{{ .chezmoi.homeDir }}/.pi/mcp/nutanix-mcp-server/.venv/bin/nutanix-mcp",
       "env": {
         "NUTANIX_HOST": "prismcentral.usubv.plant.scoutway.io",
@@ -35,10 +41,12 @@
       }
     },
     "browsermcp": {
+      "enabled": false,
       "command": "npx",
       "args": ["@browsermcp/mcp@latest"]
     },
     "zscaler": {
+      "enabled": false,
       "command": "uvx",
       "args": ["zscaler-mcp"],
       "env": {
@@ -50,6 +58,7 @@
       "description": "Zscaler MCP server in read-only mode by default"
     },
     "mist-cloud": {
+      "enabled": false,
       "url": "https://mcp.ai.juniper.net/mcp/mist",
       "headers": {
         "Authorization": "!sh -c 'printf \"Bearer \"; /opt/homebrew/bin/op read op://wqghe4bimpx7yuizvsas4ysiwu/6qo2ly55qzuxileusuy4bba6ve/password'",
