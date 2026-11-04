@@ -42,7 +42,8 @@
   },
   "packages": [
     "npm:pi-sessions",
-    "npm:pi-spell-check"
+    "npm:pi-spell-check",
+    "npm:@hyperdreamer/pi-webui"
   ],
   "sessions": {
     "autoTitle": {

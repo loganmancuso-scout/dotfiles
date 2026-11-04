@@ -128,6 +128,25 @@ Install the pinned Nutanix MCP server once:
 ~/.pi/agent/scripts/install-nutanix-mcp.sh
 ```
 
+## PI WEBUI configuration
+
+`dot_config/pi-webui/config.json` manages the global PI WEBUI configuration at
+`~/.config/pi-webui/config.json`. It keeps the service bound to loopback on port
+8808 and allows the file browser to access `~/SourceControl` and
+`~/Documents/Notes`. PI WEBUI has no authentication, so do not change the host
+from `127.0.0.1` unless access is protected by a trusted network or an
+authenticated proxy.
+
+Preview and apply changes with:
+
+```bash
+chezmoi diff
+chezmoi apply ~/.config/pi-webui/config.json
+```
+
+Keep this source file canonical: UI edits to the same global config can be
+replaced by the next targeted `chezmoi apply` for this path.
+
 ## Prerequisites
 
 ```bash
