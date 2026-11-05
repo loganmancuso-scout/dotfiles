@@ -128,24 +128,30 @@ Install the pinned Nutanix MCP server once:
 ~/.pi/agent/scripts/install-nutanix-mcp.sh
 ```
 
-## PI WEBUI configuration
+## Pi Web
 
-`dot_config/pi-webui/config.json` manages the global PI WEBUI configuration at
-`~/.config/pi-webui/config.json`. It keeps the service bound to loopback on port
-8808 and allows the file browser to access `~/SourceControl` and
-`~/Documents/Notes`. PI WEBUI has no authentication, so do not change the host
-from `127.0.0.1` unless access is protected by a trusted network or an
-authenticated proxy.
-
-Preview and apply changes with:
+Pi Web is installed globally as `@agegr/pi-web`. The LaunchAgent at
+`Library/LaunchAgents/com.agegr.pi-web.plist.tmpl` starts it at user login on
+`http://127.0.0.1:30141`, suppresses browser auto-open, and disables idle
+shutdown. It is managed with chezmoi:
 
 ```bash
 chezmoi diff
-chezmoi apply ~/.config/pi-webui/config.json
+chezmoi apply ~/Library/LaunchAgents/com.agegr.pi-web.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.agegr.pi-web.plist
 ```
 
-Keep this source file canonical: UI edits to the same global config can be
-replaced by the next targeted `chezmoi apply` for this path.
+To stop and remove the user service:
+
+```bash
+launchctl bootout gui/$(id -u)/com.agegr.pi-web
+```
+
+Pi Web binds to loopback by default and has no authentication by default. Keep
+it on `127.0.0.1` unless access is protected by an authenticated proxy or
+trusted network. Pi Web exposes files through its selected projects and
+workspaces; add directories there rather than using the former PI WEBUI global
+path allow-list.
 
 ## Prerequisites
 
