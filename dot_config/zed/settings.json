@@ -73,7 +73,7 @@
     }
   },
   "terminal": {
-    "dock": "left",
+    "dock": "bottom",
     "font_family": "SauceCodePro NFM",
     "font_size": 16,
     "working_directory": "current_project_directory",
